@@ -24,8 +24,14 @@ flutter:
   assets:
     - assets/images/svg/
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: YekanBakh
+      fonts:
+        - asset: assets/fonts/yekan_bakh_hairline.ttf
+        - asset: assets/fonts/yekan_bakh_light.ttf
+        - asset: assets/fonts/yekan_bakh_regular.ttf
+        - asset: assets/fonts/yekan_bakh_medium.ttf
+        - asset: assets/fonts/yekan_bakh_bold.ttf
+        - asset: assets/fonts/yekan_bakh_fat.ttf
+        - asset: assets/fonts/yekan_bakh_heavy.ttf
+
