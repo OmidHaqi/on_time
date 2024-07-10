@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.10+1
+  persian_datetime_picker: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +34,7 @@ flutter:
         - asset: assets/fonts/yekan_bakh_regular.ttf
         - asset: assets/fonts/yekan_bakh_medium.ttf
         - asset: assets/fonts/yekan_bakh_bold.ttf
+          weight: 700
         - asset: assets/fonts/yekan_bakh_fat.ttf
         - asset: assets/fonts/yekan_bakh_heavy.ttf
 
