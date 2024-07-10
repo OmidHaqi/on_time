@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  
- static ThemeData darkTheme() {
+  static ThemeData darkTheme() {
     return ThemeData(
       fontFamily: 'YekanBakh',
       colorScheme: const ColorScheme(

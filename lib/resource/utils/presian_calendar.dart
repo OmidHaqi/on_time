@@ -390,7 +390,7 @@ class _CalendarDatePickerState extends State<PersianCalendar> {
 class _MonthPicker extends StatefulWidget {
   /// Creates a month picker.
   _MonthPicker({
-    Key? key,
+    super.key,
     required this.initialMonth,
     required this.currentDate,
     required this.firstDate,
@@ -401,8 +401,7 @@ class _MonthPicker extends StatefulWidget {
     this.selectableDayPredicate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
-        assert(!selectedDate.isAfter(lastDate)),
-        super(key: key);
+        assert(!selectedDate.isAfter(lastDate));
 
   /// The initial month to display
   final Jalali? initialMonth;
@@ -553,7 +552,10 @@ class _MonthPickerState extends State<_MonthPicker> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_rounded,size: 36,),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_rounded,
+                    size: 36,
+                  ),
                   color: controlColor,
                   tooltip: _isDisplayingFirstMonth ? null : previousTooltipText,
                   onPressed:
@@ -561,13 +563,13 @@ class _MonthPickerState extends State<_MonthPicker> {
                 ),
                 Text(
                   '${widget.selectedDate.day.toString().toPersianNumber()} - ${widget.selectedDate.month.toString().toPesianMonth()} - ${widget.selectedDate.year.toString().toPersianNumber()}',
-                  style:Theme.of(context).textTheme.bodyLarge?.apply(
-                    fontSizeDelta: 14,
-                    fontWeightDelta: 3
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.apply(fontSizeDelta: 14, fontWeightDelta: 3),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios_rounded,size: 36),
+                  icon: const Icon(Icons.arrow_forward_ios_rounded, size: 36),
                   color: controlColor,
                   tooltip: _isDisplayingLastMonth ? null : nextTooltipText,
                   onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
@@ -598,7 +600,7 @@ class _MonthPickerState extends State<_MonthPicker> {
 class _DayPicker extends StatelessWidget {
   /// Creates a day picker.
   _DayPicker({
-    Key? key,
+    super.key,
     required this.currentDate,
     required this.displayedMonth,
     required this.firstDate,
@@ -608,8 +610,7 @@ class _DayPicker extends StatelessWidget {
     this.selectableDayPredicate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
-        assert(!selectedDate.isAfter(lastDate)),
-        super(key: key);
+        assert(!selectedDate.isAfter(lastDate));
 
   /// The currently selected date.
   ///
@@ -847,15 +848,14 @@ class _YearPicker extends StatefulWidget {
   /// The [currentDate, [firstDate], [lastDate], [selectedDate], and [onChanged]
   /// arguments must be non-null. The [lastDate] must be after the [firstDate].
   _YearPicker({
-    Key? key,
+    super.key,
     required this.currentDate,
     required this.firstDate,
     required this.lastDate,
     required this.initialDate,
     required this.selectedDate,
     required this.onChanged,
-  })  : assert(!firstDate.isAfter(lastDate)),
-        super(key: key);
+  }) : assert(!firstDate.isAfter(lastDate));
 
   /// The current date.
   ///

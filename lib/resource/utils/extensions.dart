@@ -9,20 +9,7 @@ String getFarsiNumber(String number) {
 }
 
 String getPersianMonth(String month) {
-  const en = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12'
-  ];
+  const en = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
   const perMonth = [
     'فروردین',
