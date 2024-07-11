@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 String getFarsiNumber(String number) {
   const en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -35,6 +37,7 @@ String getPersianMonth(String month) {
   return month; // اگر ماه ورودی معتبر نباشد، همان مقدار ورودی را برمی‌گرداند
 }
 
+
 extension PersianNumbers on String {
   String toPersianNumber() {
     return getFarsiNumber(this);
@@ -42,5 +45,22 @@ extension PersianNumbers on String {
 
   String toPesianMonth() {
     return getPersianMonth(this);
+  }
+}
+
+
+extension SizedBoxExtention on double {
+  SizedBox get height => SizedBox(
+        height: toDouble(),
+      );
+  SizedBox get width => SizedBox(
+        width: toDouble(),
+      );
+}
+
+extension DarkMode on BuildContext {
+  bool get isLightMode {
+    final brightness = MediaQuery.of(this).platformBrightness;
+    return brightness == Brightness.light;
   }
 }
