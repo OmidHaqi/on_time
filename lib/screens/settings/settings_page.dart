@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_time/data/model/language_model.dart';
+import 'package:on_time/generated/l10n.dart';
 import 'package:on_time/resource/app_dimens.dart';
 import 'package:on_time/resource/components/text_style.dart';
+import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -22,52 +24,96 @@ class SettingsPage extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               centerTitle: true,
-              title: const Text(
-                
-                'تنظیمات',
+              title: Text(
+                S.current.settings,
                 style: AppTextStyles.appBarTitle,
               ),
             ),
             body: Directionality(
               textDirection: TextDirection.ltr,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: AppDimens.medium),
-                    child: Text('زبان'),
+                  Padding(
+                    padding: const EdgeInsets.only(right: AppDimens.medium),
+                    child: Text(S.current.language),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.small),
                     child: Divider(),
                   ),
-                  Expanded(
+                  SizedBox(
+                    width: double.infinity,
+                    height: 150,
                     child: ListView.builder(
                         itemCount: languageModel.length,
                         itemBuilder: (context, index) {
                           var item = languageModel[index];
-              
-                          return Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: RadioListTile(
-                              value: item.languageCode,
-                              groupValue: groupValue,
-                              onChanged: (value) {
-                                BlocProvider.of<LocalizationsBloc>(context).add(
-                                  LoadLocalizations(
-                                    Locale(
-                                      item.languageCode,
-                                    ),
+                          return RadioListTile(
+                            value: item.languageCode,
+                            groupValue: groupValue,
+                            onChanged: (value) {
+                              BlocProvider.of<LocalizationsBloc>(context).add(
+                                LoadLocalizations(
+                                  Locale(
+                                    item.languageCode,
                                   ),
-                                );
-                              },
-                              title: Text(item.language),
-                              subtitle: Text(item.subLanguage),
+                                ),
+                              );
+                            },
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(item.language),
+                              ],
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(item.subLanguage),
+                              ],
                             ),
                           );
                         }),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: AppDimens.medium),
+                    child: Text(S.current.theme),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.small),
+                    child: Divider(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.medium),
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppDimens.medium),
+                            child: Text(S.current.darkMode),
+                          ),
+                          BlocBuilder<ThemeBloc, ThemeMode>(
+                            builder: (context, state) {
+                              return Switch(
+                                value: state == ThemeMode.dark,
+                                onChanged: (value) {
+                                  context
+                                      .read<ThemeBloc>()
+                                      .add(ThemeChanged(isDark: value));
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -22,7 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "darkMode": MessageLookupByLibrary.simpleMessage("حالت تاریک"),
         "language": MessageLookupByLibrary.simpleMessage("زبان"),
-        "name": MessageLookupByLibrary.simpleMessage("آن . تایم")
+        "name": MessageLookupByLibrary.simpleMessage("آن . تایم"),
+        "settings": MessageLookupByLibrary.simpleMessage("تنظیمات"),
+        "theme": MessageLookupByLibrary.simpleMessage("تم")
       };
 }

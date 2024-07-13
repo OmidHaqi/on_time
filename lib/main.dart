@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
 import 'package:on_time/screens/my_app.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 
@@ -15,8 +16,16 @@ void main() {
     ),
   );
   runApp(
-    BlocProvider(
-      create: (context) => LocalizationsBloc()..add(LoadSavedLocalizations()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<LocalizationsBloc>(
+          create: (context) =>
+              LocalizationsBloc()..add(LoadSavedLocalizations()),
+        ),
+        BlocProvider<ThemeBloc>(
+          create: (context) => ThemeBloc(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );

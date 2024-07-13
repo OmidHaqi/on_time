@@ -1,5 +1,8 @@
 {
     "@@locale": "fa",
     "name": "آن . تایم",
-    "language": "زبان"
+    "language": "زبان",
+    "settings": "تنظیمات",
+    "theme": "تم",
+    "darkMode": "حالت تاریک"
 }
