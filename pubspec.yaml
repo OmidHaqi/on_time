@@ -11,17 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   persian_datetime_picker: ^2.7.0
   zoom_tap_animation: ^1.1.0
   intl: ^0.19.0
-  flutter_localizations:
-    sdk: flutter
+  bloc: ^8.1.4
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   shared_preferences: ^2.2.3
-  bloc: ^8.1.4
 
 dev_dependencies:
   flutter_test:

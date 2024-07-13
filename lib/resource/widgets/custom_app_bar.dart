@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/resource/app_dimens.dart';
-import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
 import 'package:on_time/resource/utils/extensions.dart';
 import 'package:on_time/screens/settings/settings_page.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
