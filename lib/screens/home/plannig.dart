@@ -30,50 +30,6 @@ class _PlannigState extends State<Plannig> {
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: PersianCalendar(
-              firstDate: Jalali(1385, 8),
-              initialDate: Jalali.now(),
-              lastDate: Jalali(1450, 8),
-              onDateChanged: (Jalali? value) {
-                //TODO:Dont forget
-              },
-            ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(AppDimens.medium),
-              child: IconButton.filled(
-                iconSize: 35,
-                onPressed: () => setState(() => events.add(taskEvent)),
-                icon: const Icon(Icons.add_rounded),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppDimens.medium),
-              child: Text(
-                AppStrings.planning,
-                style: AppTextStyles.bodyTitleTextStyle.apply(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-            ),
-          ],
-        ),
-        PlannerTimeLine(events: events)
-      ],
-    );
-  }
 
   TimelineEventDisplay get taskEvent {
     return TimelineEventDisplay(
@@ -87,7 +43,7 @@ class _PlannigState extends State<Plannig> {
               children: [
                 Text(
                   '${DateTime.now().hour.toString().toPersianNumber()}:${DateTime.now().minute.toString().toPersianNumber()} - ',
-                  style: AppTextStyles.chipTextStyle,
+                  style: AppTextStyles.taskDateTimeTextStyle,
                 ),
                 Text(
                   '${Jalali.now().month.toString().toPesianMonth()} / ${Jalali.now().day.toString().toPersianNumber()} ',
@@ -107,12 +63,20 @@ class _PlannigState extends State<Plannig> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: 30,
-                          width: 40,
-                          child: Icon(
-                            Icons.delete_outline_rounded,
-                            color: Theme.of(context).colorScheme.onPrimary,
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              events.removeLast();
+                            });
+                            
+                          },
+                          child: SizedBox(
+                            height: 30,
+                            width: 40,
+                            child: Icon(
+                              Icons.delete_outline_rounded,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                           ),
                         ),
                         Padding(
@@ -221,4 +185,50 @@ class _PlannigState extends State<Plannig> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: PersianCalendar(
+              firstDate: Jalali(1385, 8),
+              initialDate: Jalali.now(),
+              lastDate: Jalali(1450, 8),
+              onDateChanged: (Jalali? value) {
+                //TODO:Dont forget
+              },
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(AppDimens.medium),
+              child: IconButton.filled(
+                iconSize: 35,
+                onPressed: () => setState(() => events.add(taskEvent)),
+                icon: const Icon(Icons.add_rounded),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(AppDimens.medium),
+              child: Text(
+                AppStrings.planning,
+                style: AppTextStyles.bodyTitleTextStyle.apply(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+          ],
+        ),
+        PlannerTimeLine(events: events)
+      ],
+    );
+  }
+
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_time/screens/my_app.dart';
+import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Color(0xff161928),
@@ -11,5 +14,10 @@ void main() {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => LocalizationsBloc()..add(LoadSavedLocalizations()),
+      child: const MyApp(),
+    ),
+  );
 }

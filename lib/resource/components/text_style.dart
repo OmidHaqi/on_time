@@ -29,4 +29,13 @@ class AppTextStyles  {
     fontSize: 16,
     
   );
+    static const TextStyle taskDateTimeTextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+  );
+    static const TextStyle appBarTitle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
 }

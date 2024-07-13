@@ -15,19 +15,25 @@ dependencies:
   flutter_svg: ^2.0.10+1
   persian_datetime_picker: ^2.7.0
   zoom_tap_animation: ^1.1.0
-  # flutter_timeline: ^0.3.0
+  intl: ^0.19.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.11
 
 flutter:
-
   uses-material-design: true
+  generate: true
+
   assets:
     - assets/images/svg/
-
   fonts:
     - family: YekanBakh
       fonts:
@@ -40,3 +46,5 @@ flutter:
         - asset: assets/fonts/yekan_bakh_fat.ttf
         - asset: assets/fonts/yekan_bakh_heavy.ttf
 
+flutter_intl:
+  enabled: true
