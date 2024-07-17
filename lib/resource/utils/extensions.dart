@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String getFarsiNumber(String number) {
+String getFarsiNumberStr(String number) {
   const en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
   for (var element in en) {
@@ -10,7 +10,18 @@ String getFarsiNumber(String number) {
   return number;
 }
 
-String getPersianMonth(String month) {
+String getFarsiNumberInt(int number) {
+  String numStr = number.toString();
+  const en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  for (var element in en) {
+    numStr = numStr.replaceAll(element, fa[en.indexOf(element)]);
+  }
+
+  return numStr;
+}
+
+String getPersianMonthStr(String month) {
   const en = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
   const perMonth = [
@@ -37,17 +48,53 @@ String getPersianMonth(String month) {
   return month; // اگر ماه ورودی معتبر نباشد، همان مقدار ورودی را برمی‌گرداند
 }
 
+String getPersianMonthInt(int month) {
+  String strMonth = month.toString();
+  const en = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
-extension PersianNumbers on String {
+  const perMonth = [
+    'فروردین',
+    'اردیبهشت',
+    'خرداد',
+    'تیر',
+    'مرداد',
+    'شهریور',
+    'مهر',
+    'آبان',
+    'آذر',
+    'دی',
+    'بهمن',
+    'اسفند'
+  ];
+
+  for (var i = 0; i < en.length; i++) {
+    if (strMonth == en[i]) {
+      return perMonth[i];
+    }
+  }
+
+  return strMonth;
+}
+
+extension PersianNumbersStr on String {
   String toPersianNumber() {
-    return getFarsiNumber(this);
+    return getFarsiNumberStr(this);
   }
 
   String toPesianMonth() {
-    return getPersianMonth(this);
+    return getPersianMonthStr(this);
   }
 }
 
+extension PersianNumbersInt on int {
+  String toPersianNumberInt() {
+    return getFarsiNumberInt(this);
+  }
+
+  String toPesianMonth() {
+    return getPersianMonthInt(this);
+  }
+}
 
 extension SizedBoxExtention on double {
   SizedBox get height => SizedBox(
@@ -56,11 +103,4 @@ extension SizedBoxExtention on double {
   SizedBox get width => SizedBox(
         width: toDouble(),
       );
-}
-
-extension DarkMode on BuildContext {
-  bool get isLightMode {
-    final brightness = MediaQuery.of(this).platformBrightness;
-    return brightness == Brightness.light;
-  }
 }
