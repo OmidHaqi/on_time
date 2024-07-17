@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTextStyles  {
+class AppTextStyles {
   AppTextStyles._();
 
   static const TextStyle appNameTextStyle = TextStyle(
@@ -15,7 +15,7 @@ class AppTextStyles  {
     fontSize: 26,
     fontWeight: FontWeight.bold,
   );
-    static const TextStyle taskTitleTextStyle = TextStyle(
+  static const TextStyle taskTitleTextStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
@@ -27,15 +27,24 @@ class AppTextStyles  {
   static const TextStyle taskInfoTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 16,
-    
   );
-    static const TextStyle taskDateTimeTextStyle = TextStyle(
+  static const TextStyle taskDateTimeTextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
   );
-    static const TextStyle appBarTitle = TextStyle(
+  static const TextStyle appBarTitle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle dateTimeTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 24,
+  );
+
+  static const TextStyle appTopText = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 26,
     fontWeight: FontWeight.bold,
   );
 }
