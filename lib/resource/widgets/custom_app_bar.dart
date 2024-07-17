@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/resource/app_dimens.dart';
@@ -31,9 +32,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                 children: [
                   AppDimens.small.width,
                   AppIcon(
-                    icon: context.isLightMode
-                        ? SvgPicture.asset(Assets.images.svg.icSettingLight)
-                        : SvgPicture.asset(Assets.images.svg.icSettingDark),
+                    icon: SvgPicture.asset(
+                      Assets.images.svg.icSetting,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.onSurface,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -42,14 +47,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                     },
                   ),
                   AppIcon(
-                    icon: context.isLightMode
-                        ? SvgPicture.asset(
-                            Assets.images.svg.icNotificationLight)
-                        : SvgPicture.asset(
-                            Assets.images.svg.icNotificationDark),
+                    icon: SvgPicture.asset(
+                      Assets.images.svg.icNotification,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.onSurface,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                     onTap: () {},
                   ),
-                 
                 ],
               ),
               Padding(
