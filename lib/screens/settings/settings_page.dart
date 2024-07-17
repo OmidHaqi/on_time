@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:on_time/data/model/language_model.dart';
+import 'package:on_time/data/models/language_model.dart';
 import 'package:on_time/generated/l10n.dart';
 import 'package:on_time/resource/app_dimens.dart';
 import 'package:on_time/resource/components/text_style.dart';
@@ -86,7 +86,8 @@ class SettingsPage extends StatelessWidget {
                     child: Divider(),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.medium),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppDimens.medium),
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: Row(

@@ -11,7 +11,8 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeMode> {
     add(LoadTheme()); // Load the theme when the bloc is created
   }
 
-  Future<void> _onThemeChanged(ThemeChanged event, Emitter<ThemeMode> emit) async {
+  Future<void> _onThemeChanged(
+      ThemeChanged event, Emitter<ThemeMode> emit) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDark', event.isDark);
     emit(event.isDark ? ThemeMode.dark : ThemeMode.light);
