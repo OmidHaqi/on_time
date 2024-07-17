@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:on_time/data/repositories/task_local_repo.dart';
 import 'package:on_time/data/sources/task_local_data_src.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
+import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/my_app.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 
@@ -23,15 +25,25 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) {
+            final homeBloc = HomeBloc(taskLocalRepo);
+            homeBloc.add(
+              HomeInit(),
+            );
+            return homeBloc;
+          },
+        ),
         BlocProvider<LocalizationsBloc>(
-          create: (context) => LocalizationsBloc()
-            ..add(
+          create: (_) {
+            final localizationsBloc = LocalizationsBloc();
+            localizationsBloc.add(
               LoadSavedLocalizations(),
-            ),
+            );
+            return localizationsBloc;
+          },
         ),
-        BlocProvider<ThemeBloc>(
-          create: (context) => ThemeBloc(),
-        ),
+        BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
       ],
       child: const MyApp(),
     ),

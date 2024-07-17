@@ -47,4 +47,9 @@ class AppTextStyles {
     fontSize: 26,
     fontWeight: FontWeight.bold,
   );
+
+    static const TextStyle emptyTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 18,
+  );
 }
