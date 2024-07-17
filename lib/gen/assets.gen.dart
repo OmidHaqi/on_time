@@ -17,24 +17,14 @@ class $AssetsImagesGen {
 class $AssetsImagesSvgGen {
   const $AssetsImagesSvgGen();
 
-  /// File path: assets/images/svg/ic_notification_dark.svg
-  String get icNotificationDark => 'assets/images/svg/ic_notification_dark.svg';
+  /// File path: assets/images/svg/ic_notification.svg
+  String get icNotification => 'assets/images/svg/ic_notification.svg';
 
-  /// File path: assets/images/svg/ic_notification_light.svg
-  String get icNotificationLight =>
-      'assets/images/svg/ic_notification_light.svg';
+  /// File path: assets/images/svg/ic_search.svg
+  String get icSearch => 'assets/images/svg/ic_search.svg';
 
-  /// File path: assets/images/svg/ic_search_dark.svg
-  String get icSearchDark => 'assets/images/svg/ic_search_dark.svg';
-
-  /// File path: assets/images/svg/ic_search_light.svg
-  String get icSearchLight => 'assets/images/svg/ic_search_light.svg';
-
-  /// File path: assets/images/svg/ic_setting_dark.svg
-  String get icSettingDark => 'assets/images/svg/ic_setting_dark.svg';
-
-  /// File path: assets/images/svg/ic_setting_light.svg
-  String get icSettingLight => 'assets/images/svg/ic_setting_light.svg';
+  /// File path: assets/images/svg/ic_setting.svg
+  String get icSetting => 'assets/images/svg/ic_setting.svg';
 
   /// File path: assets/images/svg/vc_empty_dark.svg
   String get vcEmptyDark => 'assets/images/svg/vc_empty_dark.svg';
@@ -62,12 +52,9 @@ class $AssetsImagesSvgGen {
 
   /// List of all assets
   List<String> get values => [
-        icNotificationDark,
-        icNotificationLight,
-        icSearchDark,
-        icSearchLight,
-        icSettingDark,
-        icSettingLight,
+        icNotification,
+        icSearch,
+        icSetting,
         vcEmptyDark,
         vcEmptyLight,
         vcIntroOneDark,
