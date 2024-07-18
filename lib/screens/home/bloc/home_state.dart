@@ -12,7 +12,6 @@ final class HomeLoading extends HomeState {}
 final class HomeError extends HomeState {}
 
 final class HomeLoaded extends HomeState {
-  final List<TaskModel> taskModel;
-  const HomeLoaded(this.taskModel);
+  final List<TaskModel> allTaskList;
+  const HomeLoaded(this.allTaskList);
 }
-

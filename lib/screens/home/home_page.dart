@@ -36,8 +36,6 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // addTaskBar(),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

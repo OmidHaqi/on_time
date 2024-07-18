@@ -39,7 +39,8 @@ class TaskLocalDataSrc implements ITaskDataSrc {
             endTime: _.endTime,
             color: _.color,
             remind: _.remind,
-            repeat: _.repeat,
+            repeat: _.repeat, 
+            place: _.place,
           ),
         )
         .toList();
@@ -73,6 +74,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
       color: task.color,
       remind: task.remind,
       repeat: task.repeat,
+      place: task.place
     );
     final box = await Hive.openBox<TaskModel>(taskBox);
     await box.put(taskModel.id, taskModel);
@@ -95,6 +97,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
         color: task.color,
         remind: task.remind,
         repeat: task.repeat,
+        place: task.place
       ),
     );
   }
