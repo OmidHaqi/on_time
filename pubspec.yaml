@@ -26,6 +26,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   path_provider: ^2.1.3
+  persian_datetime_picker: ^2.7.0
 
 dev_dependencies:
   flutter_test:

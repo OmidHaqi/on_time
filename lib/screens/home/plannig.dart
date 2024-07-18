@@ -23,13 +23,12 @@ class Plannig extends StatefulWidget {
 
 class _PlannigState extends State<Plannig> {
   DateTime _selectedDate = DateTime.parse(DateTime.now().toString());
-
   @override
   Widget build(BuildContext context) {
     final darkModeOn =
         BlocProvider.of<ThemeBloc>(context).state == ThemeMode.dark;
     String day = _selectedDate.day.toPersianNumberInt();
-    String month = _selectedDate.month.toPesianMonth();
+    String month = _selectedDate.month.toPersianNumberInt();
     String year = _selectedDate.year.toPersianNumberInt();
     return Column(
       children: [
@@ -47,7 +46,7 @@ class _PlannigState extends State<Plannig> {
           child: DatePicker(
             DateTime.now(),
             initialSelectedDate: DateTime.now(),
-            calendarType: CalendarType.persianDate,
+            calendarType: CalendarType.gregorianDate,
             height: 90,
             dateTextStyle: TextStyle(
               color: Theme.of(context).colorScheme.onSurface,
@@ -58,9 +57,8 @@ class _PlannigState extends State<Plannig> {
             monthTextStyle:
                 TextStyle(color: Theme.of(context).colorScheme.onSurface),
             daysCount: 30,
-            selectionColor: Theme.of(context).colorScheme.onSurface,
+            selectedTextColor: Theme.of(context).colorScheme.onSurface,
             directionality: TextDirection.ltr,
-            selectedTextColor: Theme.of(context).colorScheme.surface,
             onDateChange: (date) {
               setState(() {
                 _selectedDate = date;
@@ -108,9 +106,9 @@ class _PlannigState extends State<Plannig> {
                   width: double.infinity,
                   //TODO:responsive this sizesbox
                   height: 475,
-                  child: state.taskModel.isNotEmpty
+                  child: state.allTaskList.isNotEmpty
                       ? ListView.builder(
-                          itemCount: state.taskModel.length,
+                          itemCount: state.allTaskList.length,
                           itemBuilder: (contxt, index) {
                             return Padding(
                               padding: const EdgeInsets.all(AppDimens.medium),
@@ -154,7 +152,8 @@ class _PlannigState extends State<Plannig> {
                                                         horizontal:
                                                             AppDimens.small),
                                                 child: Text(
-                                                  state.taskModel[index].title,
+                                                  state
+                                                      .allTaskList[index].title,
                                                   style: AppTextStyles
                                                       .taskTitleTextStyle
                                                       .apply(
@@ -197,7 +196,7 @@ class _PlannigState extends State<Plannig> {
                                                   ),
                                                   TextSpan(
                                                     text:
-                                                        '${state.taskModel[index].startTime.toPersianNumber()} تا ${state.taskModel[index].endTime.toPersianNumber()}',
+                                                        '${state.allTaskList[index].startTime.toPersianNumber()} تا ${state.allTaskList[index].endTime.toPersianNumber()}',
                                                     style: AppTextStyles
                                                         .taskInfoTextStyle
                                                         .apply(
@@ -247,7 +246,7 @@ class _PlannigState extends State<Plannig> {
                                                     ),
                                                     TextSpan(
                                                       text: state
-                                                          .taskModel[index]
+                                                          .allTaskList[index]
                                                           .note,
                                                       style: AppTextStyles
                                                           .taskInfoTextStyle
@@ -272,31 +271,31 @@ class _PlannigState extends State<Plannig> {
                           },
                         )
                       : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              darkModeOn
-                                  ? Assets.images.svg.vcEmptyDark
-                                  : Assets.images.svg.vcEmptyLight,
-                              height: 200,
-                            ),
-                            AppDimens.medium.height,
-                            Text(
-                              'امروز برنامه ای نداری',
-                              style: AppTextStyles.emptyTextStyle.copyWith(
-                                  background: Paint()
-                                    ..strokeJoin = StrokeJoin.round
-                                    ..style = PaintingStyle.stroke
-                                    ..color = Theme.of(context)
-                                        .colorScheme
-                                        .onSurface
-                                        .withOpacity(0.1)
-                                    ..strokeWidth = 25),
-                            )
-                          ],
-                        ),
-                      ));
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                darkModeOn
+                                    ? Assets.images.svg.vcEmptyDark
+                                    : Assets.images.svg.vcEmptyLight,
+                                height: 200,
+                              ),
+                              AppDimens.medium.height,
+                              Text(
+                                'امروز برنامه ای نداری',
+                                style: AppTextStyles.emptyTextStyle.copyWith(
+                                    background: Paint()
+                                      ..strokeJoin = StrokeJoin.round
+                                      ..style = PaintingStyle.stroke
+                                      ..color = Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(0.1)
+                                      ..strokeWidth = 25),
+                              )
+                            ],
+                          ),
+                        ));
             } else if (state is HomeError) {
               return const Center(
                 child: Text('Error'),

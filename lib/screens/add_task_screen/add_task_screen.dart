@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:on_time/resource/app_dimens.dart';
 import 'package:on_time/resource/components/text_style.dart';
+import 'package:on_time/resource/utils/extensions.dart';
 import 'package:on_time/resource/widgets/input_feild.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -11,11 +13,13 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  DateTime _selectedDate = DateTime.parse(DateTime.now().toString());
+  Jalali _selectedDate = Jalali.now();
 
   final TextEditingController _titleController = TextEditingController();
 
   final TextEditingController _noteController = TextEditingController();
+
+  final TextEditingController _placeController = TextEditingController();
 
   String _startTime = "8:30 AM";
 
@@ -32,177 +36,182 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     20,
   ];
 
-  String _selectedRepeat = 'None';
+  String _selectedRepeat = 'هیچ کدام';
 
   List<String> repeatList = [
-    'None',
-    'Daily',
-    'Weekly',
-    'Monthly',
+    'هیچ کدام',
+    'هر روز',
+    'هر هفته',
+    'هر ماه',
   ];
 
   @override
   Widget build(BuildContext context) {
+    String day = _selectedDate.day.toPersianNumberInt();
+    String month = _selectedDate.month.toPesianMonth();
+    String year = _selectedDate.year.toPersianNumberInt();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: const Text(
-            'Add Task',
+            'برنامه جدید',
             style: AppTextStyles.appBarTitle,
           ),
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InputField(
-                  title: "Title",
-                  hint: "Enter title here.",
-                  controller: _titleController,
-                  suffixIcon: const Icon(Icons.title),
-                ),
-                InputField(
-                  title: "Note",
-                  hint: "Enter note here.",
-                  controller: _noteController,
-                  suffixIcon: const Icon(Icons.note),
-                ),
-                InputField(
-                  title: "Date",
-                  hint: "Pick Date here",
-                  suffixIcon: const Icon(Icons.date_range_rounded),
-                  widget: IconButton(
-                    icon: (const Icon(
-                      Icons.calendar_month,
-                      color: Colors.grey,
-                    )),
-                    onPressed: () {
-                      //showDatePicker(context);
+        body: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InputField(
+                    title: "عنوان",
+                    hint: "عنوان خود را اینجا وارد کنید",
+                    controller: _titleController,
+                    suffixIcon: const Icon(Icons.title),
+                  ),
+                  InputField(
+                    title: "یادداشت",
+                    hint: "یادداشت خود را در اینجا وارد کنید",
+                    controller: _noteController,
+                    suffixIcon: const Icon(Icons.note),
+                  ),
+                  InputField(
+                    title: "مکان",
+                    hint: "اسم جایی که میخای بری چیه؟",
+                    controller: _placeController,
+                    suffixIcon: const Icon(Icons.pin_drop_rounded),
+                  ),
+                  InputField(
+                    hint: '$day, $month , $year',
+                    onTap: () {
                       getDateFromUser();
                     },
+                    readOnly: true,
+                    suffixIcon: const Icon(Icons.date_range_rounded),
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InputField(
-                        title: "Start Time",
-                        hint: _startTime,
-                        onTap: () {
-                          getTimeFromUser(isStartTime: true);
-                        },
-                        readOnly: true,
-                        suffixIcon: const Icon(Icons.timer_rounded),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: InputField(
-                        title: "End Time",
-                        hint: _endTime,
-                        readOnly: true,
-                        onTap: () {
-                          getTimeFromUser(isStartTime: false);
-                        },
-                        suffixIcon: const Icon(Icons.timer_off_rounded),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(AppDimens.small),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Row(
                     children: [
-                      DropdownButton<String>(
-                          value: _selectedRemind.toString(),
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
-                          iconSize: 32,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedRemind = int.parse(newValue!);
-                            });
+                      Expanded(
+                        child: InputField(
+                          hint: _startTime,
+                          onTap: () {
+                            getTimeFromUser(isStartTime: true);
                           },
-                          items: remindList
-                              .map<DropdownMenuItem<String>>((int value) {
-                            return DropdownMenuItem<String>(
-                              value: value.toString(),
-                              child: Text(value.toString()),
-                            );
-                          }).toList()),
-                      const Text('هر چند دقیقه یادت بندازم؟'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(AppDimens.small),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DropdownButton<String>(
-                          value: _selectedRepeat.toString(),
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
-                          iconSize: 32,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedRepeat = newValue!;
-                            });
-                          },
-                          items: repeatList
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList()),
-                      const Text('کی به کی یادت بندازم؟'),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 18.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(AppDimens.small),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      colorChips(),
-                      SizedBox(
-                        height: 50,
-                        width: 120,
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            'Create Task',
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
-                          ),
+                          readOnly: true,
+                          suffixIcon: const Icon(Icons.timer_rounded),
                         ),
                       ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: InputField(
+                          hint: _endTime,
+                          readOnly: true,
+                          onTap: () {
+                            getTimeFromUser(isStartTime: false);
+                          },
+                          suffixIcon: const Icon(Icons.timer_off_rounded),
+                        ),
+                      )
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(AppDimens.small),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('هر چند دقیقه یادت بندازم؟'),
+                        DropdownButton<String>(
+                            value: _selectedRemind.toString(),
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down,
+                            ),
+                            iconSize: 32,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedRemind = int.parse(newValue!);
+                              });
+                            },
+                            items: remindList
+                                .map<DropdownMenuItem<String>>((int value) {
+                              return DropdownMenuItem<String>(
+                                value: value.toString(),
+                                child: Text(value.toString()),
+                              );
+                            }).toList()),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(AppDimens.small),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('کی به کی یادت بندازم؟'),
+                        DropdownButton<String>(
+                            value: _selectedRepeat.toString(),
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down,
+                            ),
+                            iconSize: 32,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedRepeat = newValue!;
+                              });
+                            },
+                            items: repeatList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList()),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(AppDimens.small),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        colorChips(),
+                        SizedBox(
+                          height: 50,
+                          width: 120,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              'ثبت',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -213,7 +222,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   colorChips() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text(
-        "Color",
+        "رنگ",
       ),
       const SizedBox(
         height: 8,
@@ -259,16 +268,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   getTimeFromUser({required bool isStartTime}) async {
     var pickedTime = await _showTimePicker();
-    print(pickedTime.format(context));
+
     String formatedTime = pickedTime.format(context);
-    print(formatedTime);
     if (pickedTime == null) {
-      print("time canceld");
-    } else if (isStartTime)
+    } else if (isStartTime) {
       setState(() {
         _startTime = formatedTime;
       });
-    else if (!isStartTime) {
+    } else if (!isStartTime) {
       setState(() {
         _endTime = formatedTime;
       });
@@ -277,20 +284,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   _showTimePicker() async {
-    return showTimePicker(
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      initialEntryMode: TimePickerEntryMode.input,
+    return showPersianTimePicker(
       context: context,
+      initialTime: const TimeOfDay(hour: 8, minute: 30),
+      initialEntryMode: PTimePickerEntryMode.input,
     );
   }
 
   getDateFromUser() async {
-    final DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+
+    final Jalali? pickedDate = await showPersianDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: Jalali(1310),
+      lastDate: Jalali(1500),
+    );
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;

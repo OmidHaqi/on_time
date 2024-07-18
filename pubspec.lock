@@ -533,6 +533,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  persian_datetime_picker:
+    dependency: "direct main"
+    description:
+      name: persian_datetime_picker
+      sha256: "097f69484a4ea8fdf8d2051b0b6205edbed912f096b3c521df0985f656ef5584"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   petitparser:
     dependency: transitive
     description:
