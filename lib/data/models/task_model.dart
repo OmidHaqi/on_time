@@ -34,32 +34,35 @@ class TaskModel extends HiveObject {
   @HiveField(9)
   String repeat;
 
-  TaskModel({
-    this.id,
-    required this.title,
-    required this.note,
-    required this.isCompleted,
-    required this.date,
-    required this.startTime,
-    required this.endTime,
-    required this.color,
-    required this.remind,
-    required this.repeat,
-  });
+  @HiveField(10)
+  String place;
+
+  TaskModel(
+      {this.id,
+      required this.title,
+      required this.note,
+      required this.isCompleted,
+      required this.date,
+      required this.startTime,
+      required this.endTime,
+      required this.color,
+      required this.remind,
+      required this.repeat,
+      required this.place});
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      id: json['id'],
-      title: json['title'],
-      note: json['note'],
-      isCompleted: json['isCompleted'],
-      date: json['date'],
-      startTime: json['startTime'],
-      endTime: json['endTime'],
-      color: json['color'],
-      remind: json['remind'],
-      repeat: json['repeat'],
-    );
+        id: json['id'],
+        title: json['title'],
+        note: json['note'],
+        isCompleted: json['isCompleted'],
+        date: json['date'],
+        startTime: json['startTime'],
+        endTime: json['endTime'],
+        color: json['color'],
+        remind: json['remind'],
+        repeat: json['repeat'],
+        place: json['place']);
   }
 
   Map<String, dynamic> toJson() {
@@ -74,6 +77,7 @@ class TaskModel extends HiveObject {
     data['color'] = color;
     data['remind'] = remind;
     data['repeat'] = repeat;
+    data['place'] = place;
     return data;
   }
 }
