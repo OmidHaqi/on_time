@@ -17,7 +17,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
     Hive.init(directory.path);
     Hive.registerAdapter(TaskModelAdapter());
     await Hive.openBox<TaskModel>(taskBox);
-    await Hive.openBox(latestIdBox);
+    // await Hive.openBox(latestIdBox);
   }
 
   void close() {
@@ -31,6 +31,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
     return box.values
         .map(
           (_) => TaskModel(
+            id: _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,
@@ -39,7 +40,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
             endTime: _.endTime,
             color: _.color,
             remind: _.remind,
-            repeat: _.repeat, 
+            repeat: _.repeat,
             place: _.place,
           ),
         )
@@ -47,47 +48,58 @@ class TaskLocalDataSrc implements ITaskDataSrc {
   }
 
   @override
-  void deleteAllTasks() async {
+  Future<List<TaskModel>> deleteAllTasks() async {
     final box = await Hive.openBox<TaskModel>(taskBox);
     await box.clear();
+        return box.values
+        .map(
+          (_) => TaskModel(
+            id: _.id,
+            title: _.title,
+            note: _.note,
+            isCompleted: _.isCompleted,
+            date: _.date,
+            startTime: _.startTime,
+            endTime: _.endTime,
+            color: _.color,
+            remind: _.remind,
+            repeat: _.repeat,
+            place: _.place,
+          ),
+        )
+        .toList();
   }
 
   @override
-  void deleteTask(int id) async {
+  Future<List<TaskModel>> deleteTask(int id) async {
     final box = await Hive.openBox<TaskModel>(taskBox);
     await box.delete(id);
+        return box.values
+        .map(
+          (_) => TaskModel(
+            id: _.id,
+            title: _.title,
+            note: _.note,
+            isCompleted: _.isCompleted,
+            date: _.date,
+            startTime: _.startTime,
+            endTime: _.endTime,
+            color: _.color,
+            remind: _.remind,
+            repeat: _.repeat,
+            place: _.place,
+          ),
+        )
+        .toList();
   }
 
   @override
-  void saveTask(TaskModel task) async {
-    final lastestIdBox = await Hive.openBox(latestIdBox);
-    int latestId = lastestIdBox.get(latestIdName, defaultValue: 0);
-    int newLatestId = latestId + 1;
+  Future<List<TaskModel>> saveTask(TaskModel task) async {
+    // final lastestIdBox = await Hive.openBox(latestIdBox);
+    // int latestId = lastestIdBox.get(latestIdName, defaultValue: 0);
+    // int newLatestId = latestId + 1;
     var taskModel = TaskModel(
-      id: newLatestId,
-      title: task.title,
-      note: task.note,
-      isCompleted: task.isCompleted,
-      date: task.date,
-      startTime: task.startTime,
-      endTime: task.endTime,
-      color: task.color,
-      remind: task.remind,
-      repeat: task.repeat,
-      place: task.place
-    );
-    final box = await Hive.openBox<TaskModel>(taskBox);
-    await box.put(taskModel.id, taskModel);
-    await lastestIdBox.put(lastestIdBox, newLatestId);
-  }
-
-  @override
-  void updateTask(int id, TaskModel task) async {
-    final box = await Hive.openBox<TaskModel>(taskBox);
-
-    box.put(
-      task.id,
-      TaskModel(
+        id: task.id,
         title: task.title,
         note: task.note,
         isCompleted: task.isCompleted,
@@ -97,8 +109,88 @@ class TaskLocalDataSrc implements ITaskDataSrc {
         color: task.color,
         remind: task.remind,
         repeat: task.repeat,
-        place: task.place
-      ),
-    );
+        place: task.place);
+    final box = await Hive.openBox<TaskModel>(taskBox);
+    await box.put(taskModel.id, taskModel);
+        return box.values
+        .map(
+          (_) => TaskModel(
+            id: _.id,
+            title: _.title,
+            note: _.note,
+            isCompleted: _.isCompleted,
+            date: _.date,
+            startTime: _.startTime,
+            endTime: _.endTime,
+            color: _.color,
+            remind: _.remind,
+            repeat: _.repeat,
+            place: _.place,
+          ),
+        )
+        .toList();
+    
   }
+
+  @override
+  Future<List<TaskModel>> updateTask(int id, TaskModel task) async {
+    final box = await Hive.openBox<TaskModel>(taskBox);
+
+    box.put(
+      task.id,
+      TaskModel(
+        id: task.id,
+          title: task.title,
+          note: task.note,
+          isCompleted: task.isCompleted,
+          date: task.date,
+          startTime: task.startTime,
+          endTime: task.endTime,
+          color: task.color,
+          remind: task.remind,
+          repeat: task.repeat,
+          place: task.place),
+    );
+
+        return box.values
+        .map(
+          (_) => TaskModel(
+            id: _.id,
+            title: _.title,
+            note: _.note,
+            isCompleted: _.isCompleted,
+            date: _.date,
+            startTime: _.startTime,
+            endTime: _.endTime,
+            color: _.color,
+            remind: _.remind,
+            repeat: _.repeat,
+            place: _.place,
+          ),
+        )
+        .toList();
+  }
+
+  // @override
+  // Future<List<TaskModel>> addTask(TaskModel task) async {
+  //   final box = await Hive.openBox<TaskModel>(taskBox);
+  //   box.add(task);
+  //   // List<TaskModel> list = box.values
+  //   //     .map(
+  //   //       (_) => TaskModel(
+  //   //         title: _.title,
+  //   //         note: _.note,
+  //   //         isCompleted: _.isCompleted,
+  //   //         date: _.date,
+  //   //         startTime: _.startTime,
+  //   //         endTime: _.endTime,
+  //   //         color: _.color,
+  //   //         remind: _.remind,
+  //   //         repeat: _.repeat,
+  //   //         place: _.place,
+  //   //       ),
+  //   //     )
+  //   //     .toList();
+  //   // return list;
+  // }
 }

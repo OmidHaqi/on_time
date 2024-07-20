@@ -18,5 +18,5 @@ class AppColors {
 }
 
 const String taskBox = 'task_box';
-const String latestIdBox = "latest_id_box";
-const String latestIdName = "_latestId";
+const String latestIdBox = 'latest_id_box';
+const String latestIdName = '_latestId';

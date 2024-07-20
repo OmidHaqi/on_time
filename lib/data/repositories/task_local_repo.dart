@@ -11,17 +11,20 @@ class TaskLocalRepo implements ITaskRepo {
   TaskLocalRepo(this._iTaskDataSrc);
 
   @override
-  void deleteAllTasks() => _iTaskDataSrc.deleteAllTasks();
+  Future<List<TaskModel>> deleteAllTasks() => _iTaskDataSrc.deleteAllTasks();
 
   @override
-  void deleteTask(int id) => _iTaskDataSrc.deleteTask(id);
+  Future<List<TaskModel>> deleteTask(int id) => _iTaskDataSrc.deleteTask(id);
 
   @override
   Future<List<TaskModel>> getAllTasks() => _iTaskDataSrc.getAllTasks();
 
   @override
-  void saveTask(TaskModel task) => _iTaskDataSrc.saveTask(task);
+  Future<List<TaskModel>> saveTask(TaskModel task) => _iTaskDataSrc.saveTask(task);
 
   @override
-  void updateTask(int id, TaskModel task) => _iTaskDataSrc.updateTask(id, task);
+  Future<List<TaskModel>> updateTask(int id, TaskModel task) => _iTaskDataSrc.updateTask(id, task);
+
+  // @override
+  // Future<List<TaskModel>> addTask(TaskModel task) => _iTaskDataSrc.addTask(task);
 }

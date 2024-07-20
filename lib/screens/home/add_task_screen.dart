@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/resource/app_dimens.dart';
 import 'package:on_time/resource/components/text_style.dart';
 import 'package:on_time/resource/utils/extensions.dart';
 import 'package:on_time/resource/widgets/input_feild.dart';
+import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -50,7 +53,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     String day = _selectedDate.day.toPersianNumberInt();
     String month = _selectedDate.month.toPesianMonth();
     String year = _selectedDate.year.toPersianNumberInt();
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -189,19 +191,54 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         SizedBox(
                           height: 50,
                           width: 120,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              'ثبت',
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary),
-                            ),
+                          child: BlocConsumer<HomeBloc, HomeState>(
+                            listener: (context, state) {
+                              if (state is SaveTaskState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(milliseconds: 500),
+                                    content: Text(
+                                      'Add Task',
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              return TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                    Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  BlocProvider.of<HomeBloc>(context).add(
+                                    SaveTaskEvent(
+                                      TaskModel(
+                                          id: 11,
+                                          title: _titleController.text,
+                                          note: _noteController.text,
+                                          isCompleted: 0,
+                                          date: _selectedDate.toString(),
+                                          startTime: _startTime,
+                                          endTime: _endTime,
+                                          color: _selectedColor,
+                                          remind: _selectedRemind,
+                                          repeat: _selectedRepeat,
+                                          place: _placeController.text),
+                                    ),
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'ثبت',
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -292,7 +329,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   getDateFromUser() async {
-
     final Jalali? pickedDate = await showPersianDatePicker(
       context: context,
       initialDate: _selectedDate,
