@@ -43,7 +43,9 @@ void main() async {
             return localizationsBloc;
           },
         ),
-        BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
+        BlocProvider<ThemeBloc>(
+          create: (_) => ThemeBloc(),
+        ),
       ],
       child: const MyApp(),
     ),

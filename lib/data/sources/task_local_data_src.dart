@@ -5,6 +5,7 @@ import 'package:on_time/data/sources/task_data_src.dart';
 import 'package:on_time/resource/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
+
 class TaskLocalDataSrc implements ITaskDataSrc {
   TaskLocalDataSrc._constructor();
 
@@ -16,22 +17,24 @@ class TaskLocalDataSrc implements ITaskDataSrc {
     Directory directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
     Hive.registerAdapter(TaskModelAdapter());
-    await Hive.openBox<TaskModel>(taskBox);
+    await Hive.openBox<TaskModel>(taskBoxName);
+
+    
     // await Hive.openBox(latestIdBox);
   }
 
   void close() {
-    // Closes all Hive boxes
+   // Closes all Hive boxes
     Hive.close();
   }
 
   @override
   Future<List<TaskModel>> getAllTasks() async {
-    final box = await Hive.openBox<TaskModel>(taskBox);
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
     return box.values
         .map(
           (_) => TaskModel(
-            id: _.id,
+            _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,
@@ -49,12 +52,12 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   @override
   Future<List<TaskModel>> deleteAllTasks() async {
-    final box = await Hive.openBox<TaskModel>(taskBox);
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
     await box.clear();
-        return box.values
+    return box.values
         .map(
           (_) => TaskModel(
-            id: _.id,
+            _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,
@@ -72,12 +75,12 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   @override
   Future<List<TaskModel>> deleteTask(int id) async {
-    final box = await Hive.openBox<TaskModel>(taskBox);
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
     await box.delete(id);
-        return box.values
+    return box.values
         .map(
           (_) => TaskModel(
-            id: _.id,
+            _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,
@@ -98,8 +101,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
     // final lastestIdBox = await Hive.openBox(latestIdBox);
     // int latestId = lastestIdBox.get(latestIdName, defaultValue: 0);
     // int newLatestId = latestId + 1;
-    var taskModel = TaskModel(
-        id: task.id,
+    var taskModel = TaskModel(task.id,
         title: task.title,
         note: task.note,
         isCompleted: task.isCompleted,
@@ -110,12 +112,12 @@ class TaskLocalDataSrc implements ITaskDataSrc {
         remind: task.remind,
         repeat: task.repeat,
         place: task.place);
-    final box = await Hive.openBox<TaskModel>(taskBox);
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
     await box.put(taskModel.id, taskModel);
-        return box.values
+    return box.values
         .map(
           (_) => TaskModel(
-            id: _.id,
+            _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,
@@ -129,17 +131,15 @@ class TaskLocalDataSrc implements ITaskDataSrc {
           ),
         )
         .toList();
-    
   }
 
   @override
   Future<List<TaskModel>> updateTask(int id, TaskModel task) async {
-    final box = await Hive.openBox<TaskModel>(taskBox);
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
 
     box.put(
       task.id,
-      TaskModel(
-        id: task.id,
+      TaskModel(task.id,
           title: task.title,
           note: task.note,
           isCompleted: task.isCompleted,
@@ -152,10 +152,10 @@ class TaskLocalDataSrc implements ITaskDataSrc {
           place: task.place),
     );
 
-        return box.values
+    return box.values
         .map(
           (_) => TaskModel(
-            id: _.id,
+            _.id,
             title: _.title,
             note: _.note,
             isCompleted: _.isCompleted,

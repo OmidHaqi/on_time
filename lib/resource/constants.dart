@@ -17,6 +17,4 @@ class AppColors {
   static const Color appOPrimaryLight = Color(0xff161928);
 }
 
-const String taskBox = 'task_box';
-const String latestIdBox = 'latest_id_box';
-const String latestIdName = '_latestId';
+const String taskBoxName = 'task_box';

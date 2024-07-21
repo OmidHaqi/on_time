@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/resource/app_dimens.dart';
@@ -12,6 +13,8 @@ import 'package:on_time/resource/utils/extensions.dart';
 import 'package:on_time/resource/widgets/test_date_picker/date_picker_widget.dart';
 import 'package:on_time/screens/home/add_task_screen.dart';
 import 'package:on_time/screens/home/bloc/home_bloc.dart';
+
+final box = Hive.box<TaskModel>(taskBoxName);
 
 class Plannig extends StatefulWidget {
   const Plannig({
@@ -24,8 +27,10 @@ class Plannig extends StatefulWidget {
 
 class _PlannigState extends State<Plannig> {
   DateTime _selectedDate = DateTime.parse(DateTime.now().toString());
+
   @override
   Widget build(BuildContext context) {
+
     final darkModeOn =
         BlocProvider.of<ThemeBloc>(context).state == ThemeMode.dark;
     String day = _selectedDate.day.toPersianNumberInt();
@@ -80,7 +85,18 @@ class _PlannigState extends State<Plannig> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => const AddTaskScreen()));
+                          builder: (context) => AddTaskScreen(
+                              taskModel: TaskModel(1,
+                                  color: 1,
+                                  date: '',
+                                  endTime: '',
+                                  isCompleted: 1,
+                                  note: '',
+                                  place: '',
+                                  remind: 1,
+                                  repeat: '',
+                                  startTime: '',
+                                  title: ''))));
                 },
                 icon: const Icon(Icons.add_rounded),
               ),
@@ -100,27 +116,27 @@ class _PlannigState extends State<Plannig> {
           builder: (context, state) {
             if (state is HomeLoadedState) {
               return TaskList(
-                list: state.taskList,
+                box: box,
                 darkModeOn: darkModeOn,
               );
             } else if (state is DeleteAllTasksState) {
               return TaskList(
-                list: state.taskList,
+                box: box,
                 darkModeOn: darkModeOn,
               );
             } else if (state is DeleteTaskState) {
               return TaskList(
-                list: state.taskTask,
+                box: box,
                 darkModeOn: darkModeOn,
               );
             } else if (state is SaveTaskState) {
               return TaskList(
-                list: state.taskList,
+                box: box,
                 darkModeOn: darkModeOn,
               );
             } else if (state is UpdateTaskState) {
               return TaskList(
-                list: state.taskList,
+                box: box,
                 darkModeOn: darkModeOn,
               );
             } else if (state is HomeError) {
@@ -142,92 +158,167 @@ class _PlannigState extends State<Plannig> {
 }
 
 class TaskList extends StatelessWidget {
-  final List<TaskModel> list;
   final bool darkModeOn;
+  final Box<TaskModel> box;
   const TaskList({
     super.key,
-    required this.list,
     required this.darkModeOn,
+    required this.box,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: double.infinity,
-        height: 475,
-        child: list.isNotEmpty
-            ? ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (contxt, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(AppDimens.medium),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: AppDimens.small),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        BlocProvider.of<HomeBloc>(context)
-                                            .add(DeleteAllTasksEvent());
-                                        
-                                      },
-                                      child: SizedBox(
-                                        height: 30,
-                                        width: 40,
-                                        child: Icon(
-                                          Icons.delete_outline_rounded,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                        ),
+      width: double.infinity,
+      height: 475,
+      child: ValueListenableBuilder<Box<TaskModel>>(
+        valueListenable: box.listenable(),
+        builder: (context, taskBox, child) {
+          final todoList = taskBox.values.toList();
+
+          if (todoList.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    darkModeOn
+                        ? Assets.images.svg.vcEmptyDark
+                        : Assets.images.svg.vcEmptyLight,
+                    height: 200,
+                  ),
+                  AppDimens.medium.height,
+                  Text(
+                    'امروز برنامه ای نداری',
+                    style: AppTextStyles.emptyTextStyle.copyWith(
+                        background: Paint()
+                          ..strokeJoin = StrokeJoin.round
+                          ..style = PaintingStyle.stroke
+                          ..color = Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(0.1)
+                          ..strokeWidth = 25),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: todoList.length,
+              itemBuilder: (contxt, index) {
+                todoList[index].id = box.keyAt(index);
+                return Padding(
+                  padding: const EdgeInsets.all(AppDimens.medium),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: AppDimens.small),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      BlocProvider.of<HomeBloc>(context)
+                                          .add(DeleteTaskEvent(index));
+                                    },
+                                    child: SizedBox(
+                                      height: 30,
+                                      width: 40,
+                                      child: Icon(
+                                        Icons.delete_outline_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: AppDimens.small),
-                                      child: Text(
-                                        list[index].title,
-                                        style: AppTextStyles.taskTitleTextStyle
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: AppDimens.small),
+                                    child: Text(
+                                      todoList[index].title,
+                                      style: AppTextStyles.taskTitleTextStyle
+                                          .apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Divider(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppDimens.small),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                        text: ' ساعت ',
+                                        style: AppTextStyles
+                                            .taskInfoTitleTextStyle
                                             .apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                        ),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                child: Divider(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: AppDimens.small),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(children: [
+                                      TextSpan(
+                                        text:
+                                            '${todoList[index].startTime.toPersianNumber()} تا ${todoList[index].endTime.toPersianNumber()}',
+                                        style: AppTextStyles.taskInfoTextStyle
+                                            .apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
+                                      )
+                                    ]),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                        text: 'مکان ',
+                                        style: AppTextStyles
+                                            .taskInfoTitleTextStyle
+                                            .apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
+                                      ),
+                                      TextSpan(
+                                        text: todoList[index].place,
+                                        style: AppTextStyles.taskInfoTextStyle
+                                            .apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
+                                      )
+                                    ]),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
                                         TextSpan(
-                                          text: ' ساعت ',
+                                          text: 'یادداشت ',
                                           style: AppTextStyles
                                               .taskInfoTitleTextStyle
                                               .apply(
@@ -236,97 +327,30 @@ class TaskList extends StatelessWidget {
                                                       .onPrimary),
                                         ),
                                         TextSpan(
-                                          text:
-                                              '${list[index].startTime.toPersianNumber()} تا ${list[index].endTime.toPersianNumber()}',
+                                          text: todoList[index].note,
                                           style: AppTextStyles.taskInfoTextStyle
                                               .apply(
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .onPrimary),
                                         )
-                                      ]),
+                                      ],
                                     ),
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                          text: 'مکان ',
-                                          style: AppTextStyles
-                                              .taskInfoTitleTextStyle
-                                              .apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary),
-                                        ),
-                                        TextSpan(
-                                          text: list[index].place,
-                                          style: AppTextStyles.taskInfoTextStyle
-                                              .apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary),
-                                        )
-                                      ]),
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'یادداشت ',
-                                            style: AppTextStyles
-                                                .taskInfoTitleTextStyle
-                                                .apply(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onPrimary),
-                                          ),
-                                          TextSpan(
-                                            text: list[index].note,
-                                            style: AppTextStyles
-                                                .taskInfoTextStyle
-                                                .apply(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onPrimary),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      darkModeOn
-                          ? Assets.images.svg.vcEmptyDark
-                          : Assets.images.svg.vcEmptyLight,
-                      height: 200,
-                    ),
-                    AppDimens.medium.height,
-                    Text(
-                      'امروز برنامه ای نداری',
-                      style: AppTextStyles.emptyTextStyle.copyWith(
-                          background: Paint()
-                            ..strokeJoin = StrokeJoin.round
-                            ..style = PaintingStyle.stroke
-                            ..color = Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.1)
-                            ..strokeWidth = 25),
-                    )
-                  ],
-                ),
-              ));
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 }

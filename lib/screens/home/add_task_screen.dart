@@ -6,10 +6,12 @@ import 'package:on_time/resource/components/text_style.dart';
 import 'package:on_time/resource/utils/extensions.dart';
 import 'package:on_time/resource/widgets/input_feild.dart';
 import 'package:on_time/screens/home/bloc/home_bloc.dart';
+import 'package:on_time/screens/home/plannig.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  final TaskModel taskModel;
+  const AddTaskScreen({super.key, required this.taskModel});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -214,8 +216,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 onPressed: () {
                                   BlocProvider.of<HomeBloc>(context).add(
                                     SaveTaskEvent(
-                                      TaskModel(
-                                          id: 11,
+                                      TaskModel(box.length+1,
                                           title: _titleController.text,
                                           note: _noteController.text,
                                           isCompleted: 0,
@@ -229,6 +230,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     ),
                                   );
                                   Navigator.pop(context);
+
+                                  
                                 },
                                 child: Text(
                                   'ثبت',
