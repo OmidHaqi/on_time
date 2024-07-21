@@ -1,7 +1,4 @@
-import 'package:on_time/data/models/task_model.dart';
-import 'package:on_time/data/repositories/task_repo.dart';
-import 'package:on_time/data/sources/task_data_src.dart';
-import 'package:on_time/data/sources/task_local_data_src.dart';
+part of '../../index.dart';
 
 final taskLocalRepo = TaskLocalRepo(TaskLocalDataSrc());
 

@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:on_time/data/models/language_model.dart';
-import 'package:on_time/generated/l10n.dart';
-import 'package:on_time/resource/app_dimens.dart';
-import 'package:on_time/resource/components/text_style.dart';
-import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
-import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
+part of '../../index.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

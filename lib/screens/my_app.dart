@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:on_time/generated/l10n.dart';
-import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
-import 'package:on_time/resource/themes/themes.dart';
-import 'package:on_time/screens/home/home_page.dart';
-import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
+part of '../index.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

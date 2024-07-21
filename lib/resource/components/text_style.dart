@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of '../../index.dart';
 
 class AppTextStyles {
   AppTextStyles._();

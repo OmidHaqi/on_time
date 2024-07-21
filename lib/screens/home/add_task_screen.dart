@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:on_time/data/models/task_model.dart';
-import 'package:on_time/resource/app_dimens.dart';
-import 'package:on_time/resource/components/text_style.dart';
-import 'package:on_time/resource/utils/extensions.dart';
-import 'package:on_time/resource/widgets/input_feild.dart';
-import 'package:on_time/screens/home/bloc/home_bloc.dart';
-import 'package:on_time/screens/home/plannig.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+part of '../../index.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final TaskModel taskModel;

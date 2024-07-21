@@ -1,18 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:on_time/data/models/task_model.dart';
-import 'package:on_time/gen/assets.gen.dart';
-import 'package:on_time/resource/app_dimens.dart';
-import 'package:on_time/resource/components/text_style.dart';
-import 'package:on_time/resource/constants.dart';
-import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
-import 'package:on_time/resource/utils/extensions.dart';
-import 'package:on_time/resource/widgets/test_date_picker/date_picker_widget.dart';
-import 'package:on_time/screens/home/add_task_screen.dart';
-import 'package:on_time/screens/home/bloc/home_bloc.dart';
+part of '../../index.dart';
 
 final box = Hive.box<TaskModel>(taskBoxName);
 

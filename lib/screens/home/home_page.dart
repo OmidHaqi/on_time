@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:on_time/resource/components/text_style.dart';
-import 'package:on_time/resource/constants.dart';
-import 'package:on_time/resource/widgets/custom_app_bar.dart';
-import 'package:on_time/screens/home/plannig.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+part of '../../index.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

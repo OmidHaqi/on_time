@@ -1,4 +1,4 @@
-import 'package:on_time/data/models/task_model.dart';
+part of '../../index.dart';
 
 abstract class ITaskRepo {
   Future<List<TaskModel>> getAllTasks();

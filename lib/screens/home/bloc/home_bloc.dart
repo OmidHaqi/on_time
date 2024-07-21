@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:on_time/data/models/task_model.dart';
-import 'package:on_time/data/repositories/task_local_repo.dart';
+import '../../../index.dart';
+
 
 part 'home_event.dart';
 part 'home_state.dart';
