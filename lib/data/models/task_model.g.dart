@@ -24,7 +24,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       date: fields[4] as String,
       startTime: fields[5] as String,
       endTime: fields[6] as String,
-      color: fields[7] as int,
+      color: fields[7] as TodoColor,
       remind: fields[8] as int,
       repeat: fields[9] as String,
       place: fields[10] as String,
@@ -66,6 +66,65 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TaskModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class TaskColorAdapter extends TypeAdapter<TodoColor> {
+  @override
+  final int typeId = 1;
+
+  @override
+  TodoColor read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return TodoColor.one;
+      case 1:
+        return TodoColor.two;
+      case 2:
+        return TodoColor.three;
+      case 3:
+        return TodoColor.four;
+      case 4:
+        return TodoColor.five;
+      case 5:
+        return TodoColor.six;
+      default:
+        return TodoColor.one;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, TodoColor obj) {
+    switch (obj) {
+      case TodoColor.one:
+        writer.writeByte(0);
+        break;
+      case TodoColor.two:
+        writer.writeByte(1);
+        break;
+      case TodoColor.three:
+        writer.writeByte(2);
+        break;
+      case TodoColor.four:
+        writer.writeByte(3);
+        break;
+      case TodoColor.five:
+        writer.writeByte(4);
+        break;
+      case TodoColor.six:
+        writer.writeByte(5);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TaskColorAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

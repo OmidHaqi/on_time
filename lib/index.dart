@@ -35,4 +35,5 @@ part 'data/repositories/task_repo.dart';
 part 'data/repositories/task_local_repo.dart';
 part 'data/sources/task_data_src.dart';
 part 'data/sources/task_local_data_src.dart';
+part 'resource/widgets/color_item.dart';
 
