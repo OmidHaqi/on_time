@@ -1,8 +1,7 @@
 part of '../../index.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final TaskModel taskModel;
-  const AddTaskScreen({super.key, required this.taskModel});
+  const AddTaskScreen({super.key});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -207,22 +206,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 onPressed: () {
                                   BlocProvider.of<HomeBloc>(context).add(
                                     SaveTaskEvent(
-                                      TaskModel(box.length+1,
-                                          title: _titleController.text,
-                                          note: _noteController.text,
-                                          isCompleted: 0,
-                                          date: _selectedDate.toString(),
-                                          startTime: _startTime,
-                                          endTime: _endTime,
-                                          color: _selectedColor,
-                                          remind: _selectedRemind,
-                                          repeat: _selectedRepeat,
-                                          place: _placeController.text),
+                                      TaskModel(
+                                        id: box.length,
+                                        title: _titleController.text,
+                                        note: _noteController.text,
+                                        place: _placeController.text,
+                                        isCompleted: 0,
+                                        date: _selectedDate.toString(),
+                                        startTime: _startTime,
+                                        endTime: _endTime,
+                                        color: _selectedColor,
+                                        remind: _selectedRemind,
+                                        repeat: _selectedRepeat,
+                                      ),
                                     ),
                                   );
                                   Navigator.pop(context);
-
-                                  
                                 },
                                 child: Text(
                                   'ثبت',

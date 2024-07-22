@@ -5,7 +5,7 @@ part 'task_model.g.dart';
 @HiveType(typeId: 0)
 class TaskModel extends HiveObject {
   @HiveField(0)
-  int id = -1;
+  int id;
 
   @HiveField(1)
   String title;
@@ -38,7 +38,7 @@ class TaskModel extends HiveObject {
   String place;
 
   TaskModel(
-      this.id,{
+      {required this.id,
       required this.title,
       required this.note,
       required this.isCompleted,
@@ -52,7 +52,7 @@ class TaskModel extends HiveObject {
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-         json['id'],
+        id: json['id'],
         title: json['title'],
         note: json['note'],
         isCompleted: json['isCompleted'],

@@ -15,6 +15,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    TaskLocalDataSrc taskLocalDataSrc = TaskLocalDataSrc();
+    taskLocalDataSrc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     int selectedScreen = selectedPageIndex;
@@ -105,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               index: selectedPageIndex,
               children: const [
-                Plannig(),
+                Tasks(),
                 Text('Note'),
               ],
             ),

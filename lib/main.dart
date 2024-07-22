@@ -1,6 +1,12 @@
-part of 'index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:on_time/index.dart';
+import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
+import 'package:on_time/screens/home/bloc/home_bloc.dart';
+import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 
-void main() async {
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   TaskLocalDataSrc taskLocalDataSrc = TaskLocalDataSrc();

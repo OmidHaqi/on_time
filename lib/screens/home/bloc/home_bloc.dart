@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:on_time/data/models/task_model.dart';
 import '../../../index.dart';
 
-
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -26,12 +25,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             emit(HomeError());
           }
         } else if (event is DeleteTaskEvent) {
-          emit(HomeLoadingState());
-          await taskRepo.deleteTask(event.id).then(
-                (val) => emit(
-                  DeleteTaskState(val),
-                ),
-              );
+          try {
+            emit(HomeLoadingState());
+            await taskRepo.deleteTask(event.id).then(
+                  (val) => emit(
+                    DeleteTaskState(val),
+                  ),
+                );
+          } catch (e) {
+
+            emit(HomeError());
+            
+          }
         } else if (event is DeleteAllTasksEvent) {
           emit(HomeLoadingState());
           await taskRepo.deleteAllTasks().then(
