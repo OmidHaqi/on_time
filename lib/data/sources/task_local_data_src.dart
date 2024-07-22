@@ -9,8 +9,11 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   Future<void> initialize() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    Hive.init(directory.path);
-    Hive.registerAdapter(TaskModelAdapter());
+
+    Hive
+      ..init(directory.path)
+      ..registerAdapter(TaskModelAdapter())
+      ..registerAdapter(TaskColorAdapter());
     await Hive.openBox<TaskModel>(taskBoxName);
 
     // await Hive.openBox(latestIdBox);

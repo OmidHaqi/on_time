@@ -3,10 +3,12 @@ part of '../../index.dart';
 class TaskList extends StatelessWidget {
   final bool darkModeOn;
   final Box<TaskModel> box;
+  final int colorCode;
   const TaskList({
     super.key,
     required this.darkModeOn,
     required this.box,
+    required this.colorCode,
   });
 
   @override
@@ -57,8 +59,9 @@ class TaskList extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10)),
+                          color: Color(todoList[index].color.code),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -69,20 +72,71 @@ class TaskList extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      BlocProvider.of<HomeBloc>(context)
-                                          .add(DeleteTaskEvent(index));
-                                    },
-                                    child: SizedBox(
-                                      height: 30,
-                                      width: 40,
-                                      child: Icon(
-                                        Icons.delete_outline_rounded,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: AppDimens.small),
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    AddTaskScreen(
+                                                  taskModel: TaskModel(
+                                                      id: todoList[index].id,
+                                                      title:
+                                                          todoList[index].title,
+                                                      note:
+                                                          todoList[index].note,
+                                                      isCompleted:
+                                                          todoList[index]
+                                                              .isCompleted,
+                                                      date:
+                                                          todoList[index].date,
+                                                      startTime: todoList[index]
+                                                          .startTime,
+                                                      endTime: todoList[index]
+                                                          .endTime,
+                                                      color:
+                                                          todoList[index].color,
+                                                      remind: todoList[index]
+                                                          .remind,
+                                                      repeat: todoList[index]
+                                                          .repeat,
+                                                      place: todoList[index]
+                                                          .place),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: SizedBox(
+                                            height: 30,
+                                            child: Icon(
+                                              Icons.edit_note_rounded,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            BlocProvider.of<HomeBloc>(context)
+                                                .add(DeleteTaskEvent(index));
+                                          },
+                                          child: SizedBox(
+                                            height: 30,
+                                            child: Icon(
+                                              Icons.delete_outline_rounded,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Padding(

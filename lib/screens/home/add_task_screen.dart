@@ -1,7 +1,8 @@
 part of '../../index.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  final TaskModel taskModel;
+  const AddTaskScreen({super.key, required this.taskModel});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -10,17 +11,9 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   Jalali _selectedDate = Jalali.now();
 
-  final TextEditingController _titleController = TextEditingController();
+  String _startTime = "8:30";
 
-  final TextEditingController _noteController = TextEditingController();
-
-  final TextEditingController _placeController = TextEditingController();
-
-  String _startTime = "8:30 AM";
-
-  String _endTime = "9:30 AM";
-
-  int _selectedColor = 0;
+  String _endTime = "9:30";
 
   int _selectedRemind = 5;
 
@@ -42,6 +35,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var taskList = widget.taskModel;
+    _selectedColor = taskList.color;
+    final TextEditingController titleController =
+        TextEditingController(text: taskList.title);
+    final TextEditingController noteController =
+        TextEditingController(text: taskList.note);
+    final TextEditingController placeController =
+        TextEditingController(text: taskList.place);
+
     String day = _selectedDate.day.toPersianNumberInt();
     String month = _selectedDate.month.toPesianMonth();
     String year = _selectedDate.year.toPersianNumberInt();
@@ -66,19 +68,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   InputField(
                     title: "عنوان",
                     hint: "عنوان خود را اینجا وارد کنید",
-                    controller: _titleController,
+                    controller: titleController,
                     suffixIcon: const Icon(Icons.title),
                   ),
                   InputField(
                     title: "یادداشت",
                     hint: "یادداشت خود را در اینجا وارد کنید",
-                    controller: _noteController,
+                    controller: noteController,
                     suffixIcon: const Icon(Icons.note),
                   ),
                   InputField(
                     title: "مکان",
                     hint: "اسم جایی که میخای بری چیه؟",
-                    controller: _placeController,
+                    controller: placeController,
                     suffixIcon: const Icon(Icons.pin_drop_rounded),
                   ),
                   InputField(
@@ -175,64 +177,139 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(AppDimens.small),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        colorChips(),
-                        SizedBox(
-                          height: 50,
-                          width: 120,
-                          child: BlocConsumer<HomeBloc, HomeState>(
-                            listener: (context, state) {
-                              if (state is SaveTaskState) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(milliseconds: 500),
-                                    content: Text(
-                                      'Add Task',
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            builder: (context, state) {
-                              return TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Theme.of(context).colorScheme.primary,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  BlocProvider.of<HomeBloc>(context).add(
-                                    SaveTaskEvent(
-                                      TaskModel(
-                                        id: box.length,
-                                        title: _titleController.text,
-                                        note: _noteController.text,
-                                        place: _placeController.text,
-                                        isCompleted: 0,
-                                        date: _selectedDate.toString(),
-                                        startTime: _startTime,
-                                        endTime: _endTime,
-                                        color: _selectedColor,
-                                        remind: _selectedRemind,
-                                        repeat: _selectedRepeat,
+                        const TodoColorSelector(),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 50,
+                              width: 120,
+                              child: BlocConsumer<HomeBloc, HomeState>(
+                                listener: (context, state) {
+                                  if (state is SaveTaskState) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        duration: Duration(milliseconds: 500),
+                                        content: Text(
+                                          'Add Task',
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStatePropertyAll(
+                                        Theme.of(context).colorScheme.primary,
                                       ),
                                     ),
+                                    onPressed: () {
+                                      if (titleController.text.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                "please complete all the fields"),
+                                          ),
+                                        );
+                                      } else {
+                                        if (taskList.isInBox) {
+                                          BlocProvider.of<HomeBloc>(context)
+                                              .add(
+                                            SaveTaskEvent(
+                                              TaskModel(
+                                                id: box.length,
+                                                title: titleController.text,
+                                                note: noteController.text,
+                                                place: placeController.text,
+                                                isCompleted: 0,
+                                                date: _selectedDate.toString(),
+                                                startTime: _startTime,
+                                                endTime: _endTime,
+                                                color: _selectedColor,
+                                                remind: _selectedRemind,
+                                                repeat: _selectedRepeat,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          BlocProvider.of<HomeBloc>(context)
+                                              .add(UpdateTaskEvent(
+                                                  TaskModel(
+                                                    id: taskList.id,
+                                                    title: titleController.text,
+                                                    note: noteController.text,
+                                                    place: placeController.text,
+                                                    isCompleted: 0,
+                                                    date: _selectedDate
+                                                        .toString(),
+                                                    startTime: _startTime,
+                                                    endTime: _endTime,
+                                                    color: _selectedColor,
+                                                    remind: _selectedRemind,
+                                                    repeat: _selectedRepeat,
+                                                  ),
+                                                  taskList.id));
+                                        }
+
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: Text(
+                                      'ثبت',
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                    ),
                                   );
-                                  Navigator.pop(context);
                                 },
-                                child: Text(
-                                  'ثبت',
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
-                                ),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: 120,
+                              child: BlocConsumer<HomeBloc, HomeState>(
+                                listener: (context, state) {
+                                  if (state is SaveTaskState) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        duration: Duration(milliseconds: 500),
+                                        content: Text(
+                                          'Add Task',
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStatePropertyAll(
+                                        Theme.of(context).colorScheme.primary,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'بیخیال',
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -247,51 +324,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       ),
     );
-  }
-
-  colorChips() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        "رنگ",
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      Wrap(
-        children: List<Widget>.generate(
-          3,
-          (int index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedColor = index;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(
-                  radius: 14,
-                  backgroundColor: index == 0
-                      ? Theme.of(context).colorScheme.primary
-                      : index == 1
-                          ? Colors.pink
-                          : Colors.yellow,
-                  child: index == _selectedColor
-                      ? const Center(
-                          child: Icon(
-                            Icons.done,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        )
-                      : Container(),
-                ),
-              ),
-            );
-          },
-        ).toList(),
-      ),
-    ]);
   }
 
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
@@ -333,5 +365,48 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         _selectedDate = pickedDate;
       });
     }
+  }
+}
+
+TodoColor _selectedColor = TodoColor.one;
+
+class TodoColorSelector extends StatefulWidget {
+  const TodoColorSelector({super.key});
+
+  @override
+  State<TodoColorSelector> createState() => _TodoColorSelectorState();
+}
+
+class _TodoColorSelectorState extends State<TodoColorSelector> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.one),
+            isSelected: _selectedColor == TodoColor.one,
+            colorCode: TodoColor.one.code),
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.two),
+            isSelected: _selectedColor == TodoColor.two,
+            colorCode: TodoColor.two.code),
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.three),
+            isSelected: _selectedColor == TodoColor.three,
+            colorCode: TodoColor.three.code),
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.four),
+            isSelected: _selectedColor == TodoColor.four,
+            colorCode: TodoColor.four.code),
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.five),
+            isSelected: _selectedColor == TodoColor.five,
+            colorCode: TodoColor.five.code),
+        ColorItem(
+            onTap: () => setState(() => _selectedColor = TodoColor.six),
+            isSelected: _selectedColor == TodoColor.six,
+            colorCode: TodoColor.six.code),
+      ],
+    );
   }
 }

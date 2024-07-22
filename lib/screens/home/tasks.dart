@@ -68,9 +68,24 @@ class _TasksState extends State<Tasks> {
                 iconSize: 35,
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => AddTaskScreen()));
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => AddTaskScreen(
+                        taskModel: TaskModel(
+                            id: 0,
+                            title: '',
+                            note: '',
+                            isCompleted: 0,
+                            date: '',
+                            startTime: '',
+                            endTime: '',
+                            color: TodoColor.one,
+                            remind: 0,
+                            repeat: '',
+                            place: ''),
+                      ),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.add_rounded),
               ),
@@ -109,27 +124,28 @@ class _TasksState extends State<Tasks> {
               return TaskList(
                 box: box,
                 darkModeOn: darkModeOn,
+                colorCode: _selectedColor.code,
               );
             } else if (state is DeleteAllTasksState) {
               return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-              );
+                  box: box,
+                  darkModeOn: darkModeOn,
+                  colorCode: _selectedColor.code);
             } else if (state is DeleteTaskState) {
               return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-              );
+                  box: box,
+                  darkModeOn: darkModeOn,
+                  colorCode: _selectedColor.code);
             } else if (state is SaveTaskState) {
               return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-              );
+                  box: box,
+                  darkModeOn: darkModeOn,
+                  colorCode: _selectedColor.code);
             } else if (state is UpdateTaskState) {
               return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-              );
+                  box: box,
+                  darkModeOn: darkModeOn,
+                  colorCode: _selectedColor.code);
             } else if (state is HomeError) {
               return const Text('ERROR');
             } else if (state is HomeLoadingState) {
