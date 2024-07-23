@@ -9,7 +9,7 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  Jalali _selectedDate = Jalali.now();
+  DateTime _selectedDate = DateTime.now();
 
   String _startTime = "8:30";
 
@@ -228,8 +228,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                       place:
                                                           placeController.text,
                                                       isCompleted: 0,
-                                                      date: _selectedDate
-                                                          .toString(),
+                                                      date: _selectedDate,
                                                       startTime: _startTime,
                                                       endTime: _endTime,
                                                       color: _selectedColor,
@@ -247,8 +246,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                   note: noteController.text,
                                                   place: placeController.text,
                                                   isCompleted: 0,
-                                                  date:
-                                                      _selectedDate.toString(),
+                                                  date: _selectedDate,
                                                   startTime: _startTime,
                                                   endTime: _endTime,
                                                   color: _selectedColor,
@@ -278,39 +276,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             Expanded(
                               child: SizedBox(
                                 height: 50,
-                                child: BlocConsumer<HomeBloc, HomeState>(
-                                  listener: (context, state) {
-                                    if (state is SaveTaskState) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          duration: Duration(milliseconds: 500),
-                                          content: Text(
-                                            'Add Task',
-                                          ),
-                                        ),
-                                      );
-                                    }
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(
+                                      Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
                                   },
-                                  builder: (context, state) {
-                                    return TextButton(
-                                      style: ButtonStyle(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                          Theme.of(context).colorScheme.primary,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text(
-                                        'بیخیال',
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary),
-                                      ),
-                                    );
-                                  },
+                                  child: Text(
+                                    'بیخیال',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
+                                  ),
                                 ),
                               ),
                             ),
@@ -331,40 +312,42 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
   getTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await _showTimePicker();
-
-    String formatedTime = pickedTime.format(context);
-    if (pickedTime == null) {
-    } else if (isStartTime) {
+    var _pickedTime = await _showTimePicker();
+    print(_pickedTime.format(context));
+    String _formatedTime = _pickedTime.format(context);
+    print(_formatedTime);
+    if (_pickedTime == null)
+      print("time canceld");
+    else if (isStartTime)
       setState(() {
-        _startTime = formatedTime;
+        _startTime = _formatedTime;
       });
-    } else if (!isStartTime) {
+    else if (!isStartTime) {
       setState(() {
-        _endTime = formatedTime;
+        _endTime = _formatedTime;
       });
       //_compareTime();
     }
   }
 
   _showTimePicker() async {
-    return showPersianTimePicker(
+    return showTimePicker(
+      initialTime: TimeOfDay(hour: 8, minute: 30),
+      initialEntryMode: TimePickerEntryMode.input,
       context: context,
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      initialEntryMode: PTimePickerEntryMode.input,
     );
   }
 
   getDateFromUser() async {
-    final Jalali? pickedDate = await showPersianDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: Jalali(1310),
-      lastDate: Jalali(1500),
-    );
-    if (pickedDate != null) {
+    final DateTime? _pickedDate = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2101));
+    if (_pickedDate != null) {
       setState(() {
-        _selectedDate = pickedDate;
+        _selectedDate = _pickedDate;
       });
     }
   }

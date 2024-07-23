@@ -40,6 +40,7 @@ class AppTextStyles {
   static const TextStyle dateTimeTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 24,
+    
   );
 
   static const TextStyle appTopText = TextStyle(

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'theme_event.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeMode> {
-  ThemeBloc() : super(ThemeMode.system) {
+  ThemeBloc() : super(ThemeMode.light) {
     on<ThemeChanged>(_onThemeChanged);
     on<LoadTheme>(_onLoadTheme);
     add(LoadTheme()); // Load the theme when the bloc is created
