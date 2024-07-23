@@ -1,16 +1,23 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
 import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  TaskLocalDataSrc taskLocalDataSrc = TaskLocalDataSrc();
-  taskLocalDataSrc.initialize();
+  Directory directory = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(directory.path)
+    ..registerAdapter(TaskModelAdapter())
+    ..registerAdapter(TaskColorAdapter());
+  await Hive.openBox<TaskModel>(taskBoxName);
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
