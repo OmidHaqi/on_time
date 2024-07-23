@@ -60,10 +60,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         body: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.medium),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InputField(
                     title: "عنوان",
@@ -172,150 +172,152 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 18.0,
-                  ),
+                  AppDimens.medium.height,
                   Padding(
                     padding: const EdgeInsets.all(AppDimens.small),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const TodoColorSelector(),
+                        (AppDimens.large * 7.85).height,
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: 50,
-                              width: 120,
-                              child: BlocConsumer<HomeBloc, HomeState>(
-                                listener: (context, state) {
-                                  if (state is SaveTaskState) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        duration: Duration(milliseconds: 500),
-                                        content: Text(
-                                          'Add Task',
+                            Expanded(
+                              child: SizedBox(
+                                height: 50,
+                                child: BlocConsumer<HomeBloc, HomeState>(
+                                  listener: (context, state) {
+                                    if (state is SaveTaskState) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          duration: Duration(milliseconds: 500),
+                                          content: Text(
+                                            'Add Task',
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    return TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                          Theme.of(context).colorScheme.primary,
                                         ),
                                       ),
-                                    );
-                                  }
-                                },
-                                builder: (context, state) {
-                                  return TextButton(
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                        Theme.of(context).colorScheme.primary,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (titleController.text.isEmpty) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                "please complete all the fields"),
-                                          ),
-                                        );
-                                      } else {
-                                        if (taskList.isInBox) {
-                                          BlocProvider.of<HomeBloc>(context)
-                                              .add(
-                                            SaveTaskEvent(
-                                              TaskModel(
-                                                id: box.length,
-                                                title: titleController.text,
-                                                note: noteController.text,
-                                                place: placeController.text,
-                                                isCompleted: 0,
-                                                date: _selectedDate.toString(),
-                                                startTime: _startTime,
-                                                endTime: _endTime,
-                                                color: _selectedColor,
-                                                remind: _selectedRemind,
-                                                repeat: _selectedRepeat,
-                                              ),
+                                      onPressed: () {
+                                        if (titleController.text.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  "please complete all the fields"),
                                             ),
                                           );
                                         } else {
-                                          BlocProvider.of<HomeBloc>(context)
-                                              .add(UpdateTaskEvent(
-                                                  TaskModel(
-                                                    id: taskList.id,
-                                                    title: titleController.text,
-                                                    note: noteController.text,
-                                                    place: placeController.text,
-                                                    isCompleted: 0,
-                                                    date: _selectedDate
-                                                        .toString(),
-                                                    startTime: _startTime,
-                                                    endTime: _endTime,
-                                                    color: _selectedColor,
-                                                    remind: _selectedRemind,
-                                                    repeat: _selectedRepeat,
-                                                  ),
-                                                  taskList.id));
-                                        }
+                                          if (taskList.isInBox) {
+                                            BlocProvider.of<HomeBloc>(context)
+                                                .add(UpdateTaskEvent(
+                                                    TaskModel(
+                                                      id: taskList.id,
+                                                      title:
+                                                          titleController.text,
+                                                      note: noteController.text,
+                                                      place:
+                                                          placeController.text,
+                                                      isCompleted: 0,
+                                                      date: _selectedDate
+                                                          .toString(),
+                                                      startTime: _startTime,
+                                                      endTime: _endTime,
+                                                      color: _selectedColor,
+                                                      remind: _selectedRemind,
+                                                      repeat: _selectedRepeat,
+                                                    ),
+                                                    taskList.id));
+                                          } else {
+                                            BlocProvider.of<HomeBloc>(context)
+                                                .add(
+                                              SaveTaskEvent(
+                                                TaskModel(
+                                                  id: box.length,
+                                                  title: titleController.text,
+                                                  note: noteController.text,
+                                                  place: placeController.text,
+                                                  isCompleted: 0,
+                                                  date:
+                                                      _selectedDate.toString(),
+                                                  startTime: _startTime,
+                                                  endTime: _endTime,
+                                                  color: _selectedColor,
+                                                  remind: _selectedRemind,
+                                                  repeat: _selectedRepeat,
+                                                ),
+                                              ),
+                                            );
+                                          }
 
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    child: Text(
-                                      'ثبت',
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              height: 50,
-                              width: 120,
-                              child: BlocConsumer<HomeBloc, HomeState>(
-                                listener: (context, state) {
-                                  if (state is SaveTaskState) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        duration: Duration(milliseconds: 500),
-                                        content: Text(
-                                          'Add Task',
-                                        ),
+                                          Navigator.pop(context);
+                                        }
+                                      },
+                                      child: Text(
+                                        'ثبت',
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary),
                                       ),
                                     );
-                                  }
-                                },
-                                builder: (context, state) {
-                                  return TextButton(
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                        Theme.of(context).colorScheme.primary,
+                                  },
+                                ),
+                              ),
+                            ),
+                            AppDimens.small.width,
+                            Expanded(
+                              child: SizedBox(
+                                height: 50,
+                                child: BlocConsumer<HomeBloc, HomeState>(
+                                  listener: (context, state) {
+                                    if (state is SaveTaskState) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          duration: Duration(milliseconds: 500),
+                                          content: Text(
+                                            'Add Task',
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    return TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                          Theme.of(context).colorScheme.primary,
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                      'بیخیال',
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary),
-                                    ),
-                                  );
-                                },
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'بیخیال',
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30.0,
                   ),
                 ],
               ),
@@ -365,48 +367,5 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         _selectedDate = pickedDate;
       });
     }
-  }
-}
-
-TodoColor _selectedColor = TodoColor.one;
-
-class TodoColorSelector extends StatefulWidget {
-  const TodoColorSelector({super.key});
-
-  @override
-  State<TodoColorSelector> createState() => _TodoColorSelectorState();
-}
-
-class _TodoColorSelectorState extends State<TodoColorSelector> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.one),
-            isSelected: _selectedColor == TodoColor.one,
-            colorCode: TodoColor.one.code),
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.two),
-            isSelected: _selectedColor == TodoColor.two,
-            colorCode: TodoColor.two.code),
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.three),
-            isSelected: _selectedColor == TodoColor.three,
-            colorCode: TodoColor.three.code),
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.four),
-            isSelected: _selectedColor == TodoColor.four,
-            colorCode: TodoColor.four.code),
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.five),
-            isSelected: _selectedColor == TodoColor.five,
-            colorCode: TodoColor.five.code),
-        ColorItem(
-            onTap: () => setState(() => _selectedColor = TodoColor.six),
-            isSelected: _selectedColor == TodoColor.six,
-            colorCode: TodoColor.six.code),
-      ],
-    );
   }
 }
