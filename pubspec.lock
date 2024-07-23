@@ -541,6 +541,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.7.0"
+  persian_horizontal_date_picker:
+    dependency: "direct main"
+    description:
+      name: persian_horizontal_date_picker
+      sha256: "19efd0e64e58bc861789687b8d65262c8a3b68658069e5e7b2d6f74ee11e057e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7"
   petitparser:
     dependency: transitive
     description:
@@ -597,6 +605,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  scroll_to_index:
+    dependency: transitive
+    description:
+      name: scroll_to_index
+      sha256: b707546e7500d9f070d63e5acf74fd437ec7eeeb68d3412ef7b0afada0b4f176
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
+  shamsi_date:
+    dependency: transitive
+    description:
+      name: shamsi_date
+      sha256: "19020ef0a001db3eabcec8657f8aa10b93b3746641d9eca64db9a41e6506645c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   shared_preferences:
     dependency: "direct main"
     description:

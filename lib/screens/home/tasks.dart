@@ -16,11 +16,20 @@ class _TasksState extends State<Tasks> {
 
   @override
   Widget build(BuildContext context) {
+    final todoList = box.values.toList();
+
+    final taskDates = todoList
+        .map((task) {
+          return DateTime(task.date.year, task.date.month, task.date.day);
+        })
+        .toSet()
+        .toList();
+
     final darkModeOn =
         BlocProvider.of<ThemeBloc>(context).state == ThemeMode.dark;
-    String day = _selectedDate.day.toPersianNumberInt();
-    String month = _selectedDate.month.toPersianNumberInt();
-    String year = _selectedDate.year.toPersianNumberInt();
+    String day = _selectedDate.toJalali().day.toPersianNumberInt();
+    String month = _selectedDate.toJalali().month.toPesianMonth();
+    String year = _selectedDate.toJalali().year.toPersianNumberInt();
     return Column(
       children: [
         Container(
@@ -32,30 +41,24 @@ class _TasksState extends State<Tasks> {
             textDirection: TextDirection.rtl,
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(AppDimens.small),
-          child: DatePicker(
-            DateTime.now(),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: PersianHorizontalDatePicker(
+            markedDotColor: Theme.of(context).colorScheme.onSurface,
+            markedDates: taskDates,
+            hasSelectedItemShadow: false,
             initialSelectedDate: DateTime.now(),
-            calendarType: CalendarType.persianDate,
-            height: 90,
-            dateTextStyle: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
-            ),
-            dayTextStyle: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
-            monthTextStyle:
-                TextStyle(color: Theme.of(context).colorScheme.onSurface),
-            daysCount: 30,
-            selectedTextColor: Colors.green,
-            directionality: TextDirection.ltr,
-            onDateChange: (date) {
+            datePickerHeight: 90,
+            startDate: DateTime.now(),
+            endDate: DateTime.now().add(const Duration(days: 30)),
+            backgroundColor: Colors.transparent,
+            textColor: Theme.of(context).colorScheme.onSurface,
+            selectedTextColor: Theme.of(context).colorScheme.surface,
+            selectedBackgroundColor: Theme.of(context).colorScheme.onSurface,
+            onDateSelected: (date) {
               setState(() {
-                _selectedDate = date;
+                _selectedDate = date!;
               });
-
-              // New date selected
             },
           ),
         ),
@@ -63,7 +66,7 @@ class _TasksState extends State<Tasks> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.all(AppDimens.medium),
+              padding: const EdgeInsets.symmetric(horizontal: AppDimens.medium),
               child: IconButton.filled(
                 iconSize: 35,
                 onPressed: () {
@@ -76,7 +79,7 @@ class _TasksState extends State<Tasks> {
                             title: '',
                             note: '',
                             isCompleted: 0,
-                            date: '',
+                            date: DateTime.now(),
                             startTime: '',
                             endTime: '',
                             color: TodoColor.one,
@@ -125,27 +128,36 @@ class _TasksState extends State<Tasks> {
                 box: box,
                 darkModeOn: darkModeOn,
                 colorCode: _selectedColor.code,
+                selectedDate: _selectedDate,
               );
             } else if (state is DeleteAllTasksState) {
               return TaskList(
-                  box: box,
-                  darkModeOn: darkModeOn,
-                  colorCode: _selectedColor.code);
+                box: box,
+                darkModeOn: darkModeOn,
+                colorCode: _selectedColor.code,
+                selectedDate: _selectedDate,
+              );
             } else if (state is DeleteTaskState) {
               return TaskList(
-                  box: box,
-                  darkModeOn: darkModeOn,
-                  colorCode: _selectedColor.code);
+                box: box,
+                darkModeOn: darkModeOn,
+                colorCode: _selectedColor.code,
+                selectedDate: _selectedDate,
+              );
             } else if (state is SaveTaskState) {
               return TaskList(
-                  box: box,
-                  darkModeOn: darkModeOn,
-                  colorCode: _selectedColor.code);
+                box: box,
+                darkModeOn: darkModeOn,
+                colorCode: _selectedColor.code,
+                selectedDate: _selectedDate,
+              );
             } else if (state is UpdateTaskState) {
               return TaskList(
-                  box: box,
-                  darkModeOn: darkModeOn,
-                  colorCode: _selectedColor.code);
+                box: box,
+                darkModeOn: darkModeOn,
+                colorCode: _selectedColor.code,
+                selectedDate: _selectedDate,
+              );
             } else if (state is HomeError) {
               return const Text('ERROR');
             } else if (state is HomeLoadingState) {
