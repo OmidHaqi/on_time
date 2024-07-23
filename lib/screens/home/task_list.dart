@@ -53,194 +53,229 @@ class TaskList extends StatelessWidget {
               itemCount: todoList.length,
               itemBuilder: (contxt, index) {
                 todoList[index].id = index;
-                return Padding(
-                  padding: const EdgeInsets.all(AppDimens.medium),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(todoList[index].color.code),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 500),
+                  child: SlideAnimation(
+                    horizontalOffset: 60.0,
+                    child: FadeInAnimation(
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppDimens.medium),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: AppDimens.small),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: AppDimens.small),
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder: (context) =>
-                                                    AddTaskScreen(
-                                                  taskModel: TaskModel(
-                                                      id: todoList[index].id,
-                                                      title:
-                                                          todoList[index].title,
-                                                      note:
-                                                          todoList[index].note,
-                                                      isCompleted:
-                                                          todoList[index]
-                                                              .isCompleted,
-                                                      date:
-                                                          todoList[index].date,
-                                                      startTime: todoList[index]
-                                                          .startTime,
-                                                      endTime: todoList[index]
-                                                          .endTime,
-                                                      color:
-                                                          todoList[index].color,
-                                                      remind: todoList[index]
-                                                          .remind,
-                                                      repeat: todoList[index]
-                                                          .repeat,
-                                                      place: todoList[index]
-                                                          .place),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: SizedBox(
-                                            height: 30,
-                                            child: Icon(
-                                              Icons.edit_note_rounded,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimary,
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            BlocProvider.of<HomeBloc>(context)
-                                                .add(DeleteTaskEvent(index));
-                                          },
-                                          child: SizedBox(
-                                            height: 30,
-                                            child: Icon(
-                                              Icons.delete_outline_rounded,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimary,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: AppDimens.small),
-                                    child: Text(
-                                      todoList[index].title,
-                                      style: AppTextStyles.taskTitleTextStyle
-                                          .apply(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface),
+                                color: Color(todoList[index].color.code),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Divider(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppDimens.small),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                        text: ' ساعت ',
-                                        style: AppTextStyles
-                                            .taskInfoTitleTextStyle
-                                            .apply(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            '${todoList[index].startTime.toPersianNumber()} تا ${todoList[index].endTime.toPersianNumber()}',
-                                        style: AppTextStyles.taskInfoTextStyle
-                                            .apply(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
-                                      )
-                                    ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                        text: 'مکان ',
-                                        style: AppTextStyles
-                                            .taskInfoTitleTextStyle
-                                            .apply(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
-                                      ),
-                                      TextSpan(
-                                        text: todoList[index].place,
-                                        style: AppTextStyles.taskInfoTextStyle
-                                            .apply(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
-                                      )
-                                    ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: AppDimens.small),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TextSpan(
-                                          text: 'یادداشت ',
-                                          style: AppTextStyles
-                                              .taskInfoTitleTextStyle
-                                              .apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: AppDimens.small),
+                                          child: Row(
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    CupertinoPageRoute(
+                                                      builder: (context) =>
+                                                          AddTaskScreen(
+                                                        taskModel: TaskModel(
+                                                            id: todoList[index]
+                                                                .id,
+                                                            title: todoList[index]
+                                                                .title,
+                                                            note: todoList[index]
+                                                                .note,
+                                                            isCompleted:
+                                                                todoList[index]
+                                                                    .isCompleted,
+                                                            date: todoList[index]
+                                                                .date,
+                                                            startTime:
+                                                                todoList[index]
+                                                                    .startTime,
+                                                            endTime:
+                                                                todoList[index]
+                                                                    .endTime,
+                                                            color:
+                                                                todoList[index]
+                                                                    .color,
+                                                            remind:
+                                                                todoList[index]
+                                                                    .remind,
+                                                            repeat:
+                                                                todoList[index]
+                                                                    .repeat,
+                                                            place:
+                                                                todoList[index]
+                                                                    .place),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: const SizedBox(
+                                                  height: 30,
+                                                  child: Icon(
+                                                    Icons.edit_note_rounded,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
+                                                  ),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  BlocProvider.of<HomeBloc>(
+                                                          context)
+                                                      .add(DeleteTaskEvent(
+                                                          index));
+                                                },
+                                                child: const SizedBox(
+                                                  height: 30,
+                                                  child: Icon(
+                                                    Icons
+                                                        .delete_outline_rounded,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        TextSpan(
-                                          text: todoList[index].note,
-                                          style: AppTextStyles.taskInfoTextStyle
-                                              .apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary),
-                                        )
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: AppDimens.small),
+                                          child: Text(
+                                            todoList[index].title,
+                                            style: AppTextStyles
+                                                .taskTitleTextStyle
+                                                .apply(
+                                              color: AppColors.appPrimaryDark,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    child: Divider(
+                                      color: AppColors.appPrimaryDark,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: AppDimens.small),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                              text: ' ساعت ',
+                                              style: AppTextStyles
+                                                  .taskInfoTitleTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  ' ${todoList[index].startTime.toPersianNumber()} ',
+                                              style: AppTextStyles
+                                                  .taskInfoTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            ),
+                                            TextSpan(
+                                              text: 'تا',
+                                              style: AppTextStyles
+                                                  .taskInfoTitleTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  ' ${todoList[index].endTime.toPersianNumber()} ',
+                                              style: AppTextStyles
+                                                  .taskInfoTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            )
+                                          ]),
+                                        ),
+                                        RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                              text: 'مکان ',
+                                              style: AppTextStyles
+                                                  .taskInfoTitleTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            ),
+                                            TextSpan(
+                                              text: todoList[index].place,
+                                              style: AppTextStyles
+                                                  .taskInfoTextStyle
+                                                  .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark),
+                                            )
+                                          ]),
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'یادداشت ',
+                                                style: AppTextStyles
+                                                    .taskInfoTitleTextStyle
+                                                    .apply(
+                                                        color: AppColors
+                                                            .appPrimaryDark),
+                                              ),
+                                              TextSpan(
+                                                text: todoList[index].note,
+                                                style: AppTextStyles
+                                                    .taskInfoTextStyle
+                                                    .apply(
+                                                        color: AppColors
+                                                            .appPrimaryDark),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 );
               },
