@@ -1,8 +1,15 @@
 part of '../../../index.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final TaskModel taskModel;
-  const AddTaskScreen({super.key, required this.taskModel});
+  final String endTime;
+  final String startTime;
+  final DateTime date;
+
+  const AddTaskScreen(
+      {super.key,
+      required this.endTime,
+      required this.startTime,
+      required this.date});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -10,6 +17,10 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime _selectedDate = DateTime.now();
+
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+  final TextEditingController placeController = TextEditingController();
 
   String _startTime = "8:30";
 
@@ -35,20 +46,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var taskList = widget.taskModel;
-
-    final TextEditingController titleController =
-        TextEditingController(text: taskList.title);
-    final TextEditingController noteController =
-        TextEditingController(text: taskList.note);
-    final TextEditingController placeController =
-        TextEditingController(text: taskList.place);
-    _selectedDate = taskList.date;
-    _selectedRemind = taskList.remind;
-    _selectedRepeat = taskList.repeat;
-    _startTime = taskList.startTime;
-    _endTime = taskList.endTime;
-    _selectedColor = taskList.color;
+    _startTime = widget.startTime;
+    _endTime = widget.endTime;
+    _selectedDate = widget.date;
 
     String day = _selectedDate.day.toPersianNumberInt();
     String month = _selectedDate.month.toPersianNumberInt();
@@ -227,7 +227,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                               .add(
                                             SaveTaskEvent(
                                               TaskModel(
-                                                id: box.length,
+                                                id: '',
                                                 title: titleController.text,
                                                 note: noteController.text,
                                                 place: placeController.text,

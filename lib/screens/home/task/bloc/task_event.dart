@@ -17,7 +17,7 @@ class TaskLoadedEvent extends TaskEvent {
 }
 
 class DeleteTaskEvent extends TaskEvent {
-  final int id;
+  final String id;
   const DeleteTaskEvent(this.id);
 
   @override
@@ -33,7 +33,7 @@ class SaveTaskEvent extends TaskEvent {
 }
 
 class UpdateTaskEvent extends TaskEvent {
-  final int id;
+  final String id;
   final TaskModel updateTask;
 
   const UpdateTaskEvent(this.updateTask, this.id);

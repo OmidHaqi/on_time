@@ -2,7 +2,7 @@
 
 part of '../../../index.dart';
 
-Box<TaskModel> box = Hive.box<TaskModel>(taskBoxName);
+Box<TaskModel> taskBox = Hive.box<TaskModel>(taskBoxName);
 
 class Tasks extends StatefulWidget {
   const Tasks({super.key});
@@ -16,8 +16,7 @@ class _TasksState extends State<Tasks> {
 
   @override
   Widget build(BuildContext context) {
-    final todoList = box.values.toList();
-
+    final todoList = taskBox.values.toList();
     final taskDates = todoList
         .map((task) => DateTime(task.date.year, task.date.month, task.date.day))
         .toSet()
@@ -75,19 +74,9 @@ class _TasksState extends State<Tasks> {
                     context,
                     CupertinoPageRoute(
                       builder: (context) => AddTaskScreen(
-                        taskModel: TaskModel(
-                          id: 0,
-                          title: '',
-                          note: '',
-                          isCompleted: 0,
                           date: _selectedDate,
-                          startTime: '08:30',
-                          endTime: '12:30',
-                          color: TaskColor.one,
-                          remind: 5,
-                          repeat: 'هیچ کدام',
-                          place: '',
-                        ),
+                          startTime: TimeOfDay.fromDateTime(DateTime.now()).format(context),
+                          endTime: TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours:2))).format(context),
                       ),
                     ),
                   );
@@ -125,7 +114,7 @@ class _TasksState extends State<Tasks> {
           builder: (context, state) {
             if (state is TaskLoadedState) {
               return TaskList(
-                box: box,
+                box: taskBox,
                 darkModeOn: darkModeOn,
                 colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
@@ -135,7 +124,7 @@ class _TasksState extends State<Tasks> {
                 state is SaveTaskState ||
                 state is UpdateTaskState) {
               return TaskList(
-                box: box,
+                box: taskBox,
                 darkModeOn: darkModeOn,
                 colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
