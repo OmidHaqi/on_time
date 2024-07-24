@@ -1,35 +1,35 @@
-part of '../../index.dart';
+// Tasks.dart
+
+part of '../../../index.dart';
 
 Box<TaskModel> box = Hive.box<TaskModel>(taskBoxName);
 
 class Tasks extends StatefulWidget {
-  const Tasks({
-    super.key,
-  });
+  const Tasks({super.key});
 
   @override
   State<Tasks> createState() => _TasksState();
 }
 
 class _TasksState extends State<Tasks> {
-  DateTime _selectedDate = DateTime.parse(DateTime.now().toString());
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     final todoList = box.values.toList();
 
     final taskDates = todoList
-        .map((task) {
-          return DateTime(task.date.year, task.date.month, task.date.day);
-        })
+        .map((task) => DateTime(task.date.year, task.date.month, task.date.day))
         .toSet()
         .toList();
 
     final darkModeOn =
         BlocProvider.of<ThemeBloc>(context).state == ThemeMode.dark;
+
     String day = _selectedDate.toJalali().day.toPersianNumberInt();
     String month = _selectedDate.toJalali().month.toPesianMonth();
     String year = _selectedDate.toJalali().year.toPersianNumberInt();
+
     return Column(
       children: [
         Container(
@@ -44,6 +44,7 @@ class _TasksState extends State<Tasks> {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: PersianHorizontalDatePicker(
+            selectedMarkedDotColor: Theme.of(context).colorScheme.surface,
             markedDotColor: Theme.of(context).colorScheme.onSurface,
             markedDates: taskDates,
             hasSelectedItemShadow: false,
@@ -75,17 +76,18 @@ class _TasksState extends State<Tasks> {
                     CupertinoPageRoute(
                       builder: (context) => AddTaskScreen(
                         taskModel: TaskModel(
-                            id: 0,
-                            title: '',
-                            note: '',
-                            isCompleted: 0,
-                            date: DateTime.now(),
-                            startTime: '',
-                            endTime: '',
-                            color: TodoColor.one,
-                            remind: 0,
-                            repeat: '',
-                            place: ''),
+                          id: 0,
+                          title: '',
+                          note: '',
+                          isCompleted: 0,
+                          date: _selectedDate,
+                          startTime: '08:30',
+                          endTime: '12:30',
+                          color: TodoColor.one,
+                          remind: 5,
+                          repeat: 'هیچ کدام',
+                          place: '',
+                        ),
                       ),
                     ),
                   );
@@ -97,7 +99,7 @@ class _TasksState extends State<Tasks> {
               padding: const EdgeInsets.all(AppDimens.medium),
               child: InkWell(
                 onTap: () {
-                  BlocProvider.of<HomeBloc>(context).add(DeleteAllTasksEvent());
+                  BlocProvider.of<TaskBloc>(context).add(DeleteAllTasksEvent());
                 },
                 child: Text(
                   AppStrings.planning,
@@ -109,68 +111,49 @@ class _TasksState extends State<Tasks> {
             ),
           ],
         ),
-        BlocConsumer<HomeBloc, HomeState>(
+        BlocConsumer<TaskBloc, TaskState>(
           listener: (context, state) {
             if (state is DeleteTaskState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   duration: Duration(seconds: 1),
-                  content: Text(
-                    'task Delete',
-                  ),
+                  content: Text('task Delete'),
                 ),
               );
             }
           },
           builder: (context, state) {
-            if (state is HomeLoadedState) {
+            if (state is TaskLoadedState) {
               return TaskList(
                 box: box,
                 darkModeOn: darkModeOn,
                 colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
               );
-            } else if (state is DeleteAllTasksState) {
+            } else if (state is DeleteAllTasksState ||
+                state is DeleteTaskState ||
+                state is SaveTaskState ||
+                state is UpdateTaskState) {
               return TaskList(
                 box: box,
                 darkModeOn: darkModeOn,
                 colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
               );
-            } else if (state is DeleteTaskState) {
-              return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-                colorCode: _selectedColor.code,
-                selectedDate: _selectedDate,
-              );
-            } else if (state is SaveTaskState) {
-              return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-                colorCode: _selectedColor.code,
-                selectedDate: _selectedDate,
-              );
-            } else if (state is UpdateTaskState) {
-              return TaskList(
-                box: box,
-                darkModeOn: darkModeOn,
-                colorCode: _selectedColor.code,
-                selectedDate: _selectedDate,
-              );
-            } else if (state is HomeError) {
+            } else if (state is TaskError) {
               return const Text('ERROR');
-            } else if (state is HomeLoadingState) {
+            } else if (state is TaskLoadingState) {
               return const LinearProgressIndicator();
             } else {
               return ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<HomeBloc>(context).add(HomeInit());
-                  },
-                  child: const Text('تلاش مجدد'));
+                onPressed: () {
+                  BlocProvider.of<TaskBloc>(context).add(TaskInit());
+                },
+                child: const Text('تلاش مجدد'),
+              );
             }
           },
-        )
+        ),
       ],
     );
   }

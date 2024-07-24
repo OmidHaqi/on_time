@@ -1,14 +1,14 @@
-part of '../../index.dart';
+part of '../../../index.dart';
 
-class AddTaskScreen extends StatefulWidget {
+class EditTaskScreen extends StatefulWidget {
   final TaskModel taskModel;
-  const AddTaskScreen({super.key, required this.taskModel});
+  const EditTaskScreen({super.key, required this.taskModel});
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _EditTaskScreenState extends State<EditTaskScreen> {
   DateTime _selectedDate = DateTime.now();
 
   String _startTime = "8:30";
@@ -36,16 +36,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     var taskList = widget.taskModel;
-    _selectedColor = taskList.color;
+
     final TextEditingController titleController =
         TextEditingController(text: taskList.title);
     final TextEditingController noteController =
         TextEditingController(text: taskList.note);
     final TextEditingController placeController =
         TextEditingController(text: taskList.place);
+    _selectedDate = taskList.date;
+    _selectedRemind = taskList.remind;
+    _selectedRepeat = taskList.repeat;
+    _startTime = taskList.startTime;
+    _endTime = taskList.endTime;
+    _selectedColor = taskList.color;
 
     String day = _selectedDate.day.toPersianNumberInt();
-    String month = _selectedDate.month.toPesianMonth();
+    String month = _selectedDate.month.toPersianNumberInt();
     String year = _selectedDate.year.toPersianNumberInt();
     return SafeArea(
       child: Scaffold(
@@ -53,7 +59,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: const Text(
-            'برنامه جدید',
+            ' ویرایش برنامه ',
             style: AppTextStyles.appBarTitle,
           ),
         ),
@@ -186,7 +192,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             Expanded(
                               child: SizedBox(
                                 height: 50,
-                                child: BlocConsumer<HomeBloc, HomeState>(
+                                child: BlocConsumer<TaskBloc, TaskState>(
                                   listener: (context, state) {
                                     if (state is SaveTaskState) {
                                       ScaffoldMessenger.of(context)
@@ -217,45 +223,25 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             ),
                                           );
                                         } else {
-                                          if (taskList.isInBox) {
-                                            BlocProvider.of<HomeBloc>(context)
-                                                .add(UpdateTaskEvent(
-                                                    TaskModel(
-                                                      id: taskList.id,
-                                                      title:
-                                                          titleController.text,
-                                                      note: noteController.text,
-                                                      place:
-                                                          placeController.text,
-                                                      isCompleted: 0,
-                                                      date: _selectedDate,
-                                                      startTime: _startTime,
-                                                      endTime: _endTime,
-                                                      color: _selectedColor,
-                                                      remind: _selectedRemind,
-                                                      repeat: _selectedRepeat,
-                                                    ),
-                                                    taskList.id));
-                                          } else {
-                                            BlocProvider.of<HomeBloc>(context)
-                                                .add(
-                                              SaveTaskEvent(
-                                                TaskModel(
-                                                  id: box.length,
-                                                  title: titleController.text,
-                                                  note: noteController.text,
-                                                  place: placeController.text,
-                                                  isCompleted: 0,
-                                                  date: _selectedDate,
-                                                  startTime: _startTime,
-                                                  endTime: _endTime,
-                                                  color: _selectedColor,
-                                                  remind: _selectedRemind,
-                                                  repeat: _selectedRepeat,
-                                                ),
+                                          BlocProvider.of<TaskBloc>(context)
+                                              .add(
+                                            UpdateTaskEvent(
+                                              TaskModel(
+                                                id: taskList.id,
+                                                title: titleController.text,
+                                                note: noteController.text,
+                                                place: placeController.text,
+                                                isCompleted: 0,
+                                                date: _selectedDate,
+                                                startTime: _startTime,
+                                                endTime: _endTime,
+                                                color: _selectedColor,
+                                                remind: _selectedRemind,
+                                                repeat: _selectedRepeat,
                                               ),
-                                            );
-                                          }
+                                              taskList.id,
+                                            ),
+                                          );
 
                                           Navigator.pop(context);
                                         }
