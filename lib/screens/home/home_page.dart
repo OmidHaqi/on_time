@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
               index: selectedPageIndex,
               children: const [
                 Tasks(),
-                Text('Note'),
+                Notes(),
               ],
             ),
           ],

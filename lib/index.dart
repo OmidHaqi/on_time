@@ -10,6 +10,7 @@ import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/generated/l10n.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
+import 'package:on_time/screens/home/note/notes.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
