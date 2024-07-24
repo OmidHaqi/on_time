@@ -24,7 +24,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       date: fields[4] as DateTime,
       startTime: fields[5] as String,
       endTime: fields[6] as String,
-      color: fields[7] as TodoColor,
+      color: fields[7] as TaskColor,
       remind: fields[8] as int,
       repeat: fields[9] as String,
       place: fields[10] as String,
@@ -70,50 +70,65 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
           typeId == other.typeId;
 }
 
-class TaskColorAdapter extends TypeAdapter<TodoColor> {
+class TaskColorAdapter extends TypeAdapter<TaskColor> {
   @override
   final int typeId = 1;
 
   @override
-  TodoColor read(BinaryReader reader) {
+  TaskColor read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return TodoColor.one;
+        return TaskColor.one;
       case 1:
-        return TodoColor.two;
+        return TaskColor.two;
       case 2:
-        return TodoColor.three;
+        return TaskColor.three;
       case 3:
-        return TodoColor.four;
+        return TaskColor.four;
       case 4:
-        return TodoColor.five;
+        return TaskColor.five;
       case 5:
-        return TodoColor.six;
+        return TaskColor.six;
+      case 6:
+        return TaskColor.seven;
+      case 7:
+        return TaskColor.eight;
+      case 8:
+        return TaskColor.nine;
       default:
-        return TodoColor.one;
+        return TaskColor.one;
     }
   }
 
   @override
-  void write(BinaryWriter writer, TodoColor obj) {
+  void write(BinaryWriter writer, TaskColor obj) {
     switch (obj) {
-      case TodoColor.one:
+      case TaskColor.one:
         writer.writeByte(0);
         break;
-      case TodoColor.two:
+      case TaskColor.two:
         writer.writeByte(1);
         break;
-      case TodoColor.three:
+      case TaskColor.three:
         writer.writeByte(2);
         break;
-      case TodoColor.four:
+      case TaskColor.four:
         writer.writeByte(3);
         break;
-      case TodoColor.five:
+      case TaskColor.five:
         writer.writeByte(4);
         break;
-      case TodoColor.six:
+      case TaskColor.six:
         writer.writeByte(5);
+        break;
+      case TaskColor.seven:
+        writer.writeByte(6);
+        break;
+      case TaskColor.eight:
+        writer.writeByte(7);
+        break;
+      case TaskColor.nine:
+        writer.writeByte(8);
         break;
     }
   }

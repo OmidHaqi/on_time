@@ -26,7 +26,7 @@ class TaskModel extends HiveObject {
   String endTime;
 
   @HiveField(7)
-  TodoColor color;
+  TaskColor color;
 
   @HiveField(8)
   int remind;
@@ -83,28 +83,35 @@ class TaskModel extends HiveObject {
 }
 
 @HiveType(typeId: 1)
-enum TodoColor {
+enum TaskColor {
   @HiveField(0)
-  one(0xffFF9AA2),
+  one(0xffe6ee9b),
 
   @HiveField(1)
-  two(0xffFEB7B1),
+  two(0xff80deea),
 
   @HiveField(2)
-  three(0xffFFDAC0),
+  three(0xffcf93d9),
 
   @HiveField(3)
-  four(0xffE2F0CC),
-  
+  four(0xffffab91),
+
   @HiveField(4)
-  five(0xffB5EAD6),
-  
-  
+  five(0xffffcc80),
+
   @HiveField(5)
-  six(0xffC7CEEA);
-  
+  six(0xffC4BBF0),
+
+  @HiveField(6)
+  seven(0xffFFD717),
+
+  @HiveField(7)
+  eight(0xffFFC7C7),
+
+  @HiveField(8)
+  nine(0xffCCF6C8);
 
   final int code;
 
-  const TodoColor(this.code);
+  const TaskColor(this.code);
 }

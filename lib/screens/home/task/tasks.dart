@@ -83,7 +83,7 @@ class _TasksState extends State<Tasks> {
                           date: _selectedDate,
                           startTime: '08:30',
                           endTime: '12:30',
-                          color: TodoColor.one,
+                          color: TaskColor.one,
                           remind: 5,
                           repeat: 'هیچ کدام',
                           place: '',
