@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
-import 'package:on_time/screens/home/bloc/home_bloc.dart';
+import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -32,9 +32,9 @@ main() async {
       providers: [
         BlocProvider(
           create: (_) {
-            final homeBloc = HomeBloc(taskLocalRepo);
+            final homeBloc = TaskBloc(taskLocalRepo);
             homeBloc.add(
-              HomeInit(),
+              TaskInit(),
             );
             return homeBloc;
           },

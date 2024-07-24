@@ -7,7 +7,6 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   factory TaskLocalDataSrc() => _instance;
 
-
   void close() {
     // Closes all Hive boxes
     Hive.close();
@@ -60,32 +59,34 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   @override
   Future<List<TaskModel>> deleteTask(int id) async {
-    final box = await Hive.openBox<TaskModel>(taskBoxName);
-    await box.deleteAt(id);
-    return box.values
-        .map(
-          (_) => TaskModel(
-            id: _.id,
-            title: _.title,
-            note: _.note,
-            isCompleted: _.isCompleted,
-            date: _.date,
-            startTime: _.startTime,
-            endTime: _.endTime,
-            color: _.color,
-            remind: _.remind,
-            repeat: _.repeat,
-            place: _.place,
-          ),
-        )
-        .toList();
+    try {
+      final box = await Hive.openBox<TaskModel>(taskBoxName);
+      await box.delete(id);
+      return box.values
+          .map(
+            (_) => TaskModel(
+              id: _.id,
+              title: _.title,
+              note: _.note,
+              isCompleted: _.isCompleted,
+              date: _.date,
+              startTime: _.startTime,
+              endTime: _.endTime,
+              color: _.color,
+              remind: _.remind,
+              repeat: _.repeat,
+              place: _.place,
+            ),
+          )
+          .toList();
+    } catch (e) {
+      print('#############################$e');
+      return [];
+    }
   }
 
   @override
   Future<List<TaskModel>> saveTask(TaskModel task) async {
-    // final lastestIdBox = await Hive.openBox(latestIdBox);
-    // int latestId = lastestIdBox.get(latestIdName, defaultValue: 0);
-    // int newLatestId = latestId + 1;
     var taskModel = TaskModel(
       id: task.id,
       title: task.title,
