@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+part of '../../../../../index.dart';
+
+Box<NoteModel> noteBox = Hive.box<NoteModel>(noteBoxName);
 
 class Notes extends StatelessWidget {
   const Notes({
