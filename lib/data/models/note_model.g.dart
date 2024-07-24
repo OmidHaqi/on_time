@@ -1,62 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task_model.dart';
+part of 'note_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TaskModelAdapter extends TypeAdapter<TaskModel> {
+class NoteModelAdapter extends TypeAdapter<NoteModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
-  TaskModel read(BinaryReader reader) {
+  NoteModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TaskModel(
+    return NoteModel(
       id: fields[0] as String,
       title: fields[1] as String,
-      note: fields[2] as String,
-      isCompleted: fields[3] as int,
-      date: fields[4] as DateTime,
-      startTime: fields[5] as String,
-      endTime: fields[6] as String,
-      color: fields[7] as TaskColor,
-      remind: fields[8] as int,
-      repeat: fields[9] as String,
-      place: fields[10] as String,
+      description: fields[2] as String,
+      color: fields[3] as NoteColor,
+      dateTime: fields[4] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, TaskModel obj) {
+  void write(BinaryWriter writer, NoteModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.note)
+      ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.isCompleted)
-      ..writeByte(4)
-      ..write(obj.date)
-      ..writeByte(5)
-      ..write(obj.startTime)
-      ..writeByte(6)
-      ..write(obj.endTime)
-      ..writeByte(7)
       ..write(obj.color)
-      ..writeByte(8)
-      ..write(obj.remind)
-      ..writeByte(9)
-      ..write(obj.repeat)
-      ..writeByte(10)
-      ..write(obj.place);
+      ..writeByte(4)
+      ..write(obj.dateTime);
   }
 
   @override
@@ -65,69 +47,69 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TaskModelAdapter &&
+      other is NoteModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
 
-class TaskColorAdapter extends TypeAdapter<TaskColor> {
+class NoteColorAdapter extends TypeAdapter<NoteColor> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
-  TaskColor read(BinaryReader reader) {
+  NoteColor read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return TaskColor.one;
+        return NoteColor.one;
       case 1:
-        return TaskColor.two;
+        return NoteColor.two;
       case 2:
-        return TaskColor.three;
+        return NoteColor.three;
       case 3:
-        return TaskColor.four;
+        return NoteColor.four;
       case 4:
-        return TaskColor.five;
+        return NoteColor.five;
       case 5:
-        return TaskColor.six;
+        return NoteColor.six;
       case 6:
-        return TaskColor.seven;
+        return NoteColor.seven;
       case 7:
-        return TaskColor.eight;
+        return NoteColor.eight;
       case 8:
-        return TaskColor.nine;
+        return NoteColor.nine;
       default:
-        return TaskColor.one;
+        return NoteColor.one;
     }
   }
 
   @override
-  void write(BinaryWriter writer, TaskColor obj) {
+  void write(BinaryWriter writer, NoteColor obj) {
     switch (obj) {
-      case TaskColor.one:
+      case NoteColor.one:
         writer.writeByte(0);
         break;
-      case TaskColor.two:
+      case NoteColor.two:
         writer.writeByte(1);
         break;
-      case TaskColor.three:
+      case NoteColor.three:
         writer.writeByte(2);
         break;
-      case TaskColor.four:
+      case NoteColor.four:
         writer.writeByte(3);
         break;
-      case TaskColor.five:
+      case NoteColor.five:
         writer.writeByte(4);
         break;
-      case TaskColor.six:
+      case NoteColor.six:
         writer.writeByte(5);
         break;
-      case TaskColor.seven:
+      case NoteColor.seven:
         writer.writeByte(6);
         break;
-      case TaskColor.eight:
+      case NoteColor.eight:
         writer.writeByte(7);
         break;
-      case TaskColor.nine:
+      case NoteColor.nine:
         writer.writeByte(8);
         break;
     }
@@ -139,7 +121,7 @@ class TaskColorAdapter extends TypeAdapter<TaskColor> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TaskColorAdapter &&
+      other is NoteColorAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

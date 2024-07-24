@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:on_time/data/models/note_model.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
@@ -16,8 +17,11 @@ main() async {
   Hive
     ..init(directory.path)
     ..registerAdapter(TaskModelAdapter())
-    ..registerAdapter(TaskColorAdapter());
+    ..registerAdapter(TaskColorAdapter())
+    ..registerAdapter(NoteModelAdapter())
+    ..registerAdapter(NoteColorAdapter());
   await Hive.openBox<TaskModel>(taskBoxName);
+  await Hive.openBox<NoteModel>(noteBoxName);
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

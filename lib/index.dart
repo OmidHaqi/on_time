@@ -6,15 +6,16 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_time/data/models/language_model.dart';
+import 'package:on_time/data/models/note_model.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/generated/l10n.dart';
 import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
-import 'package:on_time/screens/home/note/notes.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_horizontal_date_picker/persian_horizontal_date_picker.dart';
+import 'package:uuid/uuid.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 
@@ -31,12 +32,13 @@ part 'resource/widgets/input_feild.dart';
 part 'resource/utils/extensions.dart';
 part 'resource/themes/themes.dart';
 part 'resource/components/text_style.dart';
-part 'data/repositories/task_repo.dart';
-part 'data/repositories/task_local_repo.dart';
-part 'data/sources/task_data_src.dart';
-part 'data/sources/task_local_data_src.dart';
+part 'data/repositories/repositories.dart';
+part 'data/repositories/local_repo.dart';
+part 'data/sources/data_source.dart';
+part 'data/sources/local_data_src.dart';
 part 'resource/widgets/color_item.dart';
 part 'resource/widgets/empty_vc.dart';
 part 'resource/widgets/task_item_list.dart';
 part 'screens/home/task/edit_task_screen.dart';
-
+part 'resource/utils/utils.dart';
+part 'screens/home/note/notes.dart';

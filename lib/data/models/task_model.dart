@@ -5,41 +5,41 @@ part 'task_model.g.dart';
 @HiveType(typeId: 0)
 class TaskModel extends HiveObject {
   @HiveField(0)
-  int id;
+  String id ;
 
   @HiveField(1)
-  String title;
+  final String title;
 
   @HiveField(2)
-  String note;
+  final String note;
 
   @HiveField(3)
-  int isCompleted;
+  final int isCompleted;
 
   @HiveField(4)
-  DateTime date;
+  final DateTime date;
 
   @HiveField(5)
-  String startTime;
+  final String startTime;
 
   @HiveField(6)
-  String endTime;
+  final String endTime;
 
   @HiveField(7)
-  TaskColor color;
+  final TaskColor color;
 
   @HiveField(8)
-  int remind;
+  final int remind;
 
   @HiveField(9)
-  String repeat;
+  final String repeat;
 
   @HiveField(10)
-  String place;
+  final String place;
 
   TaskModel(
       {required this.id,
-      required this.title,
+        required this.title,
       required this.note,
       required this.isCompleted,
       required this.date,
