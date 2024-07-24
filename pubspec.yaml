@@ -28,6 +28,7 @@ dependencies:
   persian_datetime_picker: ^2.7.0
   flutter_staggered_animations: ^1.1.1
   persian_horizontal_date_picker: ^0.1.7
+  uuid: ^4.4.2
 
 dev_dependencies:
   flutter_test:
