@@ -29,6 +29,9 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   persian_horizontal_date_picker: ^0.1.7
   uuid: ^4.4.2
+  auto_size_text: ^3.0.0
+  flutter_staggered_grid_view: ^0.7.0
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
