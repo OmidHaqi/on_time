@@ -13,5 +13,5 @@ abstract class INoteRepo {
   Future<List<NoteModel>> saveNote(NoteModel note);
   Future<List<NoteModel>> updateNote(String id, NoteModel note);
   Future<List<NoteModel>> deleteNote(String id);
-  Future<List<NoteModel>> deleteAllNote();
+  Future<List<NoteModel>> deleteAllNotes();
 }

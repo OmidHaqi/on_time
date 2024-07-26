@@ -13,7 +13,7 @@ class InputField extends StatelessWidget {
 
   const InputField({
     super.key,
-     this.title,
+    this.title,
     this.controller,
     required this.hint,
     this.widget,
@@ -21,7 +21,6 @@ class InputField extends StatelessWidget {
     this.readOnly = false,
     this.prefixIcon,
     this.suffixIcon,
-
   });
 
   @override
@@ -29,15 +28,24 @@ class InputField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
       child: TextFormField(
-        
+        style: const TextStyle(color: AppColors.appPrimaryDark),
         autofocus: false,
         onTap: onTap,
         readOnly: readOnly,
         controller: controller,
         decoration: InputDecoration(
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.appPrimaryDark)),
+            disabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.appPrimaryDark)),
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.appPrimaryDark)),
+            hintStyle: const TextStyle(color: AppColors.appPrimaryDark),
+            labelStyle: const TextStyle(color: AppColors.appPrimaryDark),
             labelText: title,
             hintText: hint,
-            border: const OutlineInputBorder(),
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.appPrimaryDark)),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon),
       ),

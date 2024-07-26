@@ -74,9 +74,12 @@ class _TasksState extends State<Tasks> {
                     context,
                     CupertinoPageRoute(
                       builder: (context) => AddTaskScreen(
-                          date: _selectedDate,
-                          startTime: TimeOfDay.fromDateTime(DateTime.now()).format(context),
-                          endTime: TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours:2))).format(context),
+                        date: _selectedDate,
+                        startTime: TimeOfDay.fromDateTime(DateTime.now())
+                            .format(context),
+                        endTime: TimeOfDay.fromDateTime(
+                                DateTime.now().add(const Duration(hours: 2)))
+                            .format(context),
                       ),
                     ),
                   );
@@ -114,9 +117,7 @@ class _TasksState extends State<Tasks> {
           builder: (context, state) {
             if (state is TaskLoadedState) {
               return TaskList(
-                box: taskBox,
                 darkModeOn: darkModeOn,
-                colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
               );
             } else if (state is DeleteAllTasksState ||
@@ -124,9 +125,7 @@ class _TasksState extends State<Tasks> {
                 state is SaveTaskState ||
                 state is UpdateTaskState) {
               return TaskList(
-                box: taskBox,
                 darkModeOn: darkModeOn,
-                colorCode: _selectedColor.code,
                 selectedDate: _selectedDate,
               );
             } else if (state is TaskError) {

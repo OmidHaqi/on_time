@@ -40,7 +40,6 @@ class AppTextStyles {
   static const TextStyle dateTimeTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 24,
-    
   );
 
   static const TextStyle appTopText = TextStyle(
@@ -49,7 +48,22 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-    static const TextStyle emptyTextStyle = TextStyle(
+  static const TextStyle emptyTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 18,
+  );
+
+  static const TextStyle noteTitleTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle noteDecTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 20,
+    
+  );
+  static const TextStyle noteDateTimeTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 18,
   );

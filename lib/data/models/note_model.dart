@@ -17,7 +17,7 @@ class NoteModel extends HiveObject {
   final NoteColor color;
 
   @HiveField(4)
-  final DateTime dateTime;
+  final String dateTime;
 
   NoteModel({
     required this.id,
@@ -33,7 +33,7 @@ class NoteModel extends HiveObject {
       title: json['title'],
       description: json['description'],
       color: json['color'],
-      dateTime: DateTime.parse(json['dateTime']),
+      dateTime: json['dateTime'],
     );
   }
 

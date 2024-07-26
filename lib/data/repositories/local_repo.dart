@@ -1,7 +1,7 @@
 part of '../../index.dart';
 
-final taskLocalRepo = TaskLocalRepo(LocalDataSrc());
-final noteLocalRepo = NoteLocalRepo(LocalDataSrc());
+final taskLocalRepo = TaskLocalRepo(TaskLocalDataSrc());
+final noteLocalRepo = NoteLocalRepo(NoteLocalDataSrc());
 
 class TaskLocalRepo implements ITaskRepo {
   final ITaskDataSrc _iTaskDataSrc;
@@ -31,7 +31,7 @@ class NoteLocalRepo implements INoteRepo {
 
   NoteLocalRepo(this._iNoteDataSrc);
   @override
-  Future<List<NoteModel>> deleteAllNote() => _iNoteDataSrc.deleteAllNotes();
+  Future<List<NoteModel>> deleteAllNotes() => _iNoteDataSrc.deleteAllNotes();
 
   @override
   Future<List<NoteModel>> deleteNote(String id) => _iNoteDataSrc.deleteNote(id);

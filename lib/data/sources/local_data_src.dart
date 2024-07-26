@@ -1,11 +1,11 @@
 part of '../../index.dart';
 
-class LocalDataSrc implements ITaskDataSrc, INoteDataSrc {
-  LocalDataSrc._constructor();
+class TaskLocalDataSrc implements ITaskDataSrc {
+  TaskLocalDataSrc._constructor();
 
-  static final _instance = LocalDataSrc._constructor();
+  static final _instance = TaskLocalDataSrc._constructor();
 
-  factory LocalDataSrc() => _instance;
+  factory TaskLocalDataSrc() => _instance;
 
   void close() {
     // Closes all Hive boxes
@@ -36,10 +36,10 @@ class LocalDataSrc implements ITaskDataSrc, INoteDataSrc {
   Future<List<TaskModel>> saveTask(TaskModel task) async {
     final box = await Hive.openBox<TaskModel>(taskBoxName);
 
-    var uuid= const Uuid();
+    var uuid = const Uuid();
     task.id = uuid.v4();
 
-    await box.put(task.id,task);
+    await box.put(task.id, task);
     return taskMapTOlist(box).toList();
   }
 
@@ -51,6 +51,14 @@ class LocalDataSrc implements ITaskDataSrc, INoteDataSrc {
 
     return taskMapTOlist(box).toList();
   }
+}
+
+class NoteLocalDataSrc implements INoteDataSrc {
+  NoteLocalDataSrc._constructor();
+
+  static final _instance = NoteLocalDataSrc._constructor();
+
+  factory NoteLocalDataSrc() => _instance;
 
   @override
   Future<List<NoteModel>> deleteAllNotes() async {
@@ -76,7 +84,9 @@ class LocalDataSrc implements ITaskDataSrc, INoteDataSrc {
   @override
   Future<List<NoteModel>> saveNote(NoteModel note) async {
     final box = await Hive.openBox<NoteModel>(noteBoxName);
-    box.add(note);
+    var uuid = const Uuid();
+    note.id = uuid.v4();
+    box.put(note.id,note);
     return noteMapToList(box).toList();
   }
 

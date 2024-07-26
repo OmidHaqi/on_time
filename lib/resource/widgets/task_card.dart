@@ -1,6 +1,7 @@
 part of '../../index.dart';
-class TaskItemList extends StatelessWidget {
-  const TaskItemList({
+
+class TaskCard extends StatelessWidget {
+  const TaskCard({
     super.key,
     required this.taskList,
     required this.index,
@@ -21,7 +22,8 @@ class TaskItemList extends StatelessWidget {
         horizontalOffset: 60.0,
         child: FadeInAnimation(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal:  AppDimens.medium,vertical: AppDimens.small),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.medium, vertical: AppDimens.small),
             child: Column(
               children: [
                 Container(

@@ -4,15 +4,11 @@ part of '../../../index.dart';
 
 class TaskList extends StatelessWidget {
   final bool darkModeOn;
-  final Box<TaskModel> box;
-  final int colorCode;
   final DateTime selectedDate;
 
   const TaskList({
     super.key,
     required this.darkModeOn,
-    required this.box,
-    required this.colorCode,
     required this.selectedDate,
   });
 
@@ -28,9 +24,9 @@ class TaskList extends StatelessWidget {
       width: double.infinity,
       height: 475,
       child: ValueListenableBuilder<Box<TaskModel>>(
-        valueListenable: box.listenable(),
-        builder: (context, taskBox, child) {
-          final todoList = taskBox.values.toList();
+        valueListenable: taskBox.listenable(),
+        builder: (context, builderTaskBox, _) {
+          final todoList = builderTaskBox.values.toList();
           final tasksForSelectedDate = todoList
               .where((task) => isSameDay(task.date, selectedDate))
               .toList();
@@ -45,7 +41,7 @@ class TaskList extends StatelessWidget {
               itemCount: tasksForSelectedDate.length,
               itemBuilder: (contxt, index) {
                 var taskList = tasksForSelectedDate[index];
-                return TaskItemList(
+                return TaskCard(
                   taskList: taskList,
                   index: index,
                   editOnTap: () {
@@ -73,9 +69,6 @@ class TaskList extends StatelessWidget {
                   deleteOnTap: () {
                     BlocProvider.of<TaskBloc>(context)
                         .add(DeleteTaskEvent(taskList.id));
-                    print('Index: $index');
-                    print('Task ID: ${taskList.id}');
-                    print('Task Title: ${taskList.title}');
                   },
                 );
               },

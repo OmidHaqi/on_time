@@ -21,9 +21,9 @@ class ColorItem extends StatelessWidget {
         height: 45,
         alignment: Alignment.center,
         margin: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).colorScheme.primary),
+            color: AppColors.appPrimaryDark),
         child: Container(
           width: 43,
           height: 43,
@@ -34,7 +34,7 @@ class ColorItem extends StatelessWidget {
               shape: BoxShape.circle,
               color: Color(colorCode),
               border:
-                  Border.all(color: Theme.of(context).colorScheme.onPrimary)),
+                  Border.all(color: AppColors.appOnPrimaryDark)),
           child: isSelected
               ? const Icon(
                   Icons.check,
@@ -47,7 +47,7 @@ class ColorItem extends StatelessWidget {
   }
 }
 
-TaskColor _selectedColor = TaskColor.one;
+TaskColor _taskSelectedColor = TaskColor.one;
 
 class TodoColorSelector extends StatefulWidget {
   const TodoColorSelector({super.key});
@@ -60,46 +60,105 @@ class _TodoColorSelectorState extends State<TodoColorSelector> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal ,
+      scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.one),
-              isSelected: _selectedColor == TaskColor.one,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.one),
+              isSelected: _taskSelectedColor == TaskColor.one,
               colorCode: TaskColor.one.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.two),
-              isSelected: _selectedColor == TaskColor.two,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.two),
+              isSelected: _taskSelectedColor == TaskColor.two,
               colorCode: TaskColor.two.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.three),
-              isSelected: _selectedColor == TaskColor.three,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.three),
+              isSelected: _taskSelectedColor == TaskColor.three,
               colorCode: TaskColor.three.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.four),
-              isSelected: _selectedColor == TaskColor.four,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.four),
+              isSelected: _taskSelectedColor == TaskColor.four,
               colorCode: TaskColor.four.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.five),
-              isSelected: _selectedColor == TaskColor.five,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.five),
+              isSelected: _taskSelectedColor == TaskColor.five,
               colorCode: TaskColor.five.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.six),
-              isSelected: _selectedColor == TaskColor.six,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.six),
+              isSelected: _taskSelectedColor == TaskColor.six,
               colorCode: TaskColor.six.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.seven),
-              isSelected: _selectedColor == TaskColor.seven,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.seven),
+              isSelected: _taskSelectedColor == TaskColor.seven,
               colorCode: TaskColor.seven.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.eight),
-              isSelected: _selectedColor == TaskColor.eight,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.eight),
+              isSelected: _taskSelectedColor == TaskColor.eight,
               colorCode: TaskColor.eight.code),
           ColorItem(
-              onTap: () => setState(() => _selectedColor = TaskColor.nine),
-              isSelected: _selectedColor == TaskColor.nine,
+              onTap: () => setState(() => _taskSelectedColor = TaskColor.nine),
+              isSelected: _taskSelectedColor == TaskColor.nine,
               colorCode: TaskColor.nine.code),
+        ],
+      ),
+    );
+  }
+}
+
+NoteColor _noteSelectedColor = NoteColor.one;
+
+class NoteColorSelector extends StatefulWidget {
+  const NoteColorSelector({super.key});
+
+  @override
+  State<NoteColorSelector> createState() => _NoteColorSelectorState();
+}
+
+class _NoteColorSelectorState extends State<NoteColorSelector> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.one),
+              isSelected: _noteSelectedColor == NoteColor.one,
+              colorCode: NoteColor.one.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.two),
+              isSelected: _noteSelectedColor == NoteColor.two,
+              colorCode: NoteColor.two.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.three),
+              isSelected: _noteSelectedColor == NoteColor.three,
+              colorCode: NoteColor.three.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.four),
+              isSelected: _noteSelectedColor == NoteColor.four,
+              colorCode: NoteColor.four.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.five),
+              isSelected: _noteSelectedColor == NoteColor.five,
+              colorCode: NoteColor.five.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.six),
+              isSelected: _noteSelectedColor == NoteColor.six,
+              colorCode: NoteColor.six.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.seven),
+              isSelected: _noteSelectedColor == NoteColor.seven,
+              colorCode: NoteColor.seven.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.eight),
+              isSelected: _noteSelectedColor == NoteColor.eight,
+              colorCode: NoteColor.eight.code),
+          ColorItem(
+              onTap: () => setState(() => _noteSelectedColor = NoteColor.nine),
+              isSelected: _noteSelectedColor == NoteColor.nine,
+              colorCode: NoteColor.nine.code),
         ],
       ),
     );
