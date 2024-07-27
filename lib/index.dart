@@ -51,3 +51,4 @@ part 'resource/widgets/note_card.dart';
 part 'screens/home/note/add_note_screen.dart';
 part 'screens/home/note/edit_note_screen.dart';
 part 'screens/home/note/note_list.dart';
+part 'screens/splash_screen.dart';

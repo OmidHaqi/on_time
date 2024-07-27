@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: S.delegate.supportedLocales,
           locale: state.locale,
-          home: const HomePage(),
+          home:const  SplashScreen(),
         );
       },
     );
