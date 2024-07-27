@@ -42,7 +42,8 @@ main() async {
             return taskBloc;
           },
         ),
-        BlocProvider(create: (_) {
+        BlocProvider(
+          create: (_) {
           final noteBloc = NoteBloc(noteLocalRepo);
           noteBloc.add(NoteInit());
           return noteBloc;

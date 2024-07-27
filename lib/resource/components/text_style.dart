@@ -68,7 +68,7 @@ class AppTextStyles {
   );
     static const TextStyle splashScreenTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
-    fontWeight: FontWeight.bold,
-    fontSize: 38,
+    fontWeight: FontWeight.w800,
+    fontSize: 45,
   );
 }
