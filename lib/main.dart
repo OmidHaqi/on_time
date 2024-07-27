@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:on_time/data/models/note_model.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
+import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/home/note/bloc/note_bloc.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
@@ -53,6 +54,7 @@ main() async {
             return settingsBloc;
           },
         ),
+        BlocProvider(create: (_) => HomeBloc())
       ],
       child: const MyApp(),
     ),

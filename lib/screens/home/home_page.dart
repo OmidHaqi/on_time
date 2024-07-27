@@ -1,30 +1,11 @@
 part of '../../index.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int selectedPageIndex = 0;
-
-  changeScreen(int value) {
-    selectedPageIndex = value;
-  }
-
-  @override
-  void dispose() {
-    TaskLocalDataSrc taskLocalDataSrc = TaskLocalDataSrc();
-    taskLocalDataSrc.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    int selectedScreen = selectedPageIndex;
     return SafeArea(
       child: Scaffold(
         appBar: const CustomAppBar(
@@ -53,54 +34,68 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ZoomTapAnimation(
                         onTap: () {
-                          setState(() {
-                            changeScreen(0);
-                          });
+                          // setState(() {
+                          context.read<HomeBloc>().add(const ChangePage(0));
+                          // });
                         },
-                        child: Container(
-                          width: size.width / 2.9,
-                          height: size.height / 19,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: selectedScreen == 0
-                                ? Theme.of(context).colorScheme.onPrimary
-                                : Colors.transparent,
-                          ),
-                          child: Center(
-                            child: Text(AppStrings.planning,
-                                style: AppTextStyles.chipTextStyle.apply(
-                                  color: selectedScreen == 0
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.onPrimary,
-                                )),
-                          ),
+                        child: BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            return Container(
+                              width: size.width / 2.9,
+                              height: size.height / 19,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: state.selectedPageIndex == 0
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : Colors.transparent,
+                              ),
+                              child: Center(
+                                child: Text(AppStrings.planning,
+                                    style: AppTextStyles.chipTextStyle.apply(
+                                      color: state.selectedPageIndex == 0
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                    )),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       ZoomTapAnimation(
                         onTap: () {
-                          setState(() {
-                            changeScreen(1);
-                          });
+                          // setState(() {
+                          context.read<HomeBloc>().add(const ChangePage(1));
+                          // });
                         },
-                        child: Container(
-                          width: size.width / 2.9,
-                          height: size.height / 19,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: selectedScreen == 1
-                                ? Theme.of(context).colorScheme.onPrimary
-                                : Colors.transparent,
-                          ),
-                          child: Center(
-                            child: Text(
-                              AppStrings.note,
-                              style: AppTextStyles.chipTextStyle.apply(
-                                color: selectedScreen == 1
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Theme.of(context).colorScheme.onPrimary,
+                        child: BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            return Container(
+                              width: size.width / 2.9,
+                              height: size.height / 19,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: state.selectedPageIndex == 1
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : Colors.transparent,
                               ),
-                            ),
-                          ),
+                              child: Center(
+                                child: Text(
+                                  AppStrings.note,
+                                  style: AppTextStyles.chipTextStyle.apply(
+                                    color: state.selectedPageIndex == 1
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -108,29 +103,40 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            IndexedStack(
-              alignment: Alignment.center,
-              index: selectedPageIndex,
-              children: const [
-                Tasks(),
-                Notes(),
-              ],
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                return IndexedStack(
+                  alignment: Alignment.center,
+                  index: state.selectedPageIndex,
+                  children: const [
+                    Tasks(),
+                    Notes(),
+                  ],
+                );
+              },
             ),
           ],
         ),
-        floatingActionButton: selectedPageIndex == 1
-            ? FloatingActionButton(
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.surface,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => AddNoteScreen()));
-                })
-            : const SizedBox.shrink(),
+        floatingActionButton: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return state.selectedPageIndex == 1
+                ? FloatingActionButton(
+                    child: Icon(
+                      Icons.add,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => AddNoteScreen(),
+                        ),
+                      );
+                    },
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
