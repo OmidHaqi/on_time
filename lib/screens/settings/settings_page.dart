@@ -5,10 +5,9 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var groupValue =
-        context.read<LocalizationsBloc>().state.locale.languageCode;
+    var groupValue = context.read<SettingsBloc>().state.locale.languageCode;
     return SafeArea(
-      child: BlocConsumer<LocalizationsBloc, LocalizationsState>(
+      child: BlocConsumer<SettingsBloc, SettingsState>(
         listener: (context, state) {
           groupValue = state.locale.languageCode;
         },
@@ -47,7 +46,7 @@ class SettingsPage extends StatelessWidget {
                             value: item.languageCode,
                             groupValue: groupValue,
                             onChanged: (value) {
-                              BlocProvider.of<LocalizationsBloc>(context).add(
+                              BlocProvider.of<SettingsBloc>(context).add(
                                 LoadLocalizations(
                                   Locale(
                                     item.languageCode,
@@ -92,18 +91,14 @@ class SettingsPage extends StatelessWidget {
                                 horizontal: AppDimens.medium),
                             child: Text(S.current.darkMode),
                           ),
-                          BlocBuilder<ThemeBloc, ThemeMode>(
-                            builder: (context, state) {
-                              return Switch(
-                                value: state == ThemeMode.dark,
-                                onChanged: (value) {
-                                  context
-                                      .read<ThemeBloc>()
-                                      .add(ThemeChanged(isDark: value));
-                                },
-                              );
+                          Switch(
+                            value: state.themeMode == ThemeMode.dark,
+                            onChanged: (value) {
+                              context
+                                  .read<SettingsBloc>()
+                                  .add(ThemeChanged(isDark: value));
                             },
-                          ),
+                          )
                         ],
                       ),
                     ),

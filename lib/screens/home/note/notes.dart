@@ -9,7 +9,7 @@ class Notes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkModeOn =
-        BlocProvider.of<ThemeBloc>(context).state == ThemeMode.dark;
+        BlocProvider.of<SettingsBloc>(context).state.themeMode == ThemeMode.dark;
 
     return BlocConsumer<NoteBloc, NoteState>(
       listener: (context, state) {

@@ -6,10 +6,9 @@ import 'package:hive/hive.dart';
 import 'package:on_time/data/models/note_model.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
-import 'package:on_time/resource/themes/bloc/theme_bloc.dart';
 import 'package:on_time/screens/home/note/bloc/note_bloc.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
-import 'package:on_time/screens/settings/bloc/localizations_bloc.dart';
+import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 main() async {
@@ -49,17 +48,14 @@ main() async {
           noteBloc.add(NoteInit());
           return noteBloc;
         }),
-        BlocProvider<LocalizationsBloc>(
+        BlocProvider<SettingsBloc>(
           create: (_) {
-            final localizationsBloc = LocalizationsBloc();
+            final localizationsBloc = SettingsBloc();
             localizationsBloc.add(
               LoadSavedLocalizations(),
             );
             return localizationsBloc;
           },
-        ),
-        BlocProvider<ThemeBloc>(
-          create: (_) => ThemeBloc(),
         ),
       ],
       child: const MyApp(),

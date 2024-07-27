@@ -5,27 +5,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocalizationsBloc, LocalizationsState>(
-      builder: (localizationsContext, localizationsState) {
-        return BlocBuilder<ThemeBloc, ThemeMode>(
-          builder: (themeContext, themeState) {
-            return MaterialApp(
-              title: 'On Time',
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme(),
-              darkTheme: AppTheme.darkTheme(),
-              themeMode: themeState,
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              locale: localizationsState.locale,
-              home: const HomePage(),
-            );
-          },
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        return MaterialApp(
+          title: 'On Time',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme(),
+          darkTheme: AppTheme.darkTheme(),
+          themeMode: state.themeMode,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          locale: state.locale,
+          home: const HomePage(),
         );
       },
     );
