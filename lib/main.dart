@@ -37,9 +37,7 @@ main() async {
         BlocProvider(
           create: (_) {
             final taskBloc = TaskBloc(taskLocalRepo);
-            taskBloc.add(
-              TaskInit(),
-            );
+            taskBloc.add(TaskInit());
             return taskBloc;
           },
         ),
@@ -50,11 +48,9 @@ main() async {
         }),
         BlocProvider<SettingsBloc>(
           create: (_) {
-            final localizationsBloc = SettingsBloc();
-            localizationsBloc.add(
-              LoadSavedLocalizations(),
-            );
-            return localizationsBloc;
+            final settingsBloc = SettingsBloc();
+            settingsBloc.add(LoadSavedLocalizations());
+            return settingsBloc;
           },
         ),
       ],

@@ -3,12 +3,10 @@
 part of '../../../index.dart';
 
 class TaskList extends StatelessWidget {
-  final bool darkModeOn;
   final DateTime selectedDate;
 
   const TaskList({
     super.key,
-    required this.darkModeOn,
     required this.selectedDate,
   });
 
@@ -32,8 +30,7 @@ class TaskList extends StatelessWidget {
               .toList();
 
           if (todoList.isEmpty || tasksForSelectedDate.isEmpty) {
-            return EmptyVC(
-              darkModeOn: darkModeOn,
+            return const EmptyVC(
               text: 'امروز برنامه ای نداری',
             );
           } else {

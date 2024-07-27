@@ -32,6 +32,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
   flutter_animate: ^4.5.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -39,12 +40,18 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   build_runner: ^2.4.11
 
+flutter_launcher_icons:
+  android: "ic_launcher"
+  image_path: "assets/images/icon/icon.png"
+  min_sdk_android: 21 
+
 flutter:
   uses-material-design: true
   generate: true
 
   assets:
     - assets/images/svg/
+    - assets/images/icon/
   fonts:
     - family: YekanBakh
       fonts:

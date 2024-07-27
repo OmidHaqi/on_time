@@ -1,10 +1,8 @@
 part of '../../../index.dart';
 
 class NoteList extends StatelessWidget {
-  final bool darkModeOn;
   const NoteList({
     super.key,
-    required this.darkModeOn,
   });
 
   @override
@@ -17,8 +15,7 @@ class NoteList extends StatelessWidget {
         builder: (contxt, builderNotesBox, _) {
           final notesList = builderNotesBox.values.toList();
           if (notesList.isEmpty) {
-            return EmptyVC(
-              darkModeOn: darkModeOn,
+            return const EmptyVC(
               text: 'هنوز یادداشتی اضافه نکردی',
             );
           } else {

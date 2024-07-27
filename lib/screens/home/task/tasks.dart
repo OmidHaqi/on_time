@@ -22,8 +22,6 @@ class _TasksState extends State<Tasks> {
         .toSet()
         .toList();
 
-    final darkModeOn = BlocProvider.of<SettingsBloc>(context).state.themeMode ==
-        ThemeMode.dark;
 
     String day = _selectedDate.toJalali().day.toPersianNumberInt();
     String month = _selectedDate.toJalali().month.toPesianMonth();
@@ -117,7 +115,6 @@ class _TasksState extends State<Tasks> {
           builder: (context, state) {
             if (state is TaskLoadedState) {
               return TaskList(
-                darkModeOn: darkModeOn,
                 selectedDate: _selectedDate,
               );
             } else if (state is DeleteAllTasksState ||
@@ -125,7 +122,6 @@ class _TasksState extends State<Tasks> {
                 state is SaveTaskState ||
                 state is UpdateTaskState) {
               return TaskList(
-                darkModeOn: darkModeOn,
                 selectedDate: _selectedDate,
               );
             } else if (state is TaskError) {

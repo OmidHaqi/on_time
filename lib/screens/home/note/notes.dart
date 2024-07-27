@@ -8,9 +8,6 @@ class Notes extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final darkModeOn = BlocProvider.of<SettingsBloc>(context).state.themeMode ==
-        ThemeMode.dark;
-
     return BlocConsumer<NoteBloc, NoteState>(
       listener: (context, state) {
         if (state is DeleteNoteState) {
@@ -24,12 +21,12 @@ class Notes extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is NoteLoadedState) {
-          return NoteList(darkModeOn: darkModeOn);
+          return NoteList();
         } else if (state is DeleteNoteState ||
             state is UpdateNoteState ||
             state is SaveNoteState ||
             state is DeleteAllNotesState) {
-          return NoteList(darkModeOn: darkModeOn);
+          return NoteList();
         } else if (state is NoteLoadingState) {
           return const LinearProgressIndicator();
         } else if (state is NoteError) {
