@@ -21,7 +21,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-            
               Padding(
                 padding: const EdgeInsets.only(left: AppDimens.small),
                 child: AppIcon(

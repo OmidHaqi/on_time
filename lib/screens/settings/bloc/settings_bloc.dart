@@ -17,24 +17,29 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     add(LoadTheme());
   }
 
-  void _changeLanguage(LoadLocalizations event, Emitter<SettingsState> emit) async {
+  void _changeLanguage(
+      LoadLocalizations event, Emitter<SettingsState> emit) async {
     if (event.locale == state.locale) return;
     await _saveLocale(event.locale);
     emit(state.copyWith(locale: event.locale));
   }
 
-  Future<void> _getLanguage(LoadSavedLocalizations event, Emitter<SettingsState> emit) async {
+  Future<void> _getLanguage(
+      LoadSavedLocalizations event, Emitter<SettingsState> emit) async {
     Locale savedLocale = await _getLocale();
     emit(state.copyWith(locale: savedLocale));
   }
 
-  Future<void> _onThemeChanged(ThemeChanged event, Emitter<SettingsState> emit) async {
+  Future<void> _onThemeChanged(
+      ThemeChanged event, Emitter<SettingsState> emit) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDark', event.isDark);
-    emit(state.copyWith(themeMode: event.isDark ? ThemeMode.dark : ThemeMode.light));
+    emit(state.copyWith(
+        themeMode: event.isDark ? ThemeMode.dark : ThemeMode.light));
   }
 
-  Future<void> _onLoadTheme(LoadTheme event, Emitter<SettingsState> emit) async {
+  Future<void> _onLoadTheme(
+      LoadTheme event, Emitter<SettingsState> emit) async {
     final prefs = await SharedPreferences.getInstance();
     final isDark = prefs.getBool('isDark') ?? false;
     emit(state.copyWith(themeMode: isDark ? ThemeMode.dark : ThemeMode.light));

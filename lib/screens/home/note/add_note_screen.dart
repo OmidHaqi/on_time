@@ -28,13 +28,14 @@ class AddNoteScreen extends StatelessWidget {
                       children: [
                         TextField(
                           controller: _titleController,
-                          style: AppTextStyles.noteTitleTextStyle.apply(color: AppColors.appPrimaryDark),
+                          style: AppTextStyles.noteTitleTextStyle
+                              .apply(color: AppColors.appPrimaryDark),
                           decoration: const InputDecoration(
                             hintText: 'عنوان',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.zero,
-                             hintStyle:
-                            TextStyle(color: Color.fromARGB(132, 22, 25, 40)),
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(132, 22, 25, 40)),
                             counterText: '',
                           ),
                           minLines: 1,
@@ -49,12 +50,13 @@ class AddNoteScreen extends StatelessWidget {
                       children: [
                         TextField(
                           controller: _descriptionController,
-                          style: AppTextStyles.noteDecTextStyle.apply(color:AppColors.appPrimaryDark ),
+                          style: AppTextStyles.noteDecTextStyle
+                              .apply(color: AppColors.appPrimaryDark),
                           decoration: const InputDecoration(
                             hintText: 'یادداشت خودتو اینجا بنویس...',
                             border: InputBorder.none,
-                             hintStyle:
-                            TextStyle(color: Color.fromARGB(132, 22, 25, 40)),
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(132, 22, 25, 40)),
                             contentPadding: EdgeInsets.zero,
                           ),
                           minLines: 2,
@@ -98,10 +100,9 @@ class AddNoteScreen extends StatelessWidget {
                                   },
                                   builder: (context, state) {
                                     return TextButton(
-                                      style: ButtonStyle(
+                                      style: const ButtonStyle(
                                         backgroundColor: WidgetStatePropertyAll(
-                                          AppColors.appPrimaryDark
-                                        ),
+                                            AppColors.appPrimaryDark),
                                       ),
                                       onPressed: () {
                                         if (_titleController.text.isEmpty) {
@@ -132,7 +133,7 @@ class AddNoteScreen extends StatelessWidget {
                                           Navigator.pop(context);
                                         }
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'ثبت',
                                         style: TextStyle(
                                             color: AppColors.appOnPrimaryDark),
@@ -147,7 +148,7 @@ class AddNoteScreen extends StatelessWidget {
                               child: SizedBox(
                                 height: 50,
                                 child: TextButton(
-                                  style: ButtonStyle(
+                                  style: const ButtonStyle(
                                     backgroundColor: WidgetStatePropertyAll(
                                       AppColors.appPrimaryDark,
                                     ),
@@ -155,7 +156,7 @@ class AddNoteScreen extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'بیخیال',
                                     style: TextStyle(
                                         color: AppColors.appOnPrimaryDark),

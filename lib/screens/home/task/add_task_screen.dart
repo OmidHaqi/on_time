@@ -330,21 +330,20 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
   getTimeFromUser({required bool isStartTime}) async {
-    var _pickedTime = await _showTimePicker();
-    print(_pickedTime.format(context));
-    String _formatedTime = _pickedTime.format(context);
-    print(_formatedTime);
-    if (_pickedTime == null)
+    var pickedTime = await _showTimePicker();
+    print(pickedTime.format(context));
+    String formatedTime = pickedTime.format(context);
+    print(formatedTime);
+    if (pickedTime == null) {
       print("time canceld");
-    else if (isStartTime)
+    } else if (isStartTime) {
       setState(() {
-        _startTime = _formatedTime;
+        _startTime = formatedTime;
       });
-    else if (!isStartTime) {
+    } else if (!isStartTime) {
       setState(() {
-        _endTime = _formatedTime;
+        _endTime = formatedTime;
       });
-      //_compareTime();
     }
   }
 

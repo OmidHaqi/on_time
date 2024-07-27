@@ -3,7 +3,7 @@ part of ' ../../../../index.dart';
 Iterable<TaskModel> taskMapTOlist(Box<TaskModel> box) {
   return box.values.map(
     (t) => TaskModel(
-     id:  t.id,
+      id: t.id,
       title: t.title,
       note: t.note,
       isCompleted: t.isCompleted,
@@ -17,15 +17,15 @@ Iterable<TaskModel> taskMapTOlist(Box<TaskModel> box) {
     ),
   );
 }
-  Iterable<NoteModel> noteMapToList(Box<NoteModel> box) {
-    return box.values
-      .map(
-        (n) => NoteModel(
-          id: n.id,
-          title: n.title,
-          description: n.description,
-          color: n.color,
-          dateTime: n.dateTime,
-        ),
-      );
-  }
+
+Iterable<NoteModel> noteMapToList(Box<NoteModel> box) {
+  return box.values.map(
+    (n) => NoteModel(
+      id: n.id,
+      title: n.title,
+      description: n.description,
+      color: n.color,
+      dateTime: n.dateTime,
+    ),
+  );
+}

@@ -7,8 +7,6 @@ class NoteList extends StatelessWidget {
     required this.darkModeOn,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

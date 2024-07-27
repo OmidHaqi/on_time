@@ -8,7 +8,8 @@ class SettingsState extends Equatable {
 
   // Default state
   factory SettingsState.initial() {
-    return const SettingsState(locale: Locale('en'), themeMode: ThemeMode.light);
+    return const SettingsState(
+        locale: Locale('en'), themeMode: ThemeMode.light);
   }
 
   SettingsState copyWith({Locale? locale, ThemeMode? themeMode}) {

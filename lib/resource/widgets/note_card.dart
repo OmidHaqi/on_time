@@ -27,7 +27,8 @@ class NoteCard extends StatelessWidget {
             minHeight: 100,
           ),
           decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.onSurface),
+              border:
+                  Border.all(color: Theme.of(context).colorScheme.onSurface),
               borderRadius: BorderRadius.circular(AppDimens.small)),
           padding: const EdgeInsets.symmetric(
             horizontal: AppDimens.medium,
@@ -40,12 +41,12 @@ class NoteCard extends StatelessWidget {
             children: [
               Flexible(
                 child: AutoSizeText(
-                  
                   note.title,
                   presetFontSizes: const [16, 14, 12, 10, 8],
                   textScaleFactor: 1.3,
                   softWrap: true,
-                  style: AppTextStyles.noteTitleTextStyle.apply(color: AppColors.appPrimaryDark),
+                  style: AppTextStyles.noteTitleTextStyle
+                      .apply(color: AppColors.appPrimaryDark),
                   group: AutoSizeGroup(),
                   overflow: TextOverflow.fade,
                 ),
@@ -55,8 +56,8 @@ class NoteCard extends StatelessWidget {
                   child: Text(
                     note.description,
                     overflow: TextOverflow.clip,
-                     style: AppTextStyles.noteDecTextStyle
-                    .copyWith(color: AppColors.appPrimaryDark,
+                    style: AppTextStyles.noteDecTextStyle.copyWith(
+                      color: AppColors.appPrimaryDark,
                     ),
                   ),
                 ),

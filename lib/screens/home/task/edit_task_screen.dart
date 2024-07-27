@@ -72,7 +72,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppDimens.small),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppDimens.small),
                   child: ListView(
                     children: [
                       InputField(
@@ -207,8 +208,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                     _selectedRepeat = newValue!;
                                   });
                                 },
-                                items: repeatList
-                                    .map<DropdownMenuItem<String>>((String value) {
+                                items: repeatList.map<DropdownMenuItem<String>>(
+                                    (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -222,117 +223,112 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           ],
                         ),
                       ),
-                  
                     ],
                   ),
                 ),
               ),
               Padding(
-                    padding: const EdgeInsets.only(right:  AppDimens.small),
-                    child: Column(
-                      children: [
-                        const TodoColorSelector(),
-                        
-                        Padding(
-                          padding: const EdgeInsets.all(AppDimens.small),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: SizedBox(
-                                  height: 50,
-                                  child: BlocConsumer<TaskBloc, TaskState>(
-                                    listener: (context, state) {
-                                      if (state is SaveTaskState) {
+                padding: const EdgeInsets.only(right: AppDimens.small),
+                child: Column(
+                  children: [
+                    const TodoColorSelector(),
+                    Padding(
+                      padding: const EdgeInsets.all(AppDimens.small),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: BlocConsumer<TaskBloc, TaskState>(
+                                listener: (context, state) {
+                                  if (state is SaveTaskState) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        duration: Duration(milliseconds: 500),
+                                        content: Text(
+                                          'Add Task',
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return TextButton(
+                                    style: const ButtonStyle(
+                                      backgroundColor: WidgetStatePropertyAll(
+                                          AppColors.appPrimaryDark),
+                                    ),
+                                    onPressed: () {
+                                      if (titleController.text.isEmpty) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
-                                            duration: Duration(milliseconds: 500),
                                             content: Text(
-                                              'Add Task',
-                                            ),
+                                                "please complete all the fields"),
                                           ),
                                         );
+                                      } else {
+                                        BlocProvider.of<TaskBloc>(context).add(
+                                          UpdateTaskEvent(
+                                            TaskModel(
+                                              id: taskList.id,
+                                              title: titleController.text,
+                                              note: noteController.text,
+                                              place: placeController.text,
+                                              isCompleted: 0,
+                                              date: _selectedDate,
+                                              startTime: _startTime,
+                                              endTime: _endTime,
+                                              color: _taskSelectedColor,
+                                              remind: _selectedRemind,
+                                              repeat: _selectedRepeat,
+                                            ),
+                                            taskList.id,
+                                          ),
+                                        );
+
+                                        Navigator.pop(context);
                                       }
                                     },
-                                    builder: (context, state) {
-                                      return TextButton(
-                                        style: const ButtonStyle(
-                                          backgroundColor: WidgetStatePropertyAll(
-                                            AppColors.appPrimaryDark
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          if (titleController.text.isEmpty) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                    "please complete all the fields"),
-                                              ),
-                                            );
-                                          } else {
-                                            BlocProvider.of<TaskBloc>(context)
-                                                .add(
-                                              UpdateTaskEvent(
-                                                TaskModel(
-                                                  id: taskList.id,
-                                                  title: titleController.text,
-                                                  note: noteController.text,
-                                                  place: placeController.text,
-                                                  isCompleted: 0,
-                                                  date: _selectedDate,
-                                                  startTime: _startTime,
-                                                  endTime: _endTime,
-                                                  color: _taskSelectedColor,
-                                                  remind: _selectedRemind,
-                                                  repeat: _selectedRepeat,
-                                                ),
-                                                taskList.id,
-                                              ),
-                                            );
-                          
-                                            Navigator.pop(context);
-                                          }
-                                        },
-                                        child: const Text(
-                                          'ثبت',
-                                          style: TextStyle(
-                                              color: AppColors.appOnPrimaryDark),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                              AppDimens.small.width,
-                              Expanded(
-                                child: SizedBox(
-                                  height: 50,
-                                  child: TextButton(
-                                    style: const ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                        AppColors.appPrimaryDark,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
                                     child: const Text(
-                                      'بیخیال',
+                                      'ثبت',
                                       style: TextStyle(
                                           color: AppColors.appOnPrimaryDark),
                                     ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          AppDimens.small.width,
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: TextButton(
+                                style: const ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                    AppColors.appPrimaryDark,
                                   ),
                                 ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  'بیخیال',
+                                  style: TextStyle(
+                                      color: AppColors.appOnPrimaryDark),
+                                ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -343,19 +339,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
   getTimeFromUser({required bool isStartTime}) async {
-    var _pickedTime = await _showTimePicker();
-    print(_pickedTime.format(context));
-    String _formatedTime = _pickedTime.format(context);
-    print(_formatedTime);
-    if (_pickedTime == null)
+    var pickedTime = await _showTimePicker();
+    String formatedTime = pickedTime.format(context);
+    if (pickedTime == null) {
       print("time canceld");
-    else if (isStartTime)
+    } else if (isStartTime) {
       setState(() {
-        _startTime = _formatedTime;
+        _startTime = formatedTime;
       });
-    else if (!isStartTime) {
+    } else if (!isStartTime) {
       setState(() {
-        _endTime = _formatedTime;
+        _endTime = formatedTime;
       });
       //_compareTime();
     }
@@ -370,15 +364,15 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   }
 
   getDateFromUser() async {
-    final DateTime? _pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: _selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
-    if (_pickedDate != null) {
+    if (pickedDate != null) {
       setState(() {
-        _selectedDate = _pickedDate;
+        _selectedDate = pickedDate;
       });
     }
   }

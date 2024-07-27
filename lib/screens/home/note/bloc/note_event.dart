@@ -6,7 +6,9 @@ sealed class NoteEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 class NoteInit extends NoteEvent {}
+
 class NoteLoadedEvent extends NoteEvent {
   final List<NoteModel> allNoteList;
   const NoteLoadedEvent(this.allNoteList);

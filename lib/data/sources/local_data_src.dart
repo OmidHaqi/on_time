@@ -86,7 +86,7 @@ class NoteLocalDataSrc implements INoteDataSrc {
     final box = await Hive.openBox<NoteModel>(noteBoxName);
     var uuid = const Uuid();
     note.id = uuid.v4();
-    box.put(note.id,note);
+    box.put(note.id, note);
     return noteMapToList(box).toList();
   }
 

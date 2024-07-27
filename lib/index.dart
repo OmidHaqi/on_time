@@ -21,7 +21,6 @@ import 'package:persian_horizontal_date_picker/persian_horizontal_date_picker.da
 import 'package:uuid/uuid.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-
 part 'screens/my_app.dart';
 part 'screens/settings/settings_page.dart';
 part 'screens/home/task/add_task_screen.dart';

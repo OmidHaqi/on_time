@@ -22,8 +22,8 @@ class _TasksState extends State<Tasks> {
         .toSet()
         .toList();
 
-    final darkModeOn =
-        BlocProvider.of<SettingsBloc>(context).state.themeMode == ThemeMode.dark;
+    final darkModeOn = BlocProvider.of<SettingsBloc>(context).state.themeMode ==
+        ThemeMode.dark;
 
     String day = _selectedDate.toJalali().day.toPersianNumberInt();
     String month = _selectedDate.toJalali().month.toPesianMonth();

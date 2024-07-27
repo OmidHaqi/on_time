@@ -1,4 +1,5 @@
 part of '../index.dart';
+
 class AppDimens {
   AppDimens._();
   static const double small = 8;

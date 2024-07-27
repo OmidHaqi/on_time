@@ -8,19 +8,19 @@ class Notes extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final darkModeOn =
-        BlocProvider.of<SettingsBloc>(context).state.themeMode == ThemeMode.dark;
+    final darkModeOn = BlocProvider.of<SettingsBloc>(context).state.themeMode ==
+        ThemeMode.dark;
 
     return BlocConsumer<NoteBloc, NoteState>(
       listener: (context, state) {
         if (state is DeleteNoteState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  duration: Duration(seconds: 1),
-                  content: Text('note Delete'),
-                ),
-              );
-            }
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              duration: Duration(seconds: 1),
+              content: Text('note Delete'),
+            ),
+          );
+        }
       },
       builder: (context, state) {
         if (state is NoteLoadedState) {

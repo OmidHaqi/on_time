@@ -21,9 +21,8 @@ class ColorItem extends StatelessWidget {
         height: 45,
         alignment: Alignment.center,
         margin: const EdgeInsets.all(3),
-        decoration:const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.appPrimaryDark),
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: AppColors.appPrimaryDark),
         child: Container(
           width: 43,
           height: 43,
@@ -33,8 +32,7 @@ class ColorItem extends StatelessWidget {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Color(colorCode),
-              border:
-                  Border.all(color: AppColors.appOnPrimaryDark)),
+              border: Border.all(color: AppColors.appOnPrimaryDark)),
           child: isSelected
               ? const Icon(
                   Icons.check,

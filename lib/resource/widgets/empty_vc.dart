@@ -1,4 +1,5 @@
 part of '../../index.dart';
+
 class EmptyVC extends StatelessWidget {
   const EmptyVC({
     super.key,

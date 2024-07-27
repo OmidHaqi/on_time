@@ -61,7 +61,6 @@ class AppTextStyles {
   static const TextStyle noteDecTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 20,
-    
   );
   static const TextStyle noteDateTimeTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
