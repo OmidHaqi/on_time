@@ -11,9 +11,9 @@ class EditTaskScreen extends StatefulWidget {
 class _EditTaskScreenState extends State<EditTaskScreen> {
   DateTime _selectedDate = DateTime.now();
 
-  String _startTime = "8:30";
+  String _startTime = "";
 
-  String _endTime = "9:30";
+  String _endTime = "";
 
   int _selectedRemind = 5;
 
@@ -277,7 +277,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                               title: titleController.text,
                                               note: noteController.text,
                                               place: placeController.text,
-                                              isCompleted: 0,
+                                              isCompleted: false,
                                               date: _selectedDate,
                                               startTime: _startTime,
                                               endTime: _endTime,
@@ -357,14 +357,16 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
   _showTimePicker() async {
     return showTimePicker(
+      
       initialTime: const TimeOfDay(hour: 8, minute: 30),
-      initialEntryMode: TimePickerEntryMode.input,
+      initialEntryMode: TimePickerEntryMode.dialOnly,
       context: context,
     );
   }
 
   getDateFromUser() async {
     final DateTime? pickedDate = await showDatePicker(
+      locale:Locale('fa'),
         context: context,
         initialDate: _selectedDate,
         initialDatePickerMode: DatePickerMode.day,

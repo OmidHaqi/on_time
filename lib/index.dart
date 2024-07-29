@@ -21,6 +21,7 @@ import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_horizontal_date_picker/persian_horizontal_date_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
@@ -52,3 +53,5 @@ part 'screens/home/note/add_note_screen.dart';
 part 'screens/home/note/edit_note_screen.dart';
 part 'screens/home/note/note_list.dart';
 part 'screens/splash_screen.dart';
+part 'screens/intro/intro_screen.dart';
+part 'resource/widgets/into_vc.dart';

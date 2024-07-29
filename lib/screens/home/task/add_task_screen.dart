@@ -1,14 +1,10 @@
 part of '../../../index.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final String endTime;
-  final String startTime;
   final DateTime date;
 
   const AddTaskScreen(
       {super.key,
-      required this.endTime,
-      required this.startTime,
       required this.date});
 
   @override
@@ -22,9 +18,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController noteController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
 
-  String _startTime = "8:30";
+  String _startTime = "";
 
-  String _endTime = "9:30";
+  String _endTime = "";
 
   int _selectedRemind = 5;
 
@@ -46,8 +42,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _startTime = widget.startTime;
-    _endTime = widget.endTime;
     _selectedDate = widget.date;
 
     String day = _selectedDate.day.toPersianNumberInt();
@@ -271,7 +265,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             title: titleController.text,
                                             note: noteController.text,
                                             place: placeController.text,
-                                            isCompleted: 0,
+                                            isCompleted: false,
                                             date: _selectedDate,
                                             startTime: _startTime,
                                             endTime: _endTime,

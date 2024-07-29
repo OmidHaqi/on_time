@@ -48,7 +48,7 @@ main() async {
           noteBloc.add(NoteInit());
           return noteBloc;
         }),
-        BlocProvider<SettingsBloc>(
+        BlocProvider(
           create: (_) {
             final settingsBloc = SettingsBloc();
             settingsBloc.add(LoadSavedLocalizations());

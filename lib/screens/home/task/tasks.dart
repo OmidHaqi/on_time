@@ -73,11 +73,6 @@ class _TasksState extends State<Tasks> {
                     CupertinoPageRoute(
                       builder: (context) => AddTaskScreen(
                         date: _selectedDate,
-                        startTime: TimeOfDay.fromDateTime(DateTime.now())
-                            .format(context),
-                        endTime: TimeOfDay.fromDateTime(
-                                DateTime.now().add(const Duration(hours: 2)))
-                            .format(context),
                       ),
                     ),
                   );
