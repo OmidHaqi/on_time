@@ -14,7 +14,7 @@ class TaskModel extends HiveObject {
   final String note;
 
   @HiveField(3)
-  final int isCompleted;
+  bool isCompleted;
 
   @HiveField(4)
   final DateTime date;
