@@ -8,18 +8,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  late bool _isFirstRun;
+  
+  void _checkFirstRun() async {
+    bool ifr = await IsFirstRun.isFirstRun();
+    setState(() {
+      _isFirstRun = ifr;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
+    _checkFirstRun();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         Future.delayed(
           const Duration(seconds: 2),
           () => Navigator.pushReplacement(
             context,
-            CupertinoPageRoute(
-              builder: (_) => const HomePage(),
+            MaterialPageRoute(
+              builder: (_) =>
+                  _isFirstRun ? const IntroScreen() : const HomePage(),
+                  // const IntroScreen()
             ),
           ),
         );
@@ -41,7 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 duration: const Duration(
                   milliseconds: 1000,
                 ),
-                
               ),
         ),
       ),
