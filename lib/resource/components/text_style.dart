@@ -58,6 +58,11 @@ class AppTextStyles {
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle introScreenBtnTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+  );
   static const TextStyle noteDecTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontSize: 20,
@@ -66,9 +71,18 @@ class AppTextStyles {
     fontFamily: 'YekanBakh',
     fontSize: 18,
   );
-    static const TextStyle splashScreenTextStyle = TextStyle(
+  static const TextStyle splashScreenTextStyle = TextStyle(
     fontFamily: 'YekanBakh',
     fontWeight: FontWeight.w800,
     fontSize: 45,
+  );
+  static const TextStyle introScreenDesTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
+    fontWeight: FontWeight.w400,
+    fontSize: 22,
+  );
+  static const TextStyle isComplatedTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',  
+    fontWeight: FontWeight.w700,
   );
 }
