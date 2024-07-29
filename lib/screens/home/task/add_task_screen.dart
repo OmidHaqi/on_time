@@ -12,15 +12,14 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  DateTime _selectedDate = DateTime.now();
+  Jalali _selectedDate = Jalali.now();
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
 
-  String _startTime = "";
+   String _startTime = '';
 
-  String _endTime = "";
 
   int _selectedRemind = 5;
 
@@ -42,10 +41,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _selectedDate = widget.date;
+    _selectedDate = widget.date.toJalali();
 
     String day = _selectedDate.day.toPersianNumberInt();
-    String month = _selectedDate.month.toPersianNumberInt();
+    String month = _selectedDate.month.toPesianMonth();
     String year = _selectedDate.year.toPersianNumberInt();
     return SafeArea(
       child: Scaffold(
@@ -107,38 +106,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           color: AppColors.appPrimaryDark,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: InputField(
-                              hint: _startTime,
-                              onTap: () {
-                                getTimeFromUser(isStartTime: true);
-                              },
-                              readOnly: true,
-                              suffixIcon: const Icon(
-                                Icons.timer_rounded,
-                                color: AppColors.appPrimaryDark,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Expanded(
-                            child: InputField(
-                              hint: _endTime,
-                              readOnly: true,
-                              onTap: () {
-                                getTimeFromUser(isStartTime: false);
-                              },
-                              suffixIcon: const Icon(
-                                Icons.timer_off_rounded,
-                                color: AppColors.appPrimaryDark,
-                              ),
-                            ),
-                          )
-                        ],
+                      InputField(
+                        hint: _startTime =='' ? 'ساعت' :_startTime,
+                        onTap: () {
+                          getTimeFromUser(isStartTime: true);
+                        },
+                        readOnly: true,
+                        suffixIcon: const Icon(
+                          Icons.timer_rounded,
+                          color: AppColors.appPrimaryDark,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(AppDimens.small),
@@ -266,9 +243,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             note: noteController.text,
                                             place: placeController.text,
                                             isCompleted: false,
-                                            date: _selectedDate,
+                                            date: _selectedDate.toDateTime(),
                                             startTime: _startTime,
-                                            endTime: _endTime,
+                                            endTime: '',
                                             color: _taskSelectedColor,
                                             remind: _selectedRemind,
                                             repeat: _selectedRepeat,
@@ -321,41 +298,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
-  getTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await _showTimePicker();
-    print(pickedTime.format(context));
-    String formatedTime = pickedTime.format(context);
-    print(formatedTime);
-    if (pickedTime == null) {
-      print("time canceld");
-    } else if (isStartTime) {
-      setState(() {
-        _startTime = formatedTime;
-      });
-    } else if (!isStartTime) {
-      setState(() {
-        _endTime = formatedTime;
-      });
-    }
-  }
-
-  _showTimePicker() async {
-    return showTimePicker(
+Future<void> getTimeFromUser({required bool isStartTime}) async {
+  var pickedTime = await showPersianTimePicker(
+    initialEntryMode: PTimePickerEntryMode.dialOnly,
       initialTime: const TimeOfDay(hour: 8, minute: 30),
-      initialEntryMode: TimePickerEntryMode.input,
       context: context,
     );
+  
+  if (pickedTime == null) {
+    return;
   }
 
+  // Ensure the widget is still mounted before accessing context
+  if (!mounted) return;
+
+  String formattedTime = pickedTime.format(context);
+
+  setState(() {
+    if (isStartTime) {
+      _startTime = formattedTime;
+    }
+  });
+}
+
+
   getDateFromUser() async {
-    final DateTime? pickedDate = await showDatePicker(
+    final Jalali? pickedDate = await showPersianDatePicker(
+      
         context: context,
-        initialDate: _selectedDate,
-        initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+        initialDate: _selectedDate, firstDate: Jalali(1300), lastDate: Jalali(1500),);
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;

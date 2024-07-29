@@ -21,12 +21,12 @@ class Notes extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is NoteLoadedState) {
-          return NoteList();
+          return const NoteList();
         } else if (state is DeleteNoteState ||
             state is UpdateNoteState ||
             state is SaveNoteState ||
             state is DeleteAllNotesState) {
-          return NoteList();
+          return const NoteList();
         } else if (state is NoteLoadingState) {
           return const LinearProgressIndicator();
         } else if (state is NoteError) {
