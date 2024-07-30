@@ -1,3 +1,5 @@
+
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,3 +57,4 @@ part 'screens/home/note/note_list.dart';
 part 'screens/splash_screen.dart';
 part 'screens/intro/intro_screen.dart';
 part 'resource/widgets/into_vc.dart';
+part 'resource/widgets/dialog.dart';

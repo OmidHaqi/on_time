@@ -28,12 +28,15 @@ class InputField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
       child: TextFormField(
+        
+        maxLength: 35,
         style: const TextStyle(color: AppColors.appPrimaryDark),
         autofocus: false,
         onTap: onTap,
         readOnly: readOnly,
         controller: controller,
         decoration: InputDecoration(
+          counterText: '',
             enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.appPrimaryDark)),
             disabledBorder: const OutlineInputBorder(

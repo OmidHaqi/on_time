@@ -46,9 +46,13 @@ class _TaskCardState extends State<TaskCard> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                             top: AppDimens.small,
-                            bottom: AppDimens.small,
+                            bottom: widget.taskList.startTime.isEmpty &&
+                                    widget.taskList.place.isEmpty &&
+                                    widget.taskList.note.isEmpty
+                                ? AppDimens.small
+                                : 0,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,19 +103,29 @@ class _TaskCardState extends State<TaskCard> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: widget.taskList.startTime.isEmpty &&
-                                          widget.taskList.place.isEmpty &&
-                                          widget.taskList.note.isEmpty
-                                      ? AppDimens.large
-                                      : AppDimens.small,
+                                  horizontal:
+                                      widget.taskList.startTime.isEmpty &&
+                                              widget.taskList.place.isEmpty &&
+                                              widget.taskList.note.isEmpty
+                                          ? AppDimens.large
+                                          : AppDimens.small,
                                 ),
-                                child: Text(
-                                  widget.taskList.title,
-                                  style: AppTextStyles.taskTitleTextStyle.apply(
-                                    color: AppColors.appPrimaryDark,
-                                    decoration: widget.taskList.isCompleted
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
+                                child: Flexible(
+                                  child: SizedBox(
+                                    width: 210,
+                                    child: Text(
+                                      textDirection: TextDirection.rtl,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      widget.taskList.title,
+                                      style: AppTextStyles.taskTitleTextStyle
+                                          .apply(
+                                        color: AppColors.appPrimaryDark,
+                                        decoration: widget.taskList.isCompleted
+                                            ? TextDecoration.lineThrough
+                                            : TextDecoration.none,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -141,16 +155,19 @@ class _TaskCardState extends State<TaskCard> {
                                       children: [
                                         if (widget.taskList.isCompleted)
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.only(bottom: 5),
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5),
                                             child: RotatedBox(
                                               quarterTurns: 75,
                                               child: Column(
                                                 children: [
-                                                   Text(
+                                                  Text(
                                                     AppStrings.done,
                                                     style: AppTextStyles
-                                                        .isComplatedTextStyle.apply(color: AppColors.appPrimaryDark),
+                                                        .isComplatedTextStyle
+                                                        .apply(
+                                                            color: AppColors
+                                                                .appPrimaryDark),
                                                   ),
                                                   Container(
                                                     color: Colors.black,
@@ -175,9 +192,11 @@ class _TaskCardState extends State<TaskCard> {
                                       ],
                                     )).animate().moveX(),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        if (widget.taskList.startTime.isNotEmpty)
+                                        if (widget
+                                            .taskList.startTime.isNotEmpty)
                                           RichText(
                                             textDirection: TextDirection.rtl,
                                             text: TextSpan(
@@ -187,10 +206,11 @@ class _TaskCardState extends State<TaskCard> {
                                                   style: AppTextStyles
                                                       .taskInfoTitleTextStyle
                                                       .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
                                                     decoration: widget
-                                                            .taskList.isCompleted
+                                                            .taskList
+                                                            .isCompleted
                                                         ? TextDecoration
                                                             .lineThrough
                                                         : TextDecoration.none,
@@ -202,10 +222,11 @@ class _TaskCardState extends State<TaskCard> {
                                                   style: AppTextStyles
                                                       .taskInfoTextStyle
                                                       .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
                                                     decoration: widget
-                                                            .taskList.isCompleted
+                                                            .taskList
+                                                            .isCompleted
                                                         ? TextDecoration
                                                             .lineThrough
                                                         : TextDecoration.none,
@@ -215,53 +236,57 @@ class _TaskCardState extends State<TaskCard> {
                                             ),
                                           ),
                                         if (widget.taskList.place.isNotEmpty)
-                                          RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: 'مکان ',
-                                                  style: AppTextStyles
-                                                      .taskInfoTitleTextStyle
-                                                      .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList.isCompleted
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
+                                                ' ${widget.taskList.place} ',
+                                                style: AppTextStyles
+                                                    .taskInfoTextStyle.apply(
+                                                    color: AppColors
+                                                        .appPrimaryDark,
+                                                    decoration: widget.taskList
+                                                            .isCompleted
                                                         ? TextDecoration
                                                             .lineThrough
                                                         : TextDecoration.none,
                                                   ),
+                                              ),
+                                              Text(
+                                                ':مکان',
+                                                style: AppTextStyles
+                                                    .taskInfoTitleTextStyle
+                                                    .apply(
+                                                  color: AppColors
+                                                      .appPrimaryDark,
+                                                  decoration: widget.taskList
+                                                          .isCompleted
+                                                      ? TextDecoration
+                                                          .lineThrough
+                                                      : TextDecoration.none,
                                                 ),
-                                                TextSpan(
-                                                  text: widget.taskList.place,
-                                                  style: AppTextStyles
-                                                      .taskInfoTextStyle
-                                                      .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList.isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         if (widget.taskList.note.isNotEmpty)
                                           RichText(
+                                            maxLines: 1,
+                                            overflow: TextOverflow.fade,
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
-                                                  text: 'یادداشت ',
+                                                  text: 'یادداشت: ',
                                                   style: AppTextStyles
                                                       .taskInfoTitleTextStyle
                                                       .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
                                                     decoration: widget
-                                                            .taskList.isCompleted
+                                                            .taskList
+                                                            .isCompleted
                                                         ? TextDecoration
                                                             .lineThrough
                                                         : TextDecoration.none,
@@ -272,10 +297,11 @@ class _TaskCardState extends State<TaskCard> {
                                                   style: AppTextStyles
                                                       .taskInfoTextStyle
                                                       .apply(
-                                                    color:
-                                                        AppColors.appPrimaryDark,
+                                                    color: AppColors
+                                                        .appPrimaryDark,
                                                     decoration: widget
-                                                            .taskList.isCompleted
+                                                            .taskList
+                                                            .isCompleted
                                                         ? TextDecoration
                                                             .lineThrough
                                                         : TextDecoration.none,

@@ -85,4 +85,8 @@ class AppTextStyles {
     fontFamily: 'YekanBakh',  
     fontWeight: FontWeight.w700,
   );
+    static const TextStyle selectedTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',  
+    fontWeight: FontWeight.bold,
+  );
 }
