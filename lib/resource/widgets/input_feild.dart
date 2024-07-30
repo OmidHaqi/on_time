@@ -29,7 +29,7 @@ class InputField extends StatelessWidget {
       margin: const EdgeInsets.only(top: 16.0),
       child: TextFormField(
         
-        maxLength: 35,
+        maxLength: 20,
         style: const TextStyle(color: AppColors.appPrimaryDark),
         autofocus: false,
         onTap: onTap,

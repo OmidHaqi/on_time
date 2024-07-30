@@ -110,21 +110,19 @@ class _TaskCardState extends State<TaskCard> {
                                           ? AppDimens.large
                                           : AppDimens.small,
                                 ),
-                                child: Flexible(
-                                  child: SizedBox(
-                                    width: 210,
-                                    child: Text(
-                                      textDirection: TextDirection.rtl,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      widget.taskList.title,
-                                      style: AppTextStyles.taskTitleTextStyle
-                                          .apply(
-                                        color: AppColors.appPrimaryDark,
-                                        decoration: widget.taskList.isCompleted
-                                            ? TextDecoration.lineThrough
-                                            : TextDecoration.none,
-                                      ),
+                                child: SizedBox(
+                                  width: 160,
+                                  child: Text(
+                                    textDirection: TextDirection.rtl,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    widget.taskList.title,
+                                    style: AppTextStyles.taskTitleTextStyle
+                                        .apply(
+                                      color: AppColors.appPrimaryDark,
+                                      decoration: widget.taskList.isCompleted
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
                                     ),
                                   ),
                                 ),

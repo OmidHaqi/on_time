@@ -1,8 +1,8 @@
 {
     "@@locale": "en",
     "name": "On . Time",
-    "language": "Language",
-    "settings":"Settings",
-    "theme":"theme",
-    "darkMode":"Dark mode"
+    "language": "زبان",
+    "settings":"تنظیمات",
+    "theme":"تم",
+    "darkMode":"حالت تاریک"
 }

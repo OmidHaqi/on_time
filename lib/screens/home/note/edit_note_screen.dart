@@ -58,14 +58,18 @@ class EditNoteScreen extends StatelessWidget {
                                     note.id,
                                   ),
                                 );
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                );
                               },
                               onTapSecendaryBtn: () {
                                 Navigator.pop(context);
                               },
                               secendaryBtn: 'دستم خورد',
-                            );  
-
+                            );
                           },
                           icon: const Icon(
                             Icons.delete_rounded,
@@ -132,7 +136,7 @@ class EditNoteScreen extends StatelessWidget {
                                       const SnackBar(
                                         duration: Duration(milliseconds: 500),
                                         content: Text(
-                                          'Update Note',
+                                          'یادداشت با موفقیت ویرایش شد',textDirection: TextDirection.rtl,
                                         ),
                                       ),
                                     );
@@ -151,7 +155,8 @@ class EditNoteScreen extends StatelessWidget {
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                                "please complete all the fields"),
+                                              "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,
+                                            ),
                                           ),
                                         );
                                       } else {

@@ -20,25 +20,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
    String _startTime = '';
 
-
-  int _selectedRemind = 5;
-
-  List<int> remindList = [
-    5,
-    10,
-    15,
-    20,
-  ];
-
-  String _selectedRepeat = 'هیچ کدام';
-
-  List<String> repeatList = [
-    'هیچ کدام',
-    'هر روز',
-    'هر هفته',
-    'هر ماه',
-  ];
-
   @override
   Widget build(BuildContext context) {
     _selectedDate = widget.date.toJalali();
@@ -136,76 +117,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           )
                         ],
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(AppDimens.small),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       const Text(
-                      //         'هر چند دقیقه یادت بندازم؟',
-                      //         style: TextStyle(color: AppColors.appPrimaryDark),
-                      //       ),
-                      //       DropdownButton<String>(
-                      //           value: _selectedRemind.toString(),
-                      //           icon: const Icon(
-                      //             Icons.keyboard_arrow_down,
-                      //             color: AppColors.appPrimaryDark,
-                      //           ),
-                      //           iconSize: 32,
-                      //           onChanged: (String? newValue) {
-                      //             setState(() {
-                      //               _selectedRemind = int.parse(newValue!);
-                      //             });
-                      //           },
-                      //           items: remindList
-                      //               .map<DropdownMenuItem<String>>((int value) {
-                      //             return DropdownMenuItem<String>(
-                      //               value: value.toString(),
-                      //               child: Text(
-                      //                 value.toString(),
-                      //                 style: const TextStyle(
-                      //                     color: AppColors.appPrimaryDark),
-                      //               ),
-                      //             );
-                      //           }).toList()),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(AppDimens.small),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       const Text(
-                      //         'کی به کی یادت بندازم؟',
-                      //         style: TextStyle(color: AppColors.appPrimaryDark),
-                      //       ),
-                      //       DropdownButton<String>(
-                      //           value: _selectedRepeat.toString(),
-                      //           icon: const Icon(
-                      //             Icons.keyboard_arrow_down,
-                      //             color: AppColors.appPrimaryDark,
-                      //           ),
-                      //           iconSize: 32,
-                      //           onChanged: (String? newValue) {
-                      //             setState(() {
-                      //               _selectedRepeat = newValue!;
-                      //             });
-                      //           },
-                      //           items: repeatList.map<DropdownMenuItem<String>>(
-                      //               (String value) {
-                      //             return DropdownMenuItem<String>(
-                      //               value: value,
-                      //               child: Text(
-                      //                 value,
-                      //                 style: const TextStyle(
-                      //                     color: AppColors.appPrimaryDark),
-                      //               ),
-                      //             );
-                      //           }).toList()),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -232,7 +143,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     const SnackBar(
                                       duration: Duration(milliseconds: 500),
                                       content: Text(
-                                        'Add Task',
+                                        'تسک با موفقیت اضافه شد',textDirection: TextDirection.rtl,
                                       ),
                                     ),
                                   );
@@ -250,7 +161,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                           .showSnackBar(
                                         const SnackBar(
                                           content: Text(
-                                              "please complete all the fields"),
+                                              "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,),
                                         ),
                                       );
                                     } else {
@@ -266,8 +177,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             startTime: _startTime,
                                             endTime: '',
                                             color: _taskSelectedColor,
-                                            remind: _selectedRemind,
-                                            repeat: _selectedRepeat,
+                                            remind: 0,
+                                            repeat: '',
                                           ),
                                         ),
                                       );

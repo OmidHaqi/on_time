@@ -52,7 +52,7 @@ class _TasksState extends State<Tasks> {
             hasSelectedItemShadow: false,
             initialSelectedDate: DateTime.now(),
             datePickerHeight: 90,
-            startDate: DateTime.now(),
+            startDate: DateTime(2024, 6, 31),
             endDate: DateTime.now().add(const Duration(days: 30)),
             backgroundColor: Colors.transparent,
             textColor: Theme.of(context).colorScheme.onSurface,
@@ -106,8 +106,10 @@ class _TasksState extends State<Tasks> {
             if (state is DeleteTaskState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
+                  
                   duration: Duration(seconds: 1),
-                  content: Text('task Delete'),
+                  content: Text('تسک با موفقیت حذف شد ',
+                  textDirection: TextDirection.rtl,),
                 ),
               );
             }
@@ -125,7 +127,7 @@ class _TasksState extends State<Tasks> {
                 selectedDate: _selectedDate,
               );
             } else if (state is TaskError) {
-              return const Text('ERROR');
+              return const Text('خطا');
             } else if (state is TaskLoadingState) {
               return const LinearProgressIndicator();
             } else {

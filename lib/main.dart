@@ -13,6 +13,7 @@ import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 main() async {
+  ErrorWidget.builder = (_) => const AppErrorWidget();
   WidgetsFlutterBinding.ensureInitialized();
   Directory directory = await getApplicationDocumentsDirectory();
   Hive
@@ -42,8 +43,7 @@ main() async {
             return taskBloc;
           },
         ),
-        BlocProvider(
-          create: (_) {
+        BlocProvider(create: (_) {
           final noteBloc = NoteBloc(noteLocalRepo);
           noteBloc.add(NoteInit());
           return noteBloc;
@@ -60,4 +60,19 @@ main() async {
       child: const MyApp(),
     ),
   );
+}
+
+class AppErrorWidget extends StatelessWidget {
+  const AppErrorWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.grey,
+      body: Center(
+        child: Text(
+            '##########################################Error######################################################'),
+      ),
+    );
+  }
 }

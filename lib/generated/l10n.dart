@@ -60,40 +60,40 @@ class S {
     );
   }
 
-  /// `Language`
+  /// `زبان`
   String get language {
     return Intl.message(
-      'Language',
+      'زبان',
       name: 'language',
       desc: '',
       args: [],
     );
   }
 
-  /// `Settings`
+  /// `تنظیمات`
   String get settings {
     return Intl.message(
-      'Settings',
+      'تنظیمات',
       name: 'settings',
       desc: '',
       args: [],
     );
   }
 
-  /// `theme`
+  /// `تم`
   String get theme {
     return Intl.message(
-      'theme',
+      'تم',
       name: 'theme',
       desc: '',
       args: [],
     );
   }
 
-  /// `Dark mode`
+  /// `حالت تاریک`
   String get darkMode {
     return Intl.message(
-      'Dark mode',
+      'حالت تاریک',
       name: 'darkMode',
       desc: '',
       args: [],

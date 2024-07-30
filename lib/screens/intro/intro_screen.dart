@@ -42,41 +42,6 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                 ],
               ),
-              
-              // SizedBox(
-              //   width: double.infinity,
-              //   height: 400,
-              //   child: PageView.builder(
-              //       physics: const NeverScrollableScrollPhysics(
-              //         parent: ClampingScrollPhysics(),
-              //       ),
-              //       itemCount: 3,
-              //       controller: controller,
-              //       itemBuilder: (context, index) {
-              //         if (selectedIndex == 0) {
-              //           return IntoVC(
-              //             index: index,
-              //             text: AppStrings.goal,
-              //             darkVC: Assets.images.svg.vcIntroOneDark,
-              //             lightVC: Assets.images.svg.vcIntroOneLight,
-              //           );
-              //         } else if (selectedIndex == 1) {
-              //           return IntoVC(
-              //             index: index,
-              //             text: AppStrings.plan,
-              //             darkVC: Assets.images.svg.vcIntroTwoDark,
-              //             lightVC: Assets.images.svg.vcIntroTwoLight,
-              //           );
-              //         } else {
-              //           return IntoVC(
-              //             index: index,
-              //             text: AppStrings.target,
-              //             darkVC: Assets.images.svg.vcIntroThreeDark,
-              //             lightVC: Assets.images.svg.vcIntroThreeLight,
-              //           );
-              //         }
-              //       }),
-              // ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: AppDimens.large, vertical: AppDimens.large),
@@ -91,7 +56,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     ),
                     onPressed: () {
                       if (pageIndex == 2) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const HomePage()),

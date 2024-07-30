@@ -31,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(
               builder: (_) =>
                   _isFirstRun ? const IntroScreen() : const HomePage(),
-                  // const IntroScreen()
             ),
           ),
         );
