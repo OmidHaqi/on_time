@@ -106,16 +106,35 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           color: AppColors.appPrimaryDark,
                         ),
                       ),
-                      InputField(
-                        hint: _startTime =='' ? 'ساعت' :_startTime,
-                        onTap: () {
-                          getTimeFromUser(isStartTime: true);
-                        },
-                        readOnly: true,
-                        suffixIcon: const Icon(
-                          Icons.timer_rounded,
-                          color: AppColors.appPrimaryDark,
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: InputField(
+                              hint: _startTime == '' ? 'ساعت' : _startTime,
+                              onTap: () {
+                                getTimeFromUser(isStartTime: true);
+                              },
+                              readOnly: true,
+                              suffixIcon: const Icon(
+                                Icons.timer_rounded,
+                                color: AppColors.appPrimaryDark,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            iconSize: 35,
+                            onPressed: () {
+                              setState(() {
+                                _startTime = '';
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete_outline_rounded,
+                              color: AppColors.appPrimaryDark,
+                            ),
+                          )
+                        ],
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.all(AppDimens.small),
@@ -314,7 +333,7 @@ Future<void> getTimeFromUser({required bool isStartTime}) async {
   // Ensure the widget is still mounted before accessing context
   if (!mounted) return;
 
-  String formattedTime = pickedTime.format(context);
+  String formattedTime = pickedTime.persianFormat(context);
 
   setState(() {
     if (isStartTime) {
