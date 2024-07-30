@@ -22,7 +22,6 @@ class _TasksState extends State<Tasks> {
         .toSet()
         .toList();
 
-
     String day = _selectedDate.toJalali().day.toPersianNumberInt();
     String month = _selectedDate.toJalali().month.toPesianMonth();
     String year = _selectedDate.toJalali().year.toPersianNumberInt();
@@ -41,6 +40,12 @@ class _TasksState extends State<Tasks> {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: PersianHorizontalDatePicker(
+            selectedDayTextStyle: AppTextStyles.selectedTextStyle
+                .apply(color: Theme.of(context).colorScheme.surface),
+            selectedMonthTextStyle: AppTextStyles.selectedTextStyle
+                .apply(color: Theme.of(context).colorScheme.surface),
+            selectedWeekDayTextStyle: AppTextStyles.selectedTextStyle
+                .apply(color: Theme.of(context).colorScheme.surface),
             selectedMarkedDotColor: Theme.of(context).colorScheme.surface,
             markedDotColor: Theme.of(context).colorScheme.onSurface,
             markedDates: taskDates,
@@ -84,7 +89,7 @@ class _TasksState extends State<Tasks> {
               padding: const EdgeInsets.all(AppDimens.medium),
               child: InkWell(
                 onTap: () {
-                  BlocProvider.of<TaskBloc>(context).add(DeleteAllTasksEvent());
+                  
                 },
                 child: Text(
                   AppStrings.planning,
