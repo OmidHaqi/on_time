@@ -64,8 +64,20 @@ class TaskList extends StatelessWidget {
                     );
                   },
                   deleteOnTap: () {
-                    BlocProvider.of<TaskBloc>(context)
-                        .add(DeleteTaskEvent(taskList.id));
+                    customeDialogee(
+                      context,
+                      content: 'مطمئنی میخوای این تسک رو حذف کنی؟',
+                      primaryBtn: 'حذفش کن',
+                      onTapPrimaryBtn: () {
+                        BlocProvider.of<TaskBloc>(context)
+                            .add(DeleteTaskEvent(taskList.id));
+                        Navigator.pop(context);
+                      },
+                      onTapSecendaryBtn: () {
+                        Navigator.pop(context);
+                      },
+                      secendaryBtn: 'دستم خورد',
+                    );
                   },
                 );
               },
