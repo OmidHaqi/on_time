@@ -9,27 +9,18 @@ class EditTaskScreen extends StatefulWidget {
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
-  Jalali _selectedDate = Jalali.now();
+  late Jalali _selectedDate;
+  late String _startTime;
+  late TaskColor _taskSelectedColor;
 
-  String _startTime = "";
-
-  int _selectedRemind = 5;
-
-  List<int> remindList = [
-    5,
-    10,
-    15,
-    20,
-  ];
-
-  String _selectedRepeat = 'هیچ کدام';
-
-  List<String> repeatList = [
-    'هیچ کدام',
-    'هر روز',
-    'هر هفته',
-    'هر ماه',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the state variables with the taskModel values
+    _selectedDate = widget.taskModel.date.toJalali();
+    _startTime = widget.taskModel.startTime;
+    _taskSelectedColor = widget.taskModel.color;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +31,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         TextEditingController(text: taskList.note);
     final TextEditingController placeController =
         TextEditingController(text: taskList.place);
-    _selectedDate = taskList.date.toJalali();
-    _selectedRemind = taskList.remind;
-    _selectedRepeat = taskList.repeat;
-    _startTime = taskList.startTime;
-    _taskSelectedColor = taskList.color;
 
     String day = _selectedDate.day.toPersianNumberInt();
     String month = _selectedDate.month.toPersianNumberInt();
     String year = _selectedDate.year.toPersianNumberInt();
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(taskList.color.code),
@@ -110,96 +97,35 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           color: AppColors.appPrimaryDark,
                         ),
                       ),
-                      InputField(
-                        hint: _startTime == '' ? 'ساعت' : _startTime,
-                        onTap: () {
-                          getTimeFromUser(isStartTime: true);
-                        },
-                        readOnly: true,
-                        suffixIcon: const Icon(
-                          Icons.timer_rounded,
-                          color: AppColors.appPrimaryDark,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(AppDimens.small),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'هر چند دقیقه یادت بندازم؟',
-                              style: TextStyle(
-                                color: AppColors.appPrimaryDark,
-                              ),
-                            ),
-                            DropdownButton<String>(
-                              value: _selectedRemind.toString(),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: AppColors.appPrimaryDark,
-                              ),
-                              iconSize: 32,
-                              onChanged: (String? newValue) => setState(
-                                () => _selectedRemind = int.parse(
-                                  newValue!,
-                                ),
-                              ),
-                              items: remindList
-                                  .map<DropdownMenuItem<String>>((int value) {
-                                return DropdownMenuItem<String>(
-                                  value: value.toString(),
-                                  child: Text(
-                                    value.toString(),
-                                    style: const TextStyle(
-                                      color: AppColors.appPrimaryDark,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(AppDimens.small),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'کی به کی یادت بندازم؟',
-                              style: TextStyle(
-                                color: AppColors.appPrimaryDark,
-                              ),
-                            ),
-                            DropdownButton<String>(
-                              value: _selectedRepeat.toString(),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: AppColors.appPrimaryDark,
-                              ),
-                              iconSize: 32,
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    _selectedRepeat = newValue!;
-                                  },
-                                );
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: InputField(
+                              hint: _startTime == '' ? 'ساعت' : _startTime,
+                              onTap: () {
+                                getTimeFromUser(isStartTime: true);
                               },
-                              items: repeatList.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: const TextStyle(
-                                      color: AppColors.appPrimaryDark,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                              readOnly: true,
+                              suffixIcon: const Icon(
+                                Icons.timer_rounded,
+                                color: AppColors.appPrimaryDark,
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                            iconSize: 35,
+                            onPressed: () {
+                              setState(() {
+                                _startTime = '';
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete_outline_rounded,
+                              color: AppColors.appPrimaryDark,
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -262,8 +188,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                               startTime: _startTime,
                                               endTime: '',
                                               color: _taskSelectedColor,
-                                              remind: _selectedRemind,
-                                              repeat: _selectedRepeat,
+                                              remind: 0,
+                                              repeat: '',
                                             ),
                                             taskList.id,
                                           ),
@@ -319,6 +245,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   }
 
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+
   Future<void> getTimeFromUser({required bool isStartTime}) async {
     var pickedTime = await showPersianTimePicker(
       initialEntryMode: PTimePickerEntryMode.dialOnly,
@@ -326,29 +253,27 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       context: context,
     );
 
-    if (pickedTime == null) {
-      return;
-    }
-
     // Ensure the widget is still mounted before accessing context
     if (!mounted) return;
 
-    String formattedTime = pickedTime.format(context);
-
-    setState(() {
-      if (isStartTime) {
-        _startTime = formattedTime;
-      }
-    });
+    if (pickedTime != null) {
+      String formattedTime = pickedTime.format(context);
+      setState(() {
+        if (isStartTime) {
+          _startTime = formattedTime;
+        }
+      });
+    }
   }
 
-  getDateFromUser() async {
+  Future<void> getDateFromUser() async {
     final Jalali? pickedDate = await showPersianDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: Jalali(1300),
       lastDate: Jalali(1500),
     );
+
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;

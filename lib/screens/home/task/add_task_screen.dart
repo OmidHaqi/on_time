@@ -117,76 +117,76 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           color: AppColors.appPrimaryDark,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(AppDimens.small),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'هر چند دقیقه یادت بندازم؟',
-                              style: TextStyle(color: AppColors.appPrimaryDark),
-                            ),
-                            DropdownButton<String>(
-                                value: _selectedRemind.toString(),
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: AppColors.appPrimaryDark,
-                                ),
-                                iconSize: 32,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    _selectedRemind = int.parse(newValue!);
-                                  });
-                                },
-                                items: remindList
-                                    .map<DropdownMenuItem<String>>((int value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value.toString(),
-                                    child: Text(
-                                      value.toString(),
-                                      style: const TextStyle(
-                                          color: AppColors.appPrimaryDark),
-                                    ),
-                                  );
-                                }).toList()),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(AppDimens.small),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'کی به کی یادت بندازم؟',
-                              style: TextStyle(color: AppColors.appPrimaryDark),
-                            ),
-                            DropdownButton<String>(
-                                value: _selectedRepeat.toString(),
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: AppColors.appPrimaryDark,
-                                ),
-                                iconSize: 32,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    _selectedRepeat = newValue!;
-                                  });
-                                },
-                                items: repeatList.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: const TextStyle(
-                                          color: AppColors.appPrimaryDark),
-                                    ),
-                                  );
-                                }).toList()),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(AppDimens.small),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       const Text(
+                      //         'هر چند دقیقه یادت بندازم؟',
+                      //         style: TextStyle(color: AppColors.appPrimaryDark),
+                      //       ),
+                      //       DropdownButton<String>(
+                      //           value: _selectedRemind.toString(),
+                      //           icon: const Icon(
+                      //             Icons.keyboard_arrow_down,
+                      //             color: AppColors.appPrimaryDark,
+                      //           ),
+                      //           iconSize: 32,
+                      //           onChanged: (String? newValue) {
+                      //             setState(() {
+                      //               _selectedRemind = int.parse(newValue!);
+                      //             });
+                      //           },
+                      //           items: remindList
+                      //               .map<DropdownMenuItem<String>>((int value) {
+                      //             return DropdownMenuItem<String>(
+                      //               value: value.toString(),
+                      //               child: Text(
+                      //                 value.toString(),
+                      //                 style: const TextStyle(
+                      //                     color: AppColors.appPrimaryDark),
+                      //               ),
+                      //             );
+                      //           }).toList()),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(AppDimens.small),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       const Text(
+                      //         'کی به کی یادت بندازم؟',
+                      //         style: TextStyle(color: AppColors.appPrimaryDark),
+                      //       ),
+                      //       DropdownButton<String>(
+                      //           value: _selectedRepeat.toString(),
+                      //           icon: const Icon(
+                      //             Icons.keyboard_arrow_down,
+                      //             color: AppColors.appPrimaryDark,
+                      //           ),
+                      //           iconSize: 32,
+                      //           onChanged: (String? newValue) {
+                      //             setState(() {
+                      //               _selectedRepeat = newValue!;
+                      //             });
+                      //           },
+                      //           items: repeatList.map<DropdownMenuItem<String>>(
+                      //               (String value) {
+                      //             return DropdownMenuItem<String>(
+                      //               value: value,
+                      //               child: Text(
+                      //                 value,
+                      //                 style: const TextStyle(
+                      //                     color: AppColors.appPrimaryDark),
+                      //               ),
+                      //             );
+                      //           }).toList()),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
