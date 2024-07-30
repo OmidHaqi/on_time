@@ -48,13 +48,24 @@ class EditNoteScreen extends StatelessWidget {
                         left: 0,
                         child: IconButton(
                           onPressed: () {
-                            BlocProvider.of<NoteBloc>(context).add(
-                              DeleteNoteEvent(
-                                note.id,
-                              ),
-                            );
+                            customeDialogee(
+                              context,
+                              content: 'مطمئنی میخوای این یادداشت رو حذف کنی؟',
+                              primaryBtn: 'حذفش کن',
+                              onTapPrimaryBtn: () {
+                                BlocProvider.of<NoteBloc>(context).add(
+                                  DeleteNoteEvent(
+                                    note.id,
+                                  ),
+                                );
+                                Navigator.pop(context);
+                              },
+                              onTapSecendaryBtn: () {
+                                Navigator.pop(context);
+                              },
+                              secendaryBtn: 'دستم خورد',
+                            );  
 
-                            Navigator.pop(context);
                           },
                           icon: const Icon(
                             Icons.delete_rounded,

@@ -48,8 +48,20 @@ class NoteList extends StatelessWidget {
                       );
                     },
                     onLongPress: () {
-                      BlocProvider.of<NoteBloc>(context)
-                          .add(DeleteNoteEvent(notesList[index].id));
+                      customeDialogee(
+                        context,
+                        content: 'مطمئنی میخوای این یادداشت رو حذف کنی؟',
+                        primaryBtn: 'حذفش کن',
+                        onTapPrimaryBtn: () {
+                          BlocProvider.of<NoteBloc>(context)
+                              .add(DeleteNoteEvent(notesList[index].id));
+                          Navigator.pop(context);
+                        },
+                        onTapSecendaryBtn: () {
+                          Navigator.pop(context);
+                        },
+                        secendaryBtn: 'دستم خورد',
+                      );
                     },
                   )
                       .animate()
