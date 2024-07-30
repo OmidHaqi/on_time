@@ -40,125 +40,28 @@ class _TaskCardState extends State<TaskCard> {
                         : Color(widget.taskList.color.code),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: AppDimens.small,
-                          bottom: AppDimens.small,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppDimens.small,
-                              ),
-                              child: Row(
-                                children: [
-                                  if (widget.taskList.startTime.isEmpty &&
-                                      widget.taskList.place.isEmpty &&
-                                      widget.taskList.note.isEmpty)
-                                    Checkbox(
-                                      value: widget.taskList.isCompleted,
-                                      onChanged: (newValue) {
-                                        setState(
-                                          () {
-                                            widget.taskList.isCompleted =
-                                                newValue ?? false;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  InkWell(
-                                    onTap: widget.editOnTap,
-                                    child: const SizedBox(
-                                      height: 30,
-                                      child: Icon(
-                                        Icons.edit_note_rounded,
-                                        color: AppColors.appPrimaryDark,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: widget.deleteOnTap,
-                                    child: const SizedBox(
-                                      height: 30,
-                                      child: Icon(
-                                        Icons.delete_outline_rounded,
-                                        color: AppColors.appPrimaryDark,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: widget.taskList.startTime.isEmpty &&
-                                        widget.taskList.place.isEmpty &&
-                                        widget.taskList.note.isEmpty
-                                    ? AppDimens.large
-                                    : AppDimens.small,
-                              ),
-                              child: Text(
-                                widget.taskList.title,
-                                style: AppTextStyles.taskTitleTextStyle.apply(
-                                  color: AppColors.appPrimaryDark,
-                                  decoration: widget.taskList.isCompleted
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
+                  child: Theme(
+                    data: AppTheme.lightTheme(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: AppDimens.small,
+                            bottom: AppDimens.small,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppDimens.small,
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (widget.taskList.startTime.isNotEmpty ||
-                          widget.taskList.place.isNotEmpty ||
-                          widget.taskList.note.isNotEmpty)
-                        Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              child: Divider(
-                                color: AppColors.appPrimaryDark,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppDimens.small),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                      child: Row(
-                                    children: [
-                                      if (widget.taskList.isCompleted)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 5),
-                                          child: RotatedBox(
-                                            quarterTurns: 75,
-                                            child: Column(
-                                              children: [
-                                                const Text(
-                                                  AppStrings.done,
-                                                  style: AppTextStyles
-                                                      .isComplatedTextStyle,
-                                                ),
-                                                Container(
-                                                  color: Colors.black,
-                                                  height: 1,
-                                                  width: 70,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ).animate().moveX(),
+                                child: Row(
+                                  children: [
+                                    if (widget.taskList.startTime.isEmpty &&
+                                        widget.taskList.place.isEmpty &&
+                                        widget.taskList.note.isEmpty)
                                       Checkbox(
                                         value: widget.taskList.isCompleted,
                                         onChanged: (newValue) {
@@ -170,126 +73,226 @@ class _TaskCardState extends State<TaskCard> {
                                           );
                                         },
                                       ),
-                                    ],
-                                  )).animate().moveX(),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      if (widget.taskList.startTime.isNotEmpty)
-                                        RichText(
-                                          textDirection: TextDirection.rtl,
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: ' ساعت ',
-                                                style: AppTextStyles
-                                                    .taskInfoTitleTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    ' ${widget.taskList.startTime.toPersianNumber()} ',
-                                                style: AppTextStyles
-                                                    .taskInfoTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                    InkWell(
+                                      onTap: widget.editOnTap,
+                                      child: const SizedBox(
+                                        height: 30,
+                                        child: Icon(
+                                          Icons.edit_note_rounded,
+                                          color: AppColors.appPrimaryDark,
+                                          size: 30,
                                         ),
-                                      if (widget.taskList.place.isNotEmpty)
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: 'مکان ',
-                                                style: AppTextStyles
-                                                    .taskInfoTitleTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: widget.taskList.place,
-                                                style: AppTextStyles
-                                                    .taskInfoTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: widget.deleteOnTap,
+                                      child: const SizedBox(
+                                        height: 30,
+                                        child: Icon(
+                                          Icons.delete_outline_rounded,
+                                          color: AppColors.appPrimaryDark,
                                         ),
-                                      if (widget.taskList.note.isNotEmpty)
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: 'یادداشت ',
-                                                style: AppTextStyles
-                                                    .taskInfoTitleTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: widget.taskList.note,
-                                                style: AppTextStyles
-                                                    .taskInfoTextStyle
-                                                    .apply(
-                                                  color:
-                                                      AppColors.appPrimaryDark,
-                                                  decoration: widget
-                                                          .taskList.isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: widget.taskList.startTime.isEmpty &&
+                                          widget.taskList.place.isEmpty &&
+                                          widget.taskList.note.isEmpty
+                                      ? AppDimens.large
+                                      : AppDimens.small,
+                                ),
+                                child: Text(
+                                  widget.taskList.title,
+                                  style: AppTextStyles.taskTitleTextStyle.apply(
+                                    color: AppColors.appPrimaryDark,
+                                    decoration: widget.taskList.isCompleted
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                    ],
+                        if (widget.taskList.startTime.isNotEmpty ||
+                            widget.taskList.place.isNotEmpty ||
+                            widget.taskList.note.isNotEmpty)
+                          Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Divider(
+                                  color: AppColors.appPrimaryDark,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppDimens.small),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                        child: Row(
+                                      children: [
+                                        if (widget.taskList.isCompleted)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(bottom: 5),
+                                            child: RotatedBox(
+                                              quarterTurns: 75,
+                                              child: Column(
+                                                children: [
+                                                   Text(
+                                                    AppStrings.done,
+                                                    style: AppTextStyles
+                                                        .isComplatedTextStyle.apply(color: AppColors.appPrimaryDark),
+                                                  ),
+                                                  Container(
+                                                    color: Colors.black,
+                                                    height: 1,
+                                                    width: 70,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ).animate().moveX(),
+                                        Checkbox(
+                                          value: widget.taskList.isCompleted,
+                                          onChanged: (newValue) {
+                                            setState(
+                                              () {
+                                                widget.taskList.isCompleted =
+                                                    newValue ?? false;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    )).animate().moveX(),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        if (widget.taskList.startTime.isNotEmpty)
+                                          RichText(
+                                            textDirection: TextDirection.rtl,
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: ' ساعت ',
+                                                  style: AppTextStyles
+                                                      .taskInfoTitleTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text:
+                                                      ' ${widget.taskList.startTime.toPersianNumber()} ',
+                                                  style: AppTextStyles
+                                                      .taskInfoTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (widget.taskList.place.isNotEmpty)
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'مکان ',
+                                                  style: AppTextStyles
+                                                      .taskInfoTitleTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: widget.taskList.place,
+                                                  style: AppTextStyles
+                                                      .taskInfoTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        if (widget.taskList.note.isNotEmpty)
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'یادداشت ',
+                                                  style: AppTextStyles
+                                                      .taskInfoTitleTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: widget.taskList.note,
+                                                  style: AppTextStyles
+                                                      .taskInfoTextStyle
+                                                      .apply(
+                                                    color:
+                                                        AppColors.appPrimaryDark,
+                                                    decoration: widget
+                                                            .taskList.isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ],
