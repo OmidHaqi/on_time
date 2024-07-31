@@ -12,8 +12,14 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme(),
           darkTheme: AppTheme.darkTheme(),
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
+          builder: (_, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: MediaQuery.of(context)
+                  .textScaler
+                  .clamp(minScaleFactor: 0.8, maxScaleFactor: 0.8),
+            ),
+            child: child!,
+          ),
           themeMode: state.themeMode,
           localizationsDelegates: const [
             S.delegate,
@@ -22,7 +28,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          // locale: state.locale,
+          locale: state.locale,
           home: const SplashScreen(),
         );
       },
