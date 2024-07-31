@@ -40,8 +40,7 @@ class AppTheme {
         surface: Color(0xffDAE5EB),
         onSurface: Color(0xff161928),
       ),
-      
-      dialogTheme:  DialogTheme(
+      dialogTheme: DialogTheme(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: const BorderSide(

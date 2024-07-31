@@ -20,6 +20,7 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
+    Size size =MediaQuery.sizeOf(context);
     return AnimationConfiguration.staggeredList(
       position: widget.index,
       duration: const Duration(milliseconds: 500),
@@ -111,14 +112,14 @@ class _TaskCardState extends State<TaskCard> {
                                           : AppDimens.small,
                                 ),
                                 child: SizedBox(
-                                  width: 160,
+                                  width: size.width*0.60,
                                   child: Text(
                                     textDirection: TextDirection.rtl,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     widget.taskList.title,
-                                    style: AppTextStyles.taskTitleTextStyle
-                                        .apply(
+                                    style:
+                                        AppTextStyles.taskTitleTextStyle.apply(
                                       color: AppColors.appPrimaryDark,
                                       decoration: widget.taskList.isCompleted
                                           ? TextDecoration.lineThrough
@@ -189,126 +190,139 @@ class _TaskCardState extends State<TaskCard> {
                                         ),
                                       ],
                                     )).animate().moveX(),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        if (widget
-                                            .taskList.startTime.isNotEmpty)
-                                          RichText(
-                                            textDirection: TextDirection.rtl,
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: ' ساعت ',
-                                                  style: AppTextStyles
-                                                      .taskInfoTitleTextStyle
-                                                      .apply(
-                                                    color: AppColors
-                                                        .appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList
-                                                            .isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
+                                    SizedBox(
+                                      width: size.width*0.60,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          if (widget
+                                              .taskList.startTime.isNotEmpty)
+                                            RichText(
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: TextDirection.rtl,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'ساعت:',
+                                                    style: AppTextStyles
+                                                        .taskInfoTitleTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
                                                   ),
-                                                ),
-                                                TextSpan(
-                                                  text:
-                                                      ' ${widget.taskList.startTime.toPersianNumber()} ',
-                                                  style: AppTextStyles
-                                                      .taskInfoTextStyle
-                                                      .apply(
-                                                    color: AppColors
-                                                        .appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList
-                                                            .isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
+                                                  TextSpan(
+                                                    text:
+                                                        ' ${widget.taskList.startTime.toPersianNumber()} ',
+                                                    style: AppTextStyles
+                                                        .taskInfoTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        if (widget.taskList.place.isNotEmpty)
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                maxLines: 1,
-                                                overflow: TextOverflow.fade,
-                                                ' ${widget.taskList.place} ',
-                                                style: AppTextStyles
-                                                    .taskInfoTextStyle.apply(
-                                                    color: AppColors
-                                                        .appPrimaryDark,
-                                                    decoration: widget.taskList
-                                                            .isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
-                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                ':مکان',
-                                                style: AppTextStyles
-                                                    .taskInfoTitleTextStyle
-                                                    .apply(
-                                                  color: AppColors
-                                                      .appPrimaryDark,
-                                                  decoration: widget.taskList
-                                                          .isCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        if (widget.taskList.note.isNotEmpty)
-                                          RichText(
-                                            maxLines: 1,
-                                            overflow: TextOverflow.fade,
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: 'یادداشت: ',
-                                                  style: AppTextStyles
-                                                      .taskInfoTitleTextStyle
-                                                      .apply(
-                                                    color: AppColors
-                                                        .appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList
-                                                            .isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: widget.taskList.note,
-                                                  style: AppTextStyles
-                                                      .taskInfoTextStyle
-                                                      .apply(
-                                                    color: AppColors
-                                                        .appPrimaryDark,
-                                                    decoration: widget
-                                                            .taskList
-                                                            .isCompleted
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
-                                                  ),
-                                                )
-                                              ],
                                             ),
-                                          ),
-                                      ],
+                                          if (widget.taskList.place.isNotEmpty)
+                                            RichText(
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: TextDirection.rtl,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'مکان:',
+                                                    style: AppTextStyles
+                                                        .taskInfoTitleTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        ' ${widget.taskList.place} ',
+                                                    style: AppTextStyles
+                                                        .taskInfoTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          if (widget.taskList.note.isNotEmpty)
+                                            RichText(
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: TextDirection.rtl,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'یادداشت: ',
+                                                    style: AppTextStyles
+                                                        .taskInfoTitleTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: widget.taskList.note,
+                                                    style: AppTextStyles
+                                                        .taskInfoTextStyle
+                                                        .apply(
+                                                      color: AppColors
+                                                          .appPrimaryDark,
+                                                      decoration: widget
+                                                              .taskList
+                                                              .isCompleted
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : TextDecoration.none,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

@@ -18,9 +18,7 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 475,
+    return Expanded(
       child: ValueListenableBuilder<Box<TaskModel>>(
         valueListenable: taskBox.listenable(),
         builder: (context, builderTaskBox, _) {
@@ -28,7 +26,7 @@ class TaskList extends StatelessWidget {
           final tasksForSelectedDate = todoList
               .where((task) => isSameDay(task.date, selectedDate))
               .toList();
-
+    
           if (todoList.isEmpty || tasksForSelectedDate.isEmpty) {
             return const EmptyVC(
               text: 'امروز برنامه ای نداری',

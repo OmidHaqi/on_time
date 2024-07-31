@@ -14,7 +14,6 @@ customeDialogee(
       context: context,
       builder: (context) {
         return AlertDialog(
-          
           actionsAlignment: MainAxisAlignment.center,
           scrollable: true,
           actions: [
@@ -34,18 +33,16 @@ customeDialogee(
                 backgroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onSurface),
               ),
-              onPressed:onTapSecendaryBtn,
+              onPressed: onTapSecendaryBtn,
               child: Text(
                 secendaryBtn,
                 style: TextStyle(color: Theme.of(context).colorScheme.surface),
               ),
             ),
           ],
-
           content: FittedBox(
             child: Column(
               children: [
-              
                 const SizedBox(height: 15),
                 Text(content),
               ],

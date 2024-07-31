@@ -82,11 +82,11 @@ class AppTextStyles {
     fontSize: 22,
   );
   static const TextStyle isComplatedTextStyle = TextStyle(
-    fontFamily: 'YekanBakh',  
+    fontFamily: 'YekanBakh',
     fontWeight: FontWeight.w700,
   );
-    static const TextStyle selectedTextStyle = TextStyle(
-    fontFamily: 'YekanBakh',  
+  static const TextStyle selectedTextStyle = TextStyle(
+    fontFamily: 'YekanBakh',
     fontWeight: FontWeight.bold,
   );
 }

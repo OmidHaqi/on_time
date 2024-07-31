@@ -3,27 +3,27 @@ part of '../../../index.dart';
 class AddTaskScreen extends StatefulWidget {
   final DateTime date;
 
-  const AddTaskScreen(
-      {super.key,
-      required this.date});
+  const AddTaskScreen({super.key, required this.date});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  Jalali _selectedDate = Jalali.now();
-
+  late Jalali _selectedDate;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
+  String _startTime = '';
 
-   String _startTime = '';
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.date.toJalali();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _selectedDate = widget.date.toJalali();
-
     String day = _selectedDate.day.toPersianNumberInt();
     String month = _selectedDate.month.toPesianMonth();
     String year = _selectedDate.year.toPersianNumberInt();
@@ -143,7 +143,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     const SnackBar(
                                       duration: Duration(milliseconds: 500),
                                       content: Text(
-                                        'تسک با موفقیت اضافه شد',textDirection: TextDirection.rtl,
+                                        'تسک با موفقیت اضافه شد',
+                                        textDirection: TextDirection.rtl,
                                       ),
                                     ),
                                   );
@@ -161,7 +162,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                           .showSnackBar(
                                         const SnackBar(
                                           content: Text(
-                                              "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,),
+                                            "حداقل عنوان رو پر کن",
+                                            textDirection: TextDirection.rtl,
+                                          ),
                                         ),
                                       );
                                     } else {
@@ -228,37 +231,38 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
-Future<void> getTimeFromUser({required bool isStartTime}) async {
-  var pickedTime = await showPersianTimePicker(
-    initialEntryMode: PTimePickerEntryMode.dialOnly,
+  Future<void> getTimeFromUser({required bool isStartTime}) async {
+    var pickedTime = await showPersianTimePicker(
+      initialEntryMode: PTimePickerEntryMode.dialOnly,
       initialTime: const TimeOfDay(hour: 8, minute: 30),
       context: context,
     );
-  
-  if (pickedTime == null) {
-    return;
+
+    if (pickedTime == null) {
+      return;
+    }
+
+    // Ensure the widget is still mounted before accessing context
+    if (!mounted) return;
+
+    String formattedTime = pickedTime.persianFormat(context);
+
+    setState(() {
+      if (isStartTime) {
+        _startTime = formattedTime;
+      }
+    });
   }
 
-  // Ensure the widget is still mounted before accessing context
-  if (!mounted) return;
-
-  String formattedTime = pickedTime.persianFormat(context);
-
-  setState(() {
-    if (isStartTime) {
-      _startTime = formattedTime;
-    }
-  });
-}
-
-
-  getDateFromUser() async {
+  Future<void> getDateFromUser() async {
     final Jalali? pickedDate = await showPersianDatePicker(
-      
-        context: context,
-        initialDate: _selectedDate, firstDate: Jalali(1300), lastDate: Jalali(1500),);
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: Jalali(1300),
+      lastDate: Jalali(1500),
+    );
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;

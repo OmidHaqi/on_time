@@ -136,7 +136,8 @@ class EditNoteScreen extends StatelessWidget {
                                       const SnackBar(
                                         duration: Duration(milliseconds: 500),
                                         content: Text(
-                                          'یادداشت با موفقیت ویرایش شد',textDirection: TextDirection.rtl,
+                                          'یادداشت با موفقیت ویرایش شد',
+                                          textDirection: TextDirection.rtl,
                                         ),
                                       ),
                                     );
@@ -155,7 +156,8 @@ class EditNoteScreen extends StatelessWidget {
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                              "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,
+                                              "حداقل عنوان رو پر کن",
+                                              textDirection: TextDirection.rtl,
                                             ),
                                           ),
                                         );

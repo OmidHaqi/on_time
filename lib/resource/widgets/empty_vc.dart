@@ -17,7 +17,7 @@ class EmptyVC extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                state.themeMode==ThemeMode.dark
+                state.themeMode == ThemeMode.dark
                     ? Assets.images.svg.vcEmptyDark
                     : Assets.images.svg.vcEmptyLight,
                 height: 200,

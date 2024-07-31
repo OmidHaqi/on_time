@@ -92,7 +92,8 @@ class AddNoteScreen extends StatelessWidget {
                                         const SnackBar(
                                           duration: Duration(milliseconds: 500),
                                           content: Text(
-                                            'یادداشت با موفقیت اضافه شد',textDirection: TextDirection.rtl,
+                                            'یادداشت با موفقیت اضافه شد',
+                                            textDirection: TextDirection.rtl,
                                           ),
                                         ),
                                       );
@@ -110,7 +111,10 @@ class AddNoteScreen extends StatelessWidget {
                                               .showSnackBar(
                                             const SnackBar(
                                               content: Text(
-                                                  "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,),
+                                                "حداقل عنوان رو پر کن",
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                              ),
                                             ),
                                           );
                                         } else {

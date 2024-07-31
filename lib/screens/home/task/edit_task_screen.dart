@@ -152,7 +152,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                       const SnackBar(
                                         duration: Duration(milliseconds: 500),
                                         content: Text(
-                                          'تسک با موفقیت ویرایش شد',textDirection: TextDirection.rtl,
+                                          'تسک با موفقیت ویرایش شد',
+                                          textDirection: TextDirection.rtl,
                                         ),
                                       ),
                                     );
@@ -171,7 +172,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                              "حداقل عنوان رو پر کن",textDirection: TextDirection.rtl,
+                                              "حداقل عنوان رو پر کن",
+                                              textDirection: TextDirection.rtl,
                                             ),
                                           ),
                                         );

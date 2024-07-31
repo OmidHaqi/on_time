@@ -8,9 +8,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   late bool _isFirstRun;
-  
+
   void _checkFirstRun() async {
     bool ifr = await IsFirstRun.isFirstRun();
     setState(() {

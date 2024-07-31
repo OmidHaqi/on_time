@@ -8,9 +8,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-
-   int pageIndex =0;
-
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +41,8 @@ class _IntroScreenState extends State<IntroScreen> {
                 ],
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: AppDimens.large, vertical: AppDimens.large),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimens.large, vertical: AppDimens.large),
                 child: SizedBox(
                   width: double.infinity,
                   height: 60,

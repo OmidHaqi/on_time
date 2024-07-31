@@ -14,7 +14,10 @@ class Notes extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               duration: Duration(seconds: 1),
-              content: Text('یادداشت با موفقیت حذف شد',textDirection: TextDirection.rtl,),
+              content: Text(
+                'یادداشت با موفقیت حذف شد',
+                textDirection: TextDirection.rtl,
+              ),
             ),
           );
         }

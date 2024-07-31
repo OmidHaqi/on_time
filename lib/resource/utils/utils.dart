@@ -36,7 +36,6 @@ class IsFirstRun {
 
   static bool? _isFirstRun;
 
-
   static Future<bool> isFirstCall() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstCall;
@@ -48,6 +47,7 @@ class IsFirstRun {
     await prefs.setBool(_firstCallSettingsKey, false);
     return firstCall;
   }
+
   static Future<bool> isFirstRun() async {
     if (_isFirstRun != null) {
       return _isFirstRun!;

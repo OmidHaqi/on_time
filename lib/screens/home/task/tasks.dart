@@ -38,7 +38,7 @@ class _TasksState extends State<Tasks> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.only(top: AppDimens.medium),
           child: PersianHorizontalDatePicker(
             selectedDayTextStyle: AppTextStyles.selectedTextStyle
                 .apply(color: Theme.of(context).colorScheme.surface),
@@ -89,7 +89,6 @@ class _TasksState extends State<Tasks> {
               padding: const EdgeInsets.all(AppDimens.medium),
               child: InkWell(
                 onTap: () {
-                  
                 },
                 child: Text(
                   AppStrings.planning,
@@ -106,10 +105,11 @@ class _TasksState extends State<Tasks> {
             if (state is DeleteTaskState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  
                   duration: Duration(seconds: 1),
-                  content: Text('تسک با موفقیت حذف شد ',
-                  textDirection: TextDirection.rtl,),
+                  content: Text(
+                    'تسک با موفقیت حذف شد ',
+                    textDirection: TextDirection.rtl,
+                  ),
                 ),
               );
             }
