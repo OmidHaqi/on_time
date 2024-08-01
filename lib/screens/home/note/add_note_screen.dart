@@ -1,11 +1,19 @@
 part of '../../../index.dart';
 
-class AddNoteScreen extends StatelessWidget {
-  AddNoteScreen({
+class AddNoteScreen extends StatefulWidget {
+  const AddNoteScreen({
     super.key,
   });
+
+  @override
+  State<AddNoteScreen> createState() => _AddNoteScreenState();
+}
+
+class _AddNoteScreenState extends State<AddNoteScreen> {
   final TextEditingController _titleController = TextEditingController();
+
   final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
@@ -59,9 +67,16 @@ class AddNoteScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(right: AppDimens.small),
-                  child: NoteColorSelector(),
+                Padding(
+                  padding: const EdgeInsets.only(right: AppDimens.small),
+                  child: NoteColorSelector(
+                    selectedColor: _noteSelectedColor,
+                    onColorSelected: (color) {
+                      setState(() {
+                        _noteSelectedColor = color;
+                      });
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(AppDimens.small),
@@ -79,7 +94,6 @@ class AddNoteScreen extends StatelessWidget {
                                     duration: const Duration(milliseconds: 500),
                                     content: Text(
                                       S.current.addNoteSnackBar,
-                                      
                                     ),
                                   ),
                                 );
@@ -97,43 +111,41 @@ class AddNoteScreen extends StatelessWidget {
                                       SnackBar(
                                         content: Text(
                                           S.current.emptyTextFieldError,
-                                         
                                         ),
                                       ),
                                     );
                                   } else {
                                     if (lang == 'fa') {
                                       String dateTime =
-                                        '${DateTime.now().hour.toPersianNumberInt()}:${DateTime.now().minute.toPersianNumberInt()} / ${Jalali.now().day.toPersianNumberInt()} - ${Jalali.now().month.toPesianMonth()} ';
-                                    BlocProvider.of<NoteBloc>(context).add(
-                                      SaveNoteEvent(
-                                        NoteModel(
-                                            id: '',
-                                            title: _titleController.text,
-                                            description:
-                                                _descriptionController.text,
-                                            color: _noteSelectedColor,
-                                            dateTime: dateTime),
-                                      ),
-                                    );
-
+                                          '${DateTime.now().hour.toPersianNumberInt()}:${DateTime.now().minute.toPersianNumberInt()} / ${Jalali.now().day.toPersianNumberInt()} - ${Jalali.now().month.toPesianMonth()} ';
+                                      BlocProvider.of<NoteBloc>(context).add(
+                                        SaveNoteEvent(
+                                          NoteModel(
+                                              id: '',
+                                              title: _titleController.text,
+                                              description:
+                                                  _descriptionController.text,
+                                              color: _noteSelectedColor,
+                                              dateTime: dateTime),
+                                        ),
+                                      );
                                     } else {
                                       String gDateTime =
-                                        '${DateTime.now().hour}:${DateTime.now().minute} / ${DateTime.now().day} - ${DateTime.now().month.toGregorianMonth()} ';
+                                          '${DateTime.now().hour}:${DateTime.now().minute} / ${DateTime.now().day} - ${DateTime.now().month.toGregorianMonth()} ';
 
-                                         BlocProvider.of<NoteBloc>(context).add(
-                                      SaveNoteEvent(
-                                        NoteModel(
-                                            id: '',
-                                            title: _titleController.text,
-                                            description:
-                                                _descriptionController.text,
-                                            color: _noteSelectedColor,
-                                            dateTime: gDateTime),
-                                      ),
-                                    );
+                                      BlocProvider.of<NoteBloc>(context).add(
+                                        SaveNoteEvent(
+                                          NoteModel(
+                                              id: '',
+                                              title: _titleController.text,
+                                              description:
+                                                  _descriptionController.text,
+                                              color: _noteSelectedColor,
+                                              dateTime: gDateTime),
+                                        ),
+                                      );
                                     }
-                                    
+
                                     Navigator.pop(context);
                                   }
                                 },

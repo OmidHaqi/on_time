@@ -44,11 +44,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(taskList.color.code),
+        backgroundColor: Color(_taskSelectedColor.code),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
-          backgroundColor: Color(taskList.color.code),
+          backgroundColor: Color(_taskSelectedColor.code),
           title: Text(
             S.current.editTask,
             style: AppTextStyles.appBarTitle
@@ -150,7 +150,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               padding: const EdgeInsets.only(right: AppDimens.small),
               child: Column(
                 children: [
-                  const TodoColorSelector(),
+                  TaskColorSelector(
+                    selectedColor: _taskSelectedColor,
+                    onColorSelected: (value) {
+                      setState(() {
+                        _taskSelectedColor = value;
+                      });
+                    },
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(AppDimens.small),
                     child: Row(
@@ -203,7 +210,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                               note: noteController.text,
                                               place: placeController.text,
                                               isCompleted: false,
-                                              date: _persianSelectedDate.toDateTime(),
+                                              date: _persianSelectedDate
+                                                  .toDateTime(),
                                               startTime: _startTime,
                                               endTime: '',
                                               color: _taskSelectedColor,

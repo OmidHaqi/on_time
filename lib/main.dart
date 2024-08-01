@@ -56,7 +56,7 @@ main() async {
         ),
         BlocProvider(create: (_) => HomeBloc())
       ],
-      child: const MyApp(),
+      child: const RestartWidget(child: MyApp()),
     ),
   );
 }

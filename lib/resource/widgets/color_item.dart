@@ -47,60 +47,29 @@ class ColorItem extends StatelessWidget {
 
 TaskColor _taskSelectedColor = TaskColor.one;
 
-class TodoColorSelector extends StatefulWidget {
-  const TodoColorSelector({super.key});
+class TaskColorSelector extends StatelessWidget {
+  final TaskColor selectedColor;
+  final ValueChanged<TaskColor> onColorSelected;
 
-  @override
-  State<TodoColorSelector> createState() => _TodoColorSelectorState();
-}
+  const TaskColorSelector({
+    super.key,
+    required this.selectedColor,
+    required this.onColorSelected,
+  });
 
-class _TodoColorSelectorState extends State<TodoColorSelector> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: InkWell(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.one),
-                isSelected: _taskSelectedColor == TaskColor.one,
-                colorCode: TaskColor.one.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.two),
-                isSelected: _taskSelectedColor == TaskColor.two,
-                colorCode: TaskColor.two.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.three),
-                isSelected: _taskSelectedColor == TaskColor.three,
-                colorCode: TaskColor.three.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.four),
-                isSelected: _taskSelectedColor == TaskColor.four,
-                colorCode: TaskColor.four.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.five),
-                isSelected: _taskSelectedColor == TaskColor.five,
-                colorCode: TaskColor.five.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.six),
-                isSelected: _taskSelectedColor == TaskColor.six,
-                colorCode: TaskColor.six.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.seven),
-                isSelected: _taskSelectedColor == TaskColor.seven,
-                colorCode: TaskColor.seven.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.eight),
-                isSelected: _taskSelectedColor == TaskColor.eight,
-                colorCode: TaskColor.eight.code),
-            ColorItem(
-                onTap: () => setState(() => _taskSelectedColor = TaskColor.nine),
-                isSelected: _taskSelectedColor == TaskColor.nine,
-                colorCode: TaskColor.nine.code),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: TaskColor.values.map((noteColor) {
+          return ColorItem(
+            onTap: () => onColorSelected(noteColor),
+            isSelected: selectedColor == noteColor,
+            colorCode: noteColor.code,
+          );
+        }).toList(),
       ),
     );
   }
@@ -108,58 +77,29 @@ class _TodoColorSelectorState extends State<TodoColorSelector> {
 
 NoteColor _noteSelectedColor = NoteColor.one;
 
-class NoteColorSelector extends StatefulWidget {
-  const NoteColorSelector({super.key});
+class NoteColorSelector extends StatelessWidget {
+  final NoteColor selectedColor;
+  final ValueChanged<NoteColor> onColorSelected;
 
-  @override
-  State<NoteColorSelector> createState() => _NoteColorSelectorState();
-}
+  const NoteColorSelector({
+    super.key,
+    required this.selectedColor,
+    required this.onColorSelected,
+  });
 
-class _NoteColorSelectorState extends State<NoteColorSelector> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.one),
-              isSelected: _noteSelectedColor == NoteColor.one,
-              colorCode: NoteColor.one.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.two),
-              isSelected: _noteSelectedColor == NoteColor.two,
-              colorCode: NoteColor.two.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.three),
-              isSelected: _noteSelectedColor == NoteColor.three,
-              colorCode: NoteColor.three.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.four),
-              isSelected: _noteSelectedColor == NoteColor.four,
-              colorCode: NoteColor.four.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.five),
-              isSelected: _noteSelectedColor == NoteColor.five,
-              colorCode: NoteColor.five.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.six),
-              isSelected: _noteSelectedColor == NoteColor.six,
-              colorCode: NoteColor.six.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.seven),
-              isSelected: _noteSelectedColor == NoteColor.seven,
-              colorCode: NoteColor.seven.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.eight),
-              isSelected: _noteSelectedColor == NoteColor.eight,
-              colorCode: NoteColor.eight.code),
-          ColorItem(
-              onTap: () => setState(() => _noteSelectedColor = NoteColor.nine),
-              isSelected: _noteSelectedColor == NoteColor.nine,
-              colorCode: NoteColor.nine.code),
-        ],
+        children: NoteColor.values.map((noteColor) {
+          return ColorItem(
+            onTap: () => onColorSelected(noteColor),
+            isSelected: selectedColor == noteColor,
+            colorCode: noteColor.code,
+          );
+        }).toList(),
       ),
     );
   }

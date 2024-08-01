@@ -46,6 +46,7 @@ class SettingsPage extends StatelessWidget {
                             value: item.languageCode,
                             groupValue: groupValue,
                             onChanged: (value) {
+                              
                               BlocProvider.of<SettingsBloc>(context).add(
                                 LoadLocalizations(
                                   Locale(

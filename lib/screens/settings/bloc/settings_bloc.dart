@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:on_time/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'settings_event.dart';
@@ -22,6 +23,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     if (event.locale == state.locale) return;
     await _saveLocale(event.locale);
     emit(state.copyWith(locale: event.locale));
+    RestartWidget.restartApp(navigatorKey.currentContext!);
   }
 
   Future<void> _getLanguage(
@@ -36,6 +38,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     await prefs.setBool('isDark', event.isDark);
     emit(state.copyWith(
         themeMode: event.isDark ? ThemeMode.dark : ThemeMode.light));
+          RestartWidget.restartApp(navigatorKey.currentContext!);
   }
 
   Future<void> _onLoadTheme(

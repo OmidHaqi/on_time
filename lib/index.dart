@@ -56,3 +56,4 @@ part 'screens/splash_screen.dart';
 part 'screens/intro/intro_screen.dart';
 part 'resource/widgets/into_vc.dart';
 part 'resource/widgets/dialog.dart';
+part 'resource/widgets/restart.dart';

@@ -140,9 +140,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(right: AppDimens.small),
-                  child: TodoColorSelector(),
+                 Padding(
+                  padding:const EdgeInsets.only(right: AppDimens.small),
+                  child: TaskColorSelector(
+                    selectedColor: _taskSelectedColor,
+                    onColorSelected: (value) {
+                      setState(() {
+                        _taskSelectedColor = value;
+                      });
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(AppDimens.small),

@@ -1,16 +1,22 @@
 part of '../../../index.dart';
 
-class EditNoteScreen extends StatelessWidget {
+class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key, required this.note});
 
   final NoteModel note;
+
+  @override
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
+}
+
+class _EditNoteScreenState extends State<EditNoteScreen> {
   @override
   Widget build(BuildContext context) {
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     final TextEditingController titleController =
-        TextEditingController(text: note.title);
+        TextEditingController(text: widget.note.title);
     final TextEditingController descriptionController =
-        TextEditingController(text: note.description);
+        TextEditingController(text: widget.note.description);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(_noteSelectedColor.code),
@@ -53,7 +59,7 @@ class EditNoteScreen extends StatelessWidget {
                             onTapPrimaryBtn: () {
                               BlocProvider.of<NoteBloc>(context).add(
                                 DeleteNoteEvent(
-                                  note.id,
+                                  widget.note.id,
                                 ),
                               );
                               Navigator.pushReplacement(
@@ -103,7 +109,7 @@ class EditNoteScreen extends StatelessWidget {
                             .apply(color: AppColors.appPrimaryDark),
                       ),
                       Text(
-                        note.dateTime,
+                        widget.note.dateTime,
                         style: AppTextStyles.noteDecTextStyle
                             .apply(color: AppColors.appPrimaryDark),
                       ),
@@ -114,9 +120,16 @@ class EditNoteScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(right: AppDimens.small),
-                  child: NoteColorSelector(),
+                Padding(
+                  padding: const EdgeInsets.only(right: AppDimens.small),
+                  child: NoteColorSelector(
+                    selectedColor: _noteSelectedColor,
+                    onColorSelected: (color) {
+                      setState(() {
+                        _noteSelectedColor = color;
+                      });
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(AppDimens.small),
@@ -162,13 +175,13 @@ class EditNoteScreen extends StatelessWidget {
                                     BlocProvider.of<NoteBloc>(context).add(
                                       UpdateNoteEvent(
                                           NoteModel(
-                                              id: note.id,
+                                              id: widget.note.id,
                                               title: titleController.text,
                                               description:
                                                   descriptionController.text,
                                               color: _noteSelectedColor,
                                               dateTime: persianDateTime),
-                                          note.id),
+                                          widget.note.id),
                                     );
                                     } else {
                                        String gDateTime =
@@ -176,13 +189,13 @@ class EditNoteScreen extends StatelessWidget {
                                          BlocProvider.of<NoteBloc>(context).add(
                                       UpdateNoteEvent(
                                           NoteModel(
-                                              id: note.id,
+                                              id: widget.note.id,
                                               title: titleController.text,
                                               description:
                                                   descriptionController.text,
                                               color: _noteSelectedColor,
                                               dateTime: gDateTime),
-                                          note.id),
+                                          widget.note.id),
                                     );
                                     }
                                     
