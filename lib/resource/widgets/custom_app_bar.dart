@@ -15,36 +15,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       preferredSize: preferredSize,
       child: SizedBox(
         height: 100,
-        child: Directionality(
-          textDirection: TextDirection.ltr,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: AppDimens.small),
-                child: AppIcon(
-                  icon: SvgPicture.asset(
-                    Assets.images.svg.icSetting,
-                    colorFilter: ColorFilter.mode(
-                      Theme.of(context).colorScheme.onSurface,
-                      BlendMode.srcIn,
-                    ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: AppDimens.medium,left: AppDimens.medium),
+              child: child,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: AppDimens.small),
+              child: AppIcon(
+                icon: SvgPicture.asset(
+                  Assets.images.svg.icSetting,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onSurface,
+                    BlendMode.srcIn,
                   ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const SettingsPage()));
-                  },
                 ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const SettingsPage()));
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: AppDimens.medium),
-                child: child,
-              ),
-            ],
-          ),
+            ),
+            
+          ],
         ),
       ),
     );

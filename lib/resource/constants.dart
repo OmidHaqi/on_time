@@ -1,18 +1,5 @@
 part of '../index.dart';
 
-class AppStrings {
-  AppStrings._();
-
-  static const String appName = 'آن . تایم';
-  static const String planning = 'برنامه ریزی';
-  static const String note = 'یادداشت';
-  static const String well = '!خب';
-  static const String letsGo = '!...بزن بریم';
-  static const String goal = '! هدف گذاری کن ';
-  static const String plan = ' !برنامه ریزی کن';
-  static const String target = '!برس بهش';
-  static const String done = 'انجام شد';
-}
 
 class AppColors {
   AppColors._();

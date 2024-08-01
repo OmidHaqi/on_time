@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: YekanBakh
-  static const String yekanBakh = 'YekanBakh';
+  /// Font family: Ubuntu
+  static const String ubuntu = 'Ubuntu';
+
+  /// Font family: YekanBakhNumFa
+  static const String yekanBakhNumFa = 'YekanBakhNumFa';
 }

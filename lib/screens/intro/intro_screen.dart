@@ -24,17 +24,17 @@ class _IntroScreenState extends State<IntroScreen> {
                 index: pageIndex,
                 children: [
                   IntoVC(
-                    text: AppStrings.goal,
+                    text:S.current.goal,
                     darkVC: Assets.images.svg.vcIntroOneDark,
                     lightVC: Assets.images.svg.vcIntroOneLight,
                   ),
                   IntoVC(
-                    text: AppStrings.plan,
+                    text: S.current.plan,
                     darkVC: Assets.images.svg.vcIntroTwoDark,
                     lightVC: Assets.images.svg.vcIntroTwoLight,
                   ),
                   IntoVC(
-                    text: AppStrings.target,
+                    text:S.current.target,
                     darkVC: Assets.images.svg.vcIntroThreeDark,
                     lightVC: Assets.images.svg.vcIntroThreeLight,
                   ),
@@ -66,7 +66,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       }
                     },
                     child: Text(
-                      pageIndex == 2 ? AppStrings.letsGo : AppStrings.well,
+                      pageIndex == 2 ? S.current.letsGo :S.current.well,
                       style: AppTextStyles.introScreenBtnTextStyle
                           .apply(color: Theme.of(context).colorScheme.surface),
                     ),

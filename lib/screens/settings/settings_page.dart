@@ -35,42 +35,39 @@ class SettingsPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.small),
                     child: Divider(),
                   ),
-                  AbsorbPointer(
-                    absorbing: true,
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 150,
-                      child: ListView.builder(
-                          itemCount: languageModel.length,
-                          itemBuilder: (context, index) {
-                            var item = languageModel[index];
-                            return RadioListTile(
-                              value: item.languageCode,
-                              groupValue: groupValue,
-                              onChanged: (value) {
-                                BlocProvider.of<SettingsBloc>(context).add(
-                                  LoadLocalizations(
-                                    Locale(
-                                      item.languageCode,
-                                    ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 150,
+                    child: ListView.builder(
+                        itemCount: languageModel.length,
+                        itemBuilder: (context, index) {
+                          var item = languageModel[index];
+                          return RadioListTile(
+                            value: item.languageCode,
+                            groupValue: groupValue,
+                            onChanged: (value) {
+                              BlocProvider.of<SettingsBloc>(context).add(
+                                LoadLocalizations(
+                                  Locale(
+                                    item.languageCode,
                                   ),
-                                );
-                              },
-                              title: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(item.language),
-                                ],
-                              ),
-                              subtitle: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(item.subLanguage),
-                                ],
-                              ),
-                            );
-                          }),
-                    ),
+                                ),
+                              );
+                            },
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(item.language),
+                              ],
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(item.subLanguage),
+                              ],
+                            ),
+                          );
+                        }),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: AppDimens.medium),

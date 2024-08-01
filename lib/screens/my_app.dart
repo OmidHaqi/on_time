@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'On Time',
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme(),
-          darkTheme: AppTheme.darkTheme(),
+          theme: AppTheme.lightTheme(context),
+          darkTheme: AppTheme.darkTheme(context),
           builder: (_, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(
               textScaler: MediaQuery.of(context)

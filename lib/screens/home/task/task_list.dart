@@ -28,8 +28,8 @@ class TaskList extends StatelessWidget {
               .toList();
     
           if (todoList.isEmpty || tasksForSelectedDate.isEmpty) {
-            return const EmptyVC(
-              text: 'امروز برنامه ای نداری',
+            return  EmptyVC(
+              text:S.current.emptyPlan,
             );
           } else {
             return ListView.builder(
@@ -64,8 +64,9 @@ class TaskList extends StatelessWidget {
                   deleteOnTap: () {
                     customeDialogee(
                       context,
-                      content: 'مطمئنی میخوای این تسک رو حذف کنی؟',
-                      primaryBtn: 'حذفش کن',
+                      content: S.current.deleteNoteDialogContent,
+                      primaryBtn:S.current.deleteDialogPrimaryBtn,
+                      secendaryBtn:S.current.deleteDialogSecendaryBtn,
                       onTapPrimaryBtn: () {
                         BlocProvider.of<TaskBloc>(context)
                             .add(DeleteTaskEvent(taskList.id));
@@ -74,7 +75,6 @@ class TaskList extends StatelessWidget {
                       onTapSecendaryBtn: () {
                         Navigator.pop(context);
                       },
-                      secendaryBtn: 'دستم خورد',
                     );
                   },
                 );

@@ -57,12 +57,18 @@ flutter:
     - assets/images/svg/
     - assets/images/icon/
   fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/ubuntu_regular.ttf
     - family: YekanBakh
       fonts:
-        - asset: assets/fonts/yekan_bakh_light.ttf
         - asset: assets/fonts/yekan_bakh_regular.ttf
-        - asset: assets/fonts/yekan_bakh_bold.ttf
-          weight: 700
+    - family: YekanBakhNumFa
+      fonts:
+        - asset: assets/fonts/yekan_bakh_regular_numfa.ttf
+    - family: YekanBakhNoEn
+      fonts:
+        - asset: assets/fonts/yekan_bakh_no_en_regular.ttf
 
 
 flutter_intl:

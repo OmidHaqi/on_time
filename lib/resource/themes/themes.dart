@@ -1,9 +1,10 @@
 part of '../../index.dart';
 
 class AppTheme {
-  static ThemeData darkTheme() {
+  static ThemeData darkTheme(BuildContext context) {
+    var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return ThemeData(
-      fontFamily: 'YekanBakh',
+      fontFamily: lang == 'fa' ? 'YekanBakhNumFa' : 'Ubuntu',
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: Color(0xffDAE5EB),
@@ -26,9 +27,10 @@ class AppTheme {
     );
   }
 
-  static ThemeData lightTheme() {
+  static ThemeData lightTheme(BuildContext context) {
+    var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return ThemeData(
-      fontFamily: 'YekanBakh',
+      fontFamily: lang == 'fa' ? 'YekanBakhNumFa': 'Ubuntu',
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
         primary: Color(0xff161928),

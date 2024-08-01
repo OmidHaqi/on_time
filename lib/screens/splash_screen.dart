@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Scaffold(
         body: Center(
           child: Text(
-            AppStrings.appName,
+           S.current.name,
             style: AppTextStyles.splashScreenTextStyle.apply(
               color: Theme.of(context).colorScheme.onSurface,
             ),

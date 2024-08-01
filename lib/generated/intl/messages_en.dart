@@ -22,10 +22,68 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "darkMode": MessageLookupByLibrary.simpleMessage("حالت تاریک"),
-        "language": MessageLookupByLibrary.simpleMessage("زبان"),
+        "addNoteSnackBar":
+            MessageLookupByLibrary.simpleMessage("Note added successfully"),
+        "addTaskSnackBar":
+            MessageLookupByLibrary.simpleMessage("Task added successfully"),
+        "createAt": MessageLookupByLibrary.simpleMessage("created at :"),
+        "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+        "deleteDialogPrimaryBtn":
+            MessageLookupByLibrary.simpleMessage("delete it"),
+        "deleteDialogSecendaryBtn":
+            MessageLookupByLibrary.simpleMessage("Cancel"),
+        "deleteNoteDialogContent": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this note?"),
+        "deleteNoteSnackBar":
+            MessageLookupByLibrary.simpleMessage("Note deleted successfully"),
+        "deleteTaskDialogContent": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this task?"),
+        "deleteTaskSnackBar": MessageLookupByLibrary.simpleMessage(
+            "The task successfully deleted"),
+        "discard": MessageLookupByLibrary.simpleMessage("Discard"),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "editNoteSnackBar":
+            MessageLookupByLibrary.simpleMessage("Note edited successfully"),
+        "editTask": MessageLookupByLibrary.simpleMessage("Edit Task"),
+        "editTaskSnackBar": MessageLookupByLibrary.simpleMessage(
+            "The task edited successfully"),
+        "emptyNote": MessageLookupByLibrary.simpleMessage(
+            "You have not added a note yet"),
+        "emptyPlan":
+            MessageLookupByLibrary.simpleMessage("You have no plans today"),
+        "emptyTextFieldError":
+            MessageLookupByLibrary.simpleMessage("You must fill in the title"),
+        "error": MessageLookupByLibrary.simpleMessage("ERROR"),
+        "goal": MessageLookupByLibrary.simpleMessage("set a goal !"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "letsGo": MessageLookupByLibrary.simpleMessage("let s Go..."),
         "name": MessageLookupByLibrary.simpleMessage("On . Time"),
-        "settings": MessageLookupByLibrary.simpleMessage("تنظیمات"),
-        "theme": MessageLookupByLibrary.simpleMessage("تم")
+        "newTask": MessageLookupByLibrary.simpleMessage("New Task"),
+        "note": MessageLookupByLibrary.simpleMessage("Note"),
+        "noteTextFieldNoteHint":
+            MessageLookupByLibrary.simpleMessage("Write your note here..."),
+        "noteTextFieldTitleHint": MessageLookupByLibrary.simpleMessage("Title"),
+        "plan": MessageLookupByLibrary.simpleMessage("Plan for tomorrow!"),
+        "planning": MessageLookupByLibrary.simpleMessage("Planning"),
+        "save": MessageLookupByLibrary.simpleMessage("save"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "target": MessageLookupByLibrary.simpleMessage("Touch it!"),
+        "taskCardNote": MessageLookupByLibrary.simpleMessage("Note: "),
+        "taskCardPlace": MessageLookupByLibrary.simpleMessage("Place: "),
+        "taskCardTime": MessageLookupByLibrary.simpleMessage("Time:"),
+        "taskNoteHint":
+            MessageLookupByLibrary.simpleMessage("Write your note here"),
+        "taskNoteTitle": MessageLookupByLibrary.simpleMessage("Note"),
+        "taskPlaceHint": MessageLookupByLibrary.simpleMessage(
+            "What is the name of the place you want to go?"),
+        "taskPlaceTitle": MessageLookupByLibrary.simpleMessage("Place"),
+        "taskTitle": MessageLookupByLibrary.simpleMessage("Title"),
+        "taskTitleHint":
+            MessageLookupByLibrary.simpleMessage("Write your title here"),
+        "tasks": MessageLookupByLibrary.simpleMessage("Tasks"),
+        "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "time": MessageLookupByLibrary.simpleMessage("Time"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try Again"),
+        "well": MessageLookupByLibrary.simpleMessage("Ok")
       };
 }

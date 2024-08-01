@@ -12,10 +12,10 @@ class Notes extends StatelessWidget {
       listener: (context, state) {
         if (state is DeleteNoteState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              duration: Duration(seconds: 1),
+             SnackBar(
+              duration: const Duration(seconds: 1),
               content: Text(
-                'یادداشت با موفقیت حذف شد',
+               S.current.deleteNoteSnackBar,
                 textDirection: TextDirection.rtl,
               ),
             ),
@@ -33,13 +33,13 @@ class Notes extends StatelessWidget {
         } else if (state is NoteLoadingState) {
           return const LinearProgressIndicator();
         } else if (state is NoteError) {
-          return const Text('Error');
+          return Text(S.current.error);
         } else {
           return ElevatedButton(
             onPressed: () {
               BlocProvider.of<TaskBloc>(context).add(TaskInit());
             },
-            child: const Text('تلاش مجدد'),
+            child: Text(S.current.tryAgain),
           );
         }
       },
