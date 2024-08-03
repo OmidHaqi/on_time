@@ -166,7 +166,6 @@ class _TasksState extends State<Tasks> {
                       duration: const Duration(seconds: 1),
                       content: Text(
                         S.current.deleteTaskSnackBar,
-                        textDirection: TextDirection.rtl,
                       ),
                     ),
                   );

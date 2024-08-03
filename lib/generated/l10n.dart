@@ -130,20 +130,20 @@ class S {
     );
   }
 
-  /// `let s Go...`
+  /// `Let''s Go...`
   String get letsGo {
     return Intl.message(
-      'let s Go...',
+      'Let\'\'s Go...',
       name: 'letsGo',
       desc: '',
       args: [],
     );
   }
 
-  /// `set a goal !`
+  /// `Set a goal !`
   String get goal {
     return Intl.message(
-      'set a goal !',
+      'Set a goal !',
       name: 'goal',
       desc: '',
       args: [],
@@ -320,10 +320,10 @@ class S {
     );
   }
 
-  /// `save`
+  /// `Save`
   String get save {
     return Intl.message(
-      'save',
+      'Save',
       name: 'save',
       desc: '',
       args: [],
@@ -370,10 +370,10 @@ class S {
     );
   }
 
-  /// `delete it`
+  /// `Delete it`
   String get deleteDialogPrimaryBtn {
     return Intl.message(
-      'delete it',
+      'Delete it',
       name: 'deleteDialogPrimaryBtn',
       desc: '',
       args: [],
@@ -430,10 +430,10 @@ class S {
     );
   }
 
-  /// `created at :`
+  /// `Created at :`
   String get createAt {
     return Intl.message(
-      'created at :',
+      'Created at :',
       name: 'createAt',
       desc: '',
       args: [],

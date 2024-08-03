@@ -26,10 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Note added successfully"),
         "addTaskSnackBar":
             MessageLookupByLibrary.simpleMessage("Task added successfully"),
-        "createAt": MessageLookupByLibrary.simpleMessage("created at :"),
+        "createAt": MessageLookupByLibrary.simpleMessage("Created at :"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "deleteDialogPrimaryBtn":
-            MessageLookupByLibrary.simpleMessage("delete it"),
+            MessageLookupByLibrary.simpleMessage("Delete it"),
         "deleteDialogSecendaryBtn":
             MessageLookupByLibrary.simpleMessage("Cancel"),
         "deleteNoteDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -54,9 +54,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyTextFieldError":
             MessageLookupByLibrary.simpleMessage("You must fill in the title"),
         "error": MessageLookupByLibrary.simpleMessage("ERROR"),
-        "goal": MessageLookupByLibrary.simpleMessage("set a goal !"),
+        "goal": MessageLookupByLibrary.simpleMessage("Set a goal !"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "letsGo": MessageLookupByLibrary.simpleMessage("let s Go..."),
+        "letsGo": MessageLookupByLibrary.simpleMessage("Let\'\'s Go..."),
         "name": MessageLookupByLibrary.simpleMessage("On . Time"),
         "newTask": MessageLookupByLibrary.simpleMessage("New Task"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
@@ -65,7 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteTextFieldTitleHint": MessageLookupByLibrary.simpleMessage("Title"),
         "plan": MessageLookupByLibrary.simpleMessage("Plan for tomorrow!"),
         "planning": MessageLookupByLibrary.simpleMessage("Planning"),
-        "save": MessageLookupByLibrary.simpleMessage("save"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "target": MessageLookupByLibrary.simpleMessage("Touch it!"),
         "taskCardNote": MessageLookupByLibrary.simpleMessage("Note: "),

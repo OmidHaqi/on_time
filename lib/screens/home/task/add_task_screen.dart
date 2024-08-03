@@ -168,7 +168,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     duration: const Duration(milliseconds: 500),
                                     content: Text(
                                       S.current.addTaskSnackBar,
-                                      textDirection: TextDirection.rtl,
                                     ),
                                   ),
                                 );
@@ -186,7 +185,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                       SnackBar(
                                         content: Text(
                                           S.current.emptyTextFieldError,
-                                          textDirection: TextDirection.rtl,
                                         ),
                                       ),
                                     );

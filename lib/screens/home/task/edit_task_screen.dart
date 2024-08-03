@@ -176,7 +176,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                           const Duration(milliseconds: 500),
                                       content: Text(
                                         S.current.editTaskSnackBar,
-                                        textDirection: TextDirection.rtl,
                                       ),
                                     ),
                                   );
@@ -196,7 +195,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                         SnackBar(
                                           content: Text(
                                             S.current.emptyTextFieldError,
-                                            textDirection: TextDirection.rtl,
                                           ),
                                         ),
                                       );
