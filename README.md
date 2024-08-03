@@ -94,6 +94,6 @@ For any questions or suggestions, you can contact us at :
 
 <div align="center">
 
-Developed with ❤️ by [Umut](https://github.com/omidhaqi/)
+Developed with  ☕ by [Umut](https://github.com/omidhaqi/)
 
 </div>
