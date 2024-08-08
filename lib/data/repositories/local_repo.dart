@@ -12,7 +12,7 @@ class TaskLocalRepo implements ITaskRepo {
   Future<List<TaskModel>> deleteAllTasks() => _iTaskDataSrc.deleteAllTasks();
 
   @override
-  Future<List<TaskModel>> deleteTask(String id) => _iTaskDataSrc.deleteTask(id);
+  Future<List<TaskModel>> deleteTask(int id) => _iTaskDataSrc.deleteTask(id);
 
   @override
   Future<List<TaskModel>> getAllTasks() => _iTaskDataSrc.getAllTasks();
@@ -22,8 +22,11 @@ class TaskLocalRepo implements ITaskRepo {
       _iTaskDataSrc.saveTask(task);
 
   @override
-  Future<List<TaskModel>> updateTask(String id, TaskModel task) =>
+  Future<List<TaskModel>> updateTask(int id, TaskModel task) =>
       _iTaskDataSrc.updateTask(id, task);
+
+  @override
+  Future<List<TaskModel>> isComplateTask(int id, TaskModel task, bool isCompleted) => _iTaskDataSrc.isComplateTask(id, task,isCompleted);
 }
 
 class NoteLocalRepo implements INoteRepo {

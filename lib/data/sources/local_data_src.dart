@@ -8,7 +8,6 @@ class TaskLocalDataSrc implements ITaskDataSrc {
   factory TaskLocalDataSrc() => _instance;
 
   void close() {
-    // Closes all Hive boxes
     Hive.close();
   }
 
@@ -26,28 +25,67 @@ class TaskLocalDataSrc implements ITaskDataSrc {
   }
 
   @override
-  Future<List<TaskModel>> deleteTask(String id) async {
+  Future<List<TaskModel>> deleteTask(int id) async {
     final box = await Hive.openBox<TaskModel>(taskBoxName);
+    NotificationHelper.cancelNotification(id);
     await box.delete(id);
+
     return taskMapTOlist(box).toList();
   }
 
   @override
   Future<List<TaskModel>> saveTask(TaskModel task) async {
-    final box = await Hive.openBox<TaskModel>(taskBoxName);
-
     var uuid = const Uuid();
-    task.id = uuid.v4();
-
+    String uuidString = uuid.v4();
+    List<int> bytes = utf8.encode(uuidString);
+    int taskId = bytes.fold(0, (previousValue, element) {
+      return previousValue + element;
+    });
+    task.id = taskId;
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
+    NotificationHelper.scheduleNotification(
+      task.id,
+      task.title,
+      task.note,
+      task.dateTime,
+    );
     await box.put(task.id, task);
+
     return taskMapTOlist(box).toList();
   }
 
   @override
-  Future<List<TaskModel>> updateTask(String id, TaskModel task) async {
+  Future<List<TaskModel>> updateTask(int id, TaskModel task) async {
+    NotificationHelper.cancelNotification(id);
     final box = await Hive.openBox<TaskModel>(taskBoxName);
+    NotificationHelper.scheduleNotification(
+      task.id,
+      task.title,
+      task.note,
+      task.dateTime,
+    );
+    box.put(id, task);
+
+    return taskMapTOlist(box).toList();
+  }
+
+  @override
+  Future<List<TaskModel>> isComplateTask(
+      int id, TaskModel task, bool isComplated) async {
+    final box = await Hive.openBox<TaskModel>(taskBoxName);
+    isComplated = task.isCompleted;
 
     box.put(id, task);
+    if (isComplated) {
+      NotificationHelper.cancelNotification(id);
+    } else {
+      NotificationHelper.scheduleNotification(
+        task.id,
+        task.title,
+        task.note,
+        task.dateTime,
+      );
+    }
 
     return taskMapTOlist(box).toList();
   }
