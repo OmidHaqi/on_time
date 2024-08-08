@@ -45,6 +45,8 @@
     "tryAgain":"Try Again",
     "taskCardTime":"Time:",
     "taskCardPlace":"Place: ",
-    "taskCardNote":"Note: "
+    "taskCardNote":"Note: ",
+    "appVersion":"1.0.0",
+    "author":"Made with ☕ by WE"
 
 }

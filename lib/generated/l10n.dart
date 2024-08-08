@@ -509,6 +509,26 @@ class S {
       args: [],
     );
   }
+
+  /// `1.0.0`
+  String get appVersion {
+    return Intl.message(
+      '1.0.0',
+      name: 'appVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Made with ☕ by WE`
+  String get author {
+    return Intl.message(
+      'Made with ☕ by WE',
+      name: 'author',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -45,6 +45,8 @@
     "tryAgain":"تلاش مجدد" ,
     "taskCardTime":"ساعت:",
     "taskCardPlace":"مکان:",
-    "taskCardNote":"یادداشت:"
+    "taskCardNote":"یادداشت:",
+    "appVersion":"1.0.0",
+    "author":"ساخته شده با ☕ توسط ما"
     
 }

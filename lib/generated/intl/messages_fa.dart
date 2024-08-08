@@ -26,6 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "یادداشت با موفقیت اضافه شد..."),
         "addTaskSnackBar":
             MessageLookupByLibrary.simpleMessage("تسک با موفقیت اضافه شد"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("1.0.0"),
+        "author":
+            MessageLookupByLibrary.simpleMessage("ساخته شده با ☕ توسط ما"),
         "createAt": MessageLookupByLibrary.simpleMessage("ایجاد شده در :"),
         "darkMode": MessageLookupByLibrary.simpleMessage("حالت تاریک"),
         "deleteDialogPrimaryBtn":

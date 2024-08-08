@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Note added successfully"),
         "addTaskSnackBar":
             MessageLookupByLibrary.simpleMessage("Task added successfully"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("1.0.0"),
+        "author": MessageLookupByLibrary.simpleMessage("Made with ☕ by WE"),
         "createAt": MessageLookupByLibrary.simpleMessage("Created at :"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "deleteDialogPrimaryBtn":
