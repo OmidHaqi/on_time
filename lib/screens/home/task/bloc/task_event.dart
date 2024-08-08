@@ -17,7 +17,7 @@ class TaskLoadedEvent extends TaskEvent {
 }
 
 class DeleteTaskEvent extends TaskEvent {
-  final String id;
+  final int id;
   const DeleteTaskEvent(this.id);
 
   @override
@@ -33,13 +33,28 @@ class SaveTaskEvent extends TaskEvent {
 }
 
 class UpdateTaskEvent extends TaskEvent {
-  final String id;
+  final int id;
   final TaskModel updateTask;
 
   const UpdateTaskEvent(this.updateTask, this.id);
 
   @override
   List<Object> get props => [updateTask, id];
+}
+
+class IsComplatedTaskEvent extends TaskEvent {
+  final int id;
+  final TaskModel isComplatedTask;
+  final bool isCompleted;
+
+  const IsComplatedTaskEvent(
+    this.isComplatedTask,
+    this.id,
+    this.isCompleted,
+  );
+
+  @override
+  List<Object> get props => [isComplatedTask, id,isCompleted];
 }
 
 final class DeleteAllTasksEvent extends TaskEvent {}

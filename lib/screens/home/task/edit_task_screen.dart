@@ -9,37 +9,82 @@ class EditTaskScreen extends StatefulWidget {
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
+  
   late DateTime _selectedDate;
-  late Jalali _persianSelectedDate;
-  late String _startTime;
+  late DateTime _persianSelectedDate;
   late TaskColor _taskSelectedColor;
+  late TextEditingController _titleController;
+  late TextEditingController _noteController;
+  late TextEditingController _placeController;
 
   @override
   void initState() {
     super.initState();
-    _selectedDate = widget.taskModel.date;
-    _startTime = widget.taskModel.startTime;
+    _selectedDate = widget.taskModel.dateTime;
     _taskSelectedColor = widget.taskModel.color;
-    _persianSelectedDate = widget.taskModel.date.toJalali();
+    _persianSelectedDate = widget.taskModel.dateTime;
+    _titleController = TextEditingController(text: widget.taskModel.title);
+    _noteController = TextEditingController(text: widget.taskModel.note);
+    _placeController = TextEditingController(text: widget.taskModel.place);
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _noteController.dispose();
+    _placeController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var taskList = widget.taskModel;
-    final TextEditingController titleController =
-        TextEditingController(text: taskList.title);
-    final TextEditingController noteController =
-        TextEditingController(text: taskList.note);
-    final TextEditingController placeController =
-        TextEditingController(text: taskList.place);
 
-    String persianDay = _persianSelectedDate.day.toPersianNumberInt();
-    String perianMonth = _persianSelectedDate.month.toPesianMonth();
-    String persianYear = _persianSelectedDate.year.toPersianNumberInt();
+    String persianDay =
+        _persianSelectedDate.toJalali().day.toPersianNumberInt();
+    String perianMonth = _persianSelectedDate.toJalali().month.toPesianMonth();
+    String persianYear =
+        _persianSelectedDate.toJalali().year.toPersianNumberInt();
+    String persianMinute = _persianSelectedDate.minute.toString();
+    String persianHour = _persianSelectedDate.hour.toString();
+
+    String gregorianMinute = _selectedDate.minute.toString();
+    String gregorianHour = _selectedDate.hour.toString();
 
     String gregorianDay = _selectedDate.day.toString();
     String gregorianMonth = _selectedDate.month.toGregorianMonth();
     String gregorianYear = _selectedDate.year.toString();
+
+    var datePickerThemeEn = picker.DatePickerTheme(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        itemStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+        cancelStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16),
+        doneStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16));
+    var datePickerThemeFa = picker.DatePickerTheme(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        itemStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+        cancelStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16),
+        doneStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16));
 
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return SafeArea(
@@ -66,7 +111,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     InputField(
                       title: S.current.taskTitle,
                       hint: S.current.taskTitleHint,
-                      controller: titleController,
+                      controller: _titleController,
                       suffixIcon: const Icon(
                         Icons.title,
                         color: AppColors.appPrimaryDark,
@@ -75,7 +120,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     InputField(
                       title: S.current.taskNoteTitle,
                       hint: S.current.taskNoteHint,
-                      controller: noteController,
+                      controller: _noteController,
                       suffixIcon: const Icon(
                         Icons.note,
                         color: AppColors.appPrimaryDark,
@@ -84,26 +129,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     InputField(
                       title: S.current.taskPlaceTitle,
                       hint: S.current.taskPlaceHint,
-                      controller: placeController,
+                      controller: _placeController,
                       suffixIcon: const Icon(
                         Icons.pin_drop_rounded,
-                        color: AppColors.appPrimaryDark,
-                      ),
-                    ),
-                    InputField(
-                      hint: lang == 'fa'
-                          ? '$persianDay, $perianMonth , $persianYear'
-                          : '$gregorianDay, $gregorianMonth , $gregorianYear',
-                      onTap: () {
-                        if (lang == 'fa') {
-                          getPersianDateFromUser();
-                        } else {
-                          getGregorianDateFromUser();
-                        }
-                      },
-                      readOnly: true,
-                      suffixIcon: const Icon(
-                        Icons.date_range_rounded,
                         color: AppColors.appPrimaryDark,
                       ),
                     ),
@@ -112,18 +140,40 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                       children: [
                         Expanded(
                           child: InputField(
-                            hint:
-                                _startTime == '' ? S.current.time : _startTime,
+                            hint: lang == 'fa'
+                                ? '$persianMinute : $persianHour  | $persianDay, $perianMonth , $persianYear'
+                                : '$gregorianHour : $gregorianMinute |  $gregorianDay, $gregorianMonth , $gregorianYear',
                             onTap: () {
                               if (lang == 'fa') {
-                                getPersianTimeFromUser(isStartTime: true);
+                                picker.DatePicker.showDateTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: datePickerThemeFa,
+                                  onConfirm: (date) {
+                                    setState(() {
+                                      _persianSelectedDate = date;
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                  locale: picker.LocaleType.fa,
+                                );
                               } else {
-                                getGregorianTimeFromUser(isStartTime: true);
+                                picker.DatePicker.showDateTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: datePickerThemeEn,
+                                  onConfirm: (date) {
+                                    setState(() {
+                                      _selectedDate = date;
+                                    });
+                                  },
+                                  currentTime: DateTime.now(),
+                                );
                               }
                             },
                             readOnly: true,
                             suffixIcon: const Icon(
-                              Icons.timer_rounded,
+                              Icons.calendar_month,
                               color: AppColors.appPrimaryDark,
                             ),
                           ),
@@ -132,11 +182,15 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           iconSize: 35,
                           onPressed: () {
                             setState(() {
-                              _startTime = '';
+                              if (lang == 'fa') {
+                                _persianSelectedDate = DateTime.now();
+                              } else {
+                                _selectedDate = DateTime.now();
+                              }
                             });
                           },
                           icon: const Icon(
-                            Icons.delete_outline_rounded,
+                            Icons.today,
                             color: AppColors.appPrimaryDark,
                           ),
                         )
@@ -179,6 +233,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                       ),
                                     ),
                                   );
+                                  NotificationHelper.scheduleNotification(
+                                    0,
+                                    _titleController.text,
+                                    _noteController.text,
+                                    _selectedDate,
+                                  );
+                                } else if (state is DeleteTaskState) {
+                                  NotificationHelper.cancelNotification(0);
                                 }
                               },
                               builder: (context, state) {
@@ -189,7 +251,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    if (titleController.text.isEmpty) {
+                                    if (_titleController.text.isEmpty) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -204,17 +266,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                           UpdateTaskEvent(
                                             TaskModel(
                                               id: taskList.id,
-                                              title: titleController.text,
-                                              note: noteController.text,
-                                              place: placeController.text,
+                                              title: _titleController.text,
+                                              note: _noteController.text,
+                                              place: _placeController.text,
                                               isCompleted: false,
-                                              date: _persianSelectedDate
-                                                  .toDateTime(),
-                                              startTime: _startTime,
-                                              endTime: '',
+                                              dateTime: _persianSelectedDate,
                                               color: _taskSelectedColor,
-                                              remind: 0,
-                                              repeat: '',
                                             ),
                                             taskList.id,
                                           ),
@@ -224,16 +281,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                           UpdateTaskEvent(
                                             TaskModel(
                                               id: taskList.id,
-                                              title: titleController.text,
-                                              note: noteController.text,
-                                              place: placeController.text,
+                                              title: _titleController.text,
+                                              note: _noteController.text,
+                                              place: _placeController.text,
                                               isCompleted: false,
-                                              date: _selectedDate,
-                                              startTime: _startTime,
-                                              endTime: '',
+                                              dateTime: _selectedDate,
                                               color: _taskSelectedColor,
-                                              remind: 0,
-                                              repeat: '',
                                             ),
                                             taskList.id,
                                           ),
@@ -286,77 +339,5 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         ),
       ),
     );
-  }
-
-  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
-
-  Future<void> getPersianTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await showPersianTimePicker(
-      initialEntryMode: PTimePickerEntryMode.dialOnly,
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      context: context,
-    );
-
-    // Ensure the widget is still mounted before accessing context
-    if (!mounted) return;
-
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      setState(() {
-        if (isStartTime) {
-          _startTime = formattedTime;
-        }
-      });
-    }
-  }
-
-  Future<void> getGregorianTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await showTimePicker(
-      initialEntryMode: TimePickerEntryMode.dialOnly,
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      context: context,
-    );
-
-    // Ensure the widget is still mounted before accessing context
-    if (!mounted) return;
-
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      setState(() {
-        if (isStartTime) {
-          _startTime = formattedTime;
-        }
-      });
-    }
-  }
-
-  Future<void> getPersianDateFromUser() async {
-    final Jalali? pickedDate = await showPersianDatePicker(
-      context: context,
-      initialDate: _persianSelectedDate,
-      firstDate: Jalali(1300),
-      lastDate: Jalali(1500),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _persianSelectedDate = pickedDate;
-      });
-    }
-  }
-
-  Future<void> getGregorianDateFromUser() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    }
   }
 }

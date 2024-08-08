@@ -11,29 +11,65 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   late DateTime _selectedDate;
-  late Jalali _persianSelectedDate;
+  late DateTime _persianSelectedDate;
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
-  String _startTime = '';
 
   @override
   void initState() {
     super.initState();
     _selectedDate = widget.date;
-    _persianSelectedDate = widget.date.toJalali();
+    _persianSelectedDate = widget.date;
   }
 
   @override
   Widget build(BuildContext context) {
-    String persianDay = _persianSelectedDate.day.toPersianNumberInt();
-    String perianMonth = _persianSelectedDate.month.toPesianMonth();
-    String persianYear = _persianSelectedDate.year.toPersianNumberInt();
+    String persianDay =
+        _persianSelectedDate.toJalali().day.toPersianNumberInt();
+    String perianMonth = _persianSelectedDate.toJalali().month.toPesianMonth();
+    String persianYear =
+        _persianSelectedDate.toJalali().year.toPersianNumberInt();
+    String persianMinute = _persianSelectedDate.minute.toString();
+    String persianHour = _persianSelectedDate.hour.toString();
+
+    String gregorianMinute = _selectedDate.minute.toString();
+    String gregorianHour = _selectedDate.hour.toString();
 
     String gregorianDay = _selectedDate.day.toString();
     String gregorianMonth = _selectedDate.month.toGregorianMonth();
     String gregorianYear = _selectedDate.year.toString();
-
+    var datePickerThemeEn = picker.DatePickerTheme(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        itemStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+        cancelStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16),
+        doneStyle: TextStyle(
+            fontFamily: 'Ubuntu',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16));
+    var datePickerThemeFa = picker.DatePickerTheme(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        itemStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+        cancelStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16),
+        doneStyle: TextStyle(
+            fontFamily: 'YekanBakhNumFa',
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16));
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return SafeArea(
       child: Scaffold(
@@ -82,40 +118,47 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         color: AppColors.appPrimaryDark,
                       ),
                     ),
-                    InputField(
-                      hint: lang == 'fa'
-                          ? '$persianDay, $perianMonth , $persianYear'
-                          : '$gregorianDay, $gregorianMonth , $gregorianYear',
-                      onTap: () {
-                        if (lang == 'fa') {
-                          getPersianDateFromUser();
-                        } else {
-                          getGregorianDateFromUser();
-                        }
-                      },
-                      readOnly: true,
-                      suffixIcon: const Icon(
-                        Icons.date_range_rounded,
-                        color: AppColors.appPrimaryDark,
-                      ),
-                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
                           child: InputField(
-                            hint:
-                                _startTime == '' ? S.current.time : _startTime,
+                            hint: lang == 'fa'
+                                ? '$persianMinute : $persianHour  | $persianDay, $perianMonth , $persianYear'
+                                : '$gregorianHour : $gregorianMinute |  $gregorianDay, $gregorianMonth , $gregorianYear',
                             onTap: () {
-                             if (lang == 'fa') {
-                                 getPersianTimeFromUser(isStartTime: true);
+                              if (lang == 'fa') {
+                                picker.DatePicker.showDateTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: datePickerThemeFa,
+                                  onConfirm: (date) {
+                                    setState(() {
+                                      _persianSelectedDate = date;
+                                    });
+                                  },
+                                  currentTime: _persianSelectedDate,
+                                  locale: picker.LocaleType.fa,
+                                  
+
+                                );
                               } else {
-                                getGregorianTimeFromUser(isStartTime: true);
+                                picker.DatePicker.showDateTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  theme: datePickerThemeEn,
+                                  onConfirm: (date) {
+                                    setState(() {
+                                      _selectedDate = date;
+                                    });
+                                  },
+                                  currentTime: _selectedDate,
+                                );
                               }
                             },
                             readOnly: true,
                             suffixIcon: const Icon(
-                              Icons.timer_rounded,
+                              Icons.calendar_month,
                               color: AppColors.appPrimaryDark,
                             ),
                           ),
@@ -124,11 +167,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           iconSize: 35,
                           onPressed: () {
                             setState(() {
-                              _startTime = '';
+                              if (lang == 'fa') {
+                                _persianSelectedDate = DateTime.now();
+                              } else {
+                                _selectedDate = DateTime.now();
+                              }
                             });
                           },
                           icon: const Icon(
-                            Icons.delete_outline_rounded,
+                            Icons.today,
                             color: AppColors.appPrimaryDark,
                           ),
                         )
@@ -140,8 +187,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             Column(
               children: [
-                 Padding(
-                  padding:const EdgeInsets.only(right: AppDimens.small),
+                Padding(
+                  padding: const EdgeInsets.only(right: AppDimens.small),
                   child: TaskColorSelector(
                     selectedColor: _taskSelectedColor,
                     onColorSelected: (value) {
@@ -165,7 +212,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               if (state is SaveTaskState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    duration: const Duration(milliseconds: 500),
                                     content: Text(
                                       S.current.addTaskSnackBar,
                                     ),
@@ -193,18 +239,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                       BlocProvider.of<TaskBloc>(context).add(
                                         SaveTaskEvent(
                                           TaskModel(
-                                            id: '',
+                                            id: 0,
                                             title: titleController.text,
                                             note: noteController.text,
                                             place: placeController.text,
                                             isCompleted: false,
-                                            date: _persianSelectedDate
-                                                .toDateTime(),
-                                            startTime: _startTime,
-                                            endTime: '',
+                                            dateTime: _persianSelectedDate,
                                             color: _taskSelectedColor,
-                                            remind: 0,
-                                            repeat: '',
                                           ),
                                         ),
                                       );
@@ -212,17 +253,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                       BlocProvider.of<TaskBloc>(context).add(
                                         SaveTaskEvent(
                                           TaskModel(
-                                            id: '',
+                                            id: 0,
                                             title: titleController.text,
                                             note: noteController.text,
                                             place: placeController.text,
                                             isCompleted: false,
-                                            date: _selectedDate,
-                                            startTime: _startTime,
-                                            endTime: '',
+                                            dateTime: _selectedDate,
                                             color: _taskSelectedColor,
-                                            remind: 0,
-                                            repeat: '',
                                           ),
                                         ),
                                       );
@@ -270,77 +307,5 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       ),
     );
-  }
-
-  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
-
-  Future<void> getPersianTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await showPersianTimePicker(
-      initialEntryMode: PTimePickerEntryMode.dialOnly,
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      context: context,
-    );
-
-    // Ensure the widget is still mounted before accessing context
-    if (!mounted) return;
-
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      setState(() {
-        if (isStartTime) {
-          _startTime = formattedTime;
-        }
-      });
-    }
-  }
-
-  Future<void> getGregorianTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await showTimePicker(
-      initialEntryMode: TimePickerEntryMode.dialOnly,
-      initialTime: const TimeOfDay(hour: 8, minute: 30),
-      context: context,
-    );
-
-    // Ensure the widget is still mounted before accessing context
-    if (!mounted) return;
-
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      setState(() {
-        if (isStartTime) {
-          _startTime = formattedTime;
-        }
-      });
-    }
-  }
-
-  Future<void> getPersianDateFromUser() async {
-    final Jalali? pickedDate = await showPersianDatePicker(
-      context: context,
-      initialDate: _persianSelectedDate,
-      firstDate: Jalali(1300),
-      lastDate: Jalali(1500),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _persianSelectedDate = pickedDate;
-      });
-    }
-  }
-
-  Future<void> getGregorianDateFromUser() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    }
   }
 }

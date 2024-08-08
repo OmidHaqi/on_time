@@ -7,12 +7,8 @@ Iterable<TaskModel> taskMapTOlist(Box<TaskModel> box) {
       title: t.title,
       note: t.note,
       isCompleted: t.isCompleted,
-      date: t.date,
-      startTime: t.startTime,
-      endTime: t.endTime,
+      dateTime: t.dateTime,
       color: t.color,
-      remind: t.remind,
-      repeat: t.repeat,
       place: t.place,
     ),
   );

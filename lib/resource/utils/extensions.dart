@@ -45,7 +45,7 @@ String getPersianMonthStr(String month) {
     }
   }
 
-  return month; // اگر ماه ورودی معتبر نباشد، همان مقدار ورودی را برمی‌گرداند
+  return month;
 }
 
 String getPersianMonthInt(int month) {

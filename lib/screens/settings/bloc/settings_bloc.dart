@@ -13,7 +13,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<LoadLocalizations>(_changeLanguage);
     on<ThemeChanged>(_onThemeChanged);
     on<LoadTheme>(_onLoadTheme);
-
     add(LoadSavedLocalizations());
     add(LoadTheme());
   }

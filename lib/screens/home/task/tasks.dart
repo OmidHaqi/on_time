@@ -18,7 +18,8 @@ class _TasksState extends State<Tasks> {
   Widget build(BuildContext context) {
     final todoList = taskBox.values.toList();
     final taskDates = todoList
-        .map((task) => DateTime(task.date.year, task.date.month, task.date.day))
+        .map((task) => DateTime(
+            task.dateTime.year, task.dateTime.month, task.dateTime.day))
         .toSet()
         .toList();
 
@@ -96,6 +97,7 @@ class _TasksState extends State<Tasks> {
                   Padding(
                     padding: const EdgeInsets.only(top: AppDimens.medium),
                     child: PersianHorizontalDatePicker(
+
                       selectedDayTextStyle: AppTextStyles.selectedTextStyle
                           .apply(color: Theme.of(context).colorScheme.surface),
                       selectedMonthTextStyle: AppTextStyles.selectedTextStyle
@@ -110,8 +112,8 @@ class _TasksState extends State<Tasks> {
                       hasSelectedItemShadow: false,
                       initialSelectedDate: DateTime.now(),
                       datePickerHeight: 90,
-                      startDate: DateTime(2024, 6, 31),
-                      endDate: DateTime.now().add(const Duration(days: 30)),
+                      startDate: DateTime(2024, 6, 6),
+                      endDate: DateTime(2050,6,6),
                       backgroundColor: Colors.transparent,
                       textColor: Theme.of(context).colorScheme.onSurface,
                       selectedTextColor: Theme.of(context).colorScheme.surface,
@@ -120,6 +122,8 @@ class _TasksState extends State<Tasks> {
                       onDateSelected: (date) {
                         setState(() {
                           _selectedDate = date!;
+
+
                         });
                       },
                     ),
@@ -179,7 +183,8 @@ class _TasksState extends State<Tasks> {
                 } else if (state is DeleteAllTasksState ||
                     state is DeleteTaskState ||
                     state is SaveTaskState ||
-                    state is UpdateTaskState) {
+                    state is UpdateTaskState ||
+                    state is IsComplatedTaskState) {
                   return TaskList(
                     selectedDate: _selectedDate,
                   );

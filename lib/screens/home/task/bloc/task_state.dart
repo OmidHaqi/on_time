@@ -48,4 +48,12 @@ final class DeleteAllTasksState extends TaskState {
   List<Object> get props => [taskList];
 }
 
+final class IsComplatedTaskState extends TaskState {
+  final List<TaskModel> taskList;
+  const IsComplatedTaskState(this.taskList);
+
+  @override
+  List<Object> get props => [taskList];
+}
+
 final class TaskError extends TaskState {}

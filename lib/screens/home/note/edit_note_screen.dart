@@ -10,13 +10,22 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
+
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    _titleController = TextEditingController(text: widget.note.title);
+    _descriptionController =
+        TextEditingController(text: widget.note.description);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
-    final TextEditingController titleController =
-        TextEditingController(text: widget.note.title);
-    final TextEditingController descriptionController =
-        TextEditingController(text: widget.note.description);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(_noteSelectedColor.code),
@@ -33,7 +42,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 children: [
                   Stack(children: [
                     TextField(
-                      controller: titleController,
+                      controller: _titleController,
                       style: AppTextStyles.noteTitleTextStyle
                           .apply(color: AppColors.appPrimaryDark),
                       decoration: InputDecoration(
@@ -49,7 +58,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       maxLength: 140,
                     ),
                     Positioned(
-                      left: 0,
+                      left: lang == 'fa' ? 0 : null,
+                      right: lang == 'en' ? 0 : null,
                       child: IconButton(
                         onPressed: () {
                           customeDialogee(
@@ -62,18 +72,16 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                   widget.note.id,
                                 ),
                               );
-                              Navigator.pushReplacement(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => const HomePage(),
-                                ),
-                              );
+                              Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             onTapSecendaryBtn: () {
                               Navigator.pop(context);
                             },
                             secendaryBtn: S.current.deleteDialogSecendaryBtn,
                           );
+
+                           
                         },
                         icon: const Icon(
                           Icons.delete_rounded,
@@ -84,7 +92,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   ]),
                   const SizedBox(height: 20),
                   TextField(
-                    controller: descriptionController,
+                    controller: _descriptionController,
                     style: AppTextStyles.noteDecTextStyle
                         .apply(color: AppColors.appPrimaryDark),
                     decoration: InputDecoration(
@@ -160,7 +168,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (titleController.text.isEmpty) {
+                                  if (_titleController.text.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
@@ -171,34 +179,33 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                   } else {
                                     if (lang == 'fa') {
                                       String persianDateTime =
-                                        '${DateTime.now().hour.toPersianNumberInt()}:${DateTime.now().minute.toPersianNumberInt()} / ${Jalali.now().day.toPersianNumberInt()} - ${Jalali.now().month.toPesianMonth()} ';
-                                    BlocProvider.of<NoteBloc>(context).add(
-                                      UpdateNoteEvent(
-                                          NoteModel(
-                                              id: widget.note.id,
-                                              title: titleController.text,
-                                              description:
-                                                  descriptionController.text,
-                                              color: _noteSelectedColor,
-                                              dateTime: persianDateTime),
-                                          widget.note.id),
-                                    );
+                                          '${DateTime.now().hour.toPersianNumberInt()}:${DateTime.now().minute.toPersianNumberInt()} / ${Jalali.now().day.toPersianNumberInt()} - ${Jalali.now().month.toPesianMonth()} ';
+                                      BlocProvider.of<NoteBloc>(context).add(
+                                        UpdateNoteEvent(
+                                            NoteModel(
+                                                id: widget.note.id,
+                                                title: _titleController.text,
+                                                description:
+                                                    _descriptionController.text,
+                                                color: _noteSelectedColor,
+                                                dateTime: persianDateTime),
+                                            widget.note.id),
+                                      );
                                     } else {
-                                       String gDateTime =
-                                        '${DateTime.now().hour}:${DateTime.now().minute} / ${DateTime.now().day} - ${DateTime.now().month.toGregorianMonth()} ';
-                                         BlocProvider.of<NoteBloc>(context).add(
-                                      UpdateNoteEvent(
-                                          NoteModel(
-                                              id: widget.note.id,
-                                              title: titleController.text,
-                                              description:
-                                                  descriptionController.text,
-                                              color: _noteSelectedColor,
-                                              dateTime: gDateTime),
-                                          widget.note.id),
-                                    );
+                                      String gDateTime =
+                                          '${DateTime.now().hour}:${DateTime.now().minute} / ${DateTime.now().day} - ${DateTime.now().month.toGregorianMonth()} ';
+                                      BlocProvider.of<NoteBloc>(context).add(
+                                        UpdateNoteEvent(
+                                            NoteModel(
+                                                id: widget.note.id,
+                                                title: _titleController.text,
+                                                description:
+                                                    _descriptionController.text,
+                                                color: _noteSelectedColor,
+                                                dateTime: gDateTime),
+                                            widget.note.id),
+                                      );
                                     }
-                                    
 
                                     Navigator.pop(context);
                                   }

@@ -24,84 +24,100 @@ class SettingsPage extends StatelessWidget {
             body: Directionality(
               textDirection: TextDirection.ltr,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: AppDimens.medium),
-                    child: Text(S.current.language),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.small),
-                    child: Divider(),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 150,
-                    child: ListView.builder(
-                        itemCount: languageModel.length,
-                        itemBuilder: (context, index) {
-                          var item = languageModel[index];
-                          return RadioListTile(
-                            value: item.languageCode,
-                            groupValue: groupValue,
-                            onChanged: (value) {
-                              
-                              BlocProvider.of<SettingsBloc>(context).add(
-                                LoadLocalizations(
-                                  Locale(
-                                    item.languageCode,
-                                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: AppDimens.medium),
+                        child: Text(S.current.language),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: AppDimens.small),
+                        child: Divider(),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView.builder(
+                            itemCount: languageModel.length,
+                            itemBuilder: (context, index) {
+                              var item = languageModel[index];
+                              return RadioListTile(
+                                value: item.languageCode,
+                                groupValue: groupValue,
+                                onChanged: (value) {
+                                  BlocProvider.of<SettingsBloc>(context).add(
+                                    LoadLocalizations(
+                                      Locale(
+                                        item.languageCode,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(item.language),
+                                  ],
+                                ),
+                                subtitle: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(item.subLanguage),
+                                  ],
                                 ),
                               );
-                            },
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(item.language),
-                              ],
-                            ),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(item.subLanguage),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: AppDimens.medium),
-                    child: Text(S.current.theme),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.small),
-                    child: Divider(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppDimens.medium),
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: AppDimens.medium),
-                            child: Text(S.current.darkMode),
-                          ),
-                          Switch(
-                            value: state.themeMode == ThemeMode.dark,
-                            onChanged: (value) {
-                              context
-                                  .read<SettingsBloc>()
-                                  .add(ThemeChanged(isDark: value));
-                            },
-                          )
-                        ],
+                            }),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: AppDimens.medium),
+                        child: Text(S.current.theme),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: AppDimens.small),
+                        child: Divider(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppDimens.medium),
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppDimens.medium),
+                                child: Text(S.current.darkMode),
+                              ),
+                              Switch(
+                                value: state.themeMode == ThemeMode.dark,
+                                onChanged: (value) {
+                                  context
+                                      .read<SettingsBloc>()
+                                      .add(ThemeChanged(isDark: value));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                   Padding(
+                    padding:const EdgeInsets.only(bottom: AppDimens.large),
+                    child: Column(
+                      children: [
+                        Text(S.current.appVersion,style: AppTextStyles.appInfoTextStyle,),
+                        Text(S.current.author,style: AppTextStyles.appInfoTextStyle,),
+                      ],
                     ),
                   )
                 ],

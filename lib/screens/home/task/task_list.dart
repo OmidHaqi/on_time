@@ -24,57 +24,76 @@ class TaskList extends StatelessWidget {
         builder: (context, builderTaskBox, _) {
           final todoList = builderTaskBox.values.toList();
           final tasksForSelectedDate = todoList
-              .where((task) => isSameDay(task.date, selectedDate))
+              .where((task) => isSameDay(task.dateTime, selectedDate))
               .toList();
-    
+
           if (todoList.isEmpty || tasksForSelectedDate.isEmpty) {
-            return  EmptyVC(
-              text:S.current.emptyPlan,
+            return EmptyVC(
+              text: S.current.emptyPlan,
             );
           } else {
             return ListView.builder(
               itemCount: tasksForSelectedDate.length,
               itemBuilder: (contxt, index) {
                 var taskList = tasksForSelectedDate[index];
-                return TaskCard(
-                  taskList: taskList,
-                  index: index,
-                  editOnTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => EditTaskScreen(
-                          taskModel: TaskModel(
+
+                return BlocBuilder<TaskBloc, TaskState>(
+                  builder: (context, state) {
+                    return TaskCard(
+                      taskList: taskList,
+                      index: index,
+                      editOnTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => EditTaskScreen(
+                              taskModel: TaskModel(
+                                id: taskList.id,
+                                title: taskList.title,
+                                note: taskList.note,
+                                isCompleted: taskList.isCompleted,
+                                dateTime: taskList.dateTime,
+                                color: taskList.color,
+                                place: taskList.place,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      deleteOnTap: () {
+                        customeDialogee(
+                          context,
+                          content: S.current.deleteNoteDialogContent,
+                          primaryBtn: S.current.deleteDialogPrimaryBtn,
+                          secendaryBtn: S.current.deleteDialogSecendaryBtn,
+                          onTapPrimaryBtn: () {
+                            BlocProvider.of<TaskBloc>(context)
+                                .add(DeleteTaskEvent(taskList.id));
+
+                            Navigator.pop(context);
+                          },
+                          onTapSecendaryBtn: () {
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                      onChanged: (val) {
+                        BlocProvider.of<TaskBloc>(context)
+                            .add(IsComplatedTaskEvent(
+                          TaskModel(
                             id: taskList.id,
                             title: taskList.title,
                             note: taskList.note,
-                            isCompleted: taskList.isCompleted,
-                            date: taskList.date,
-                            startTime: taskList.startTime,
-                            endTime: taskList.endTime,
+                            isCompleted: val!,
+                            dateTime: taskList.dateTime,
                             color: taskList.color,
-                            remind: taskList.remind,
-                            repeat: taskList.repeat,
                             place: taskList.place,
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                  deleteOnTap: () {
-                    customeDialogee(
-                      context,
-                      content: S.current.deleteNoteDialogContent,
-                      primaryBtn:S.current.deleteDialogPrimaryBtn,
-                      secendaryBtn:S.current.deleteDialogSecendaryBtn,
-                      onTapPrimaryBtn: () {
-                        BlocProvider.of<TaskBloc>(context)
-                            .add(DeleteTaskEvent(taskList.id));
-                        Navigator.pop(context);
+                          taskList.id,
+                          val,
+                        ));
                       },
-                      onTapSecendaryBtn: () {
-                        Navigator.pop(context);
-                      },
+                      value: taskList.isCompleted,
                     );
                   },
                 );

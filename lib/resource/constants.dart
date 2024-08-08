@@ -12,3 +12,4 @@ class AppColors {
 
 const String taskBoxName = 'task_box';
 const String noteBoxName = 'note_box';
+

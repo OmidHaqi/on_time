@@ -7,11 +7,15 @@ class TaskCard extends StatefulWidget {
     required this.index,
     required this.deleteOnTap,
     required this.editOnTap,
+    required this.value,
+    required this.onChanged,
   });
   final Function() deleteOnTap;
   final Function() editOnTap;
+  final Function(bool?) onChanged;
   final int index;
   final TaskModel taskList;
+  final bool value;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -51,23 +55,25 @@ class _TaskCardState extends State<TaskCard> {
                         Padding(
                           padding: EdgeInsets.only(
                             top: AppDimens.small,
-                            bottom: widget.taskList.startTime.isEmpty &&
-                                    widget.taskList.place.isEmpty &&
-                                    widget.taskList.note.isEmpty
-                                ? AppDimens.small
-                                : 0,
+                            bottom:
+                                widget.taskList.dateTime.toString().isEmpty &&
+                                        widget.taskList.place.isEmpty &&
+                                        widget.taskList.note.isEmpty
+                                    ? AppDimens.small
+                                    : 0,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                      widget.taskList.startTime.isEmpty &&
-                                              widget.taskList.place.isEmpty &&
-                                              widget.taskList.note.isEmpty
-                                          ? AppDimens.large
-                                          : AppDimens.small,
+                                  horizontal: widget.taskList.dateTime
+                                              .toString()
+                                              .isEmpty &&
+                                          widget.taskList.place.isEmpty &&
+                                          widget.taskList.note.isEmpty
+                                      ? AppDimens.large
+                                      : AppDimens.small,
                                 ),
                                 child: SizedBox(
                                   width: size.width * 0.50,
@@ -112,27 +118,21 @@ class _TaskCardState extends State<TaskCard> {
                                         ),
                                       ),
                                     ),
-                                    if (widget.taskList.startTime.isEmpty &&
+                                    if (widget.taskList.dateTime
+                                            .toString()
+                                            .isEmpty &&
                                         widget.taskList.place.isEmpty &&
                                         widget.taskList.note.isEmpty)
                                       Checkbox(
-                                        value: widget.taskList.isCompleted,
-                                        onChanged: (newValue) {
-                                          setState(
-                                            () {
-                                              widget.taskList.isCompleted =
-                                                  newValue ?? false;
-                                            },
-                                          );
-                                        },
-                                      ),
+                                          value:widget.value,
+                                          onChanged: widget.onChanged),
                                   ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        if (widget.taskList.startTime.isNotEmpty ||
+                        if (widget.taskList.dateTime.toString().isNotEmpty ||
                             widget.taskList.place.isNotEmpty ||
                             widget.taskList.note.isNotEmpty)
                           Column(
@@ -156,35 +156,34 @@ class _TaskCardState extends State<TaskCard> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          if (widget
-                                              .taskList.startTime.isNotEmpty)
-                                            RichText(
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        S.current.taskCardTime,
-                                                    style: AppTextStyles
-                                                        .taskInfoTitleTextStyle
-                                                        .apply(
-                                                      fontFamily: lang == 'fa'
-                                                          ? 'YekanBakhNumFa'
-                                                          : 'Ubuntu',
-                                                      color: AppColors
-                                                          .appPrimaryDark,
-                                                      decoration: widget
-                                                              .taskList
-                                                              .isCompleted
-                                                          ? TextDecoration
-                                                              .lineThrough
-                                                          : TextDecoration.none,
-                                                    ),
+                                          RichText(
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: S.current.taskCardTime,
+                                                  style: AppTextStyles
+                                                      .taskInfoTitleTextStyle
+                                                      .apply(
+                                                    fontFamily: lang == 'fa'
+                                                        ? 'YekanBakhNumFa'
+                                                        : 'Ubuntu',
+                                                    color: AppColors
+                                                        .appPrimaryDark,
+                                                    decoration: widget.taskList
+                                                            .isCompleted
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
                                                   ),
+                                                ),
+                                                if (widget.taskList.dateTime
+                                                    .toString()
+                                                    .isNotEmpty)
                                                   TextSpan(
                                                     text:
-                                                        ' ${widget.taskList.startTime} ',
+                                                        '${widget.taskList.dateTime.hour}:${widget.taskList.dateTime.minute}',
                                                     style: AppTextStyles
                                                         .taskInfoTextStyle
                                                         .apply(
@@ -201,9 +200,9 @@ class _TaskCardState extends State<TaskCard> {
                                                           : TextDecoration.none,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                              ],
                                             ),
+                                          ),
                                           if (widget.taskList.place.isNotEmpty)
                                             RichText(
                                               maxLines: 2,
@@ -304,16 +303,8 @@ class _TaskCardState extends State<TaskCard> {
                                         child: Row(
                                       children: [
                                         Checkbox(
-                                          value: widget.taskList.isCompleted,
-                                          onChanged: (newValue) {
-                                            setState(
-                                              () {
-                                                widget.taskList.isCompleted =
-                                                    newValue ?? false;
-                                              },
-                                            );
-                                          },
-                                        ),
+                                            value: widget.value,
+                                            onChanged: widget.onChanged),
                                       ],
                                     )).animate().moveX(),
                                     if (widget.taskList.isCompleted)

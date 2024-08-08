@@ -5,6 +5,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
     Size size = MediaQuery.sizeOf(context);
     return SafeArea(
       child: Scaffold(
@@ -135,7 +141,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => AddNoteScreen(),
+                          builder: (context) => const AddNoteScreen(),
                         ),
                       );
                     },

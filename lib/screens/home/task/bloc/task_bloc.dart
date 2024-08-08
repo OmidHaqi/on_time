@@ -60,6 +60,18 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
                   UpdateTaskState(val),
                 ),
               );
+        } else if (event is IsComplatedTaskEvent) {
+          try {
+            emit(TaskLoadingState());
+            final updatedTaskList = await taskRepo.isComplateTask(
+              event.id,
+              event.isComplatedTask,
+              event.isCompleted
+            );
+            emit(TaskLoadedState(updatedTaskList));
+          } catch (e) {
+            emit(TaskError());
+          }
         }
       },
     );
