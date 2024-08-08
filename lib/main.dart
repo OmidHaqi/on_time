@@ -6,14 +6,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_time/data/models/note_model.dart';
 import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/index.dart';
+import 'package:on_time/resource/utils/notification_helper.dart';
 import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/home/note/bloc/note_bloc.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
+
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationHelper.initialize();
   Directory directory = await getApplicationDocumentsDirectory();
   Hive
     ..init(directory.path)
