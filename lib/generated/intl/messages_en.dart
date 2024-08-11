@@ -26,7 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Note added successfully"),
         "addTaskSnackBar":
             MessageLookupByLibrary.simpleMessage("Task added successfully"),
-        "appVersion": MessageLookupByLibrary.simpleMessage("1.0.0"),
+        "addToNote":
+            MessageLookupByLibrary.simpleMessage("Add the task note to notes!"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("0.0.1+1"),
         "author": MessageLookupByLibrary.simpleMessage("Made with ☕ by WE"),
         "createAt": MessageLookupByLibrary.simpleMessage("Created at :"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
@@ -44,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The task successfully deleted"),
         "discard": MessageLookupByLibrary.simpleMessage("Discard"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "editNote": MessageLookupByLibrary.simpleMessage("Edit the note!"),
         "editNoteSnackBar":
             MessageLookupByLibrary.simpleMessage("Note edited successfully"),
         "editTask": MessageLookupByLibrary.simpleMessage("Edit Task"),

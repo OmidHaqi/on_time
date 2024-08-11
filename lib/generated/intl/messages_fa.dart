@@ -26,7 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "یادداشت با موفقیت اضافه شد..."),
         "addTaskSnackBar":
             MessageLookupByLibrary.simpleMessage("تسک با موفقیت اضافه شد"),
-        "appVersion": MessageLookupByLibrary.simpleMessage("1.0.0"),
+        "addToNote": MessageLookupByLibrary.simpleMessage(
+            "یادداشت تسک رو به یادداشت ها اضافه کن!"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("0.0.1+1"),
         "author":
             MessageLookupByLibrary.simpleMessage("ساخته شده با ☕ توسط ما"),
         "createAt": MessageLookupByLibrary.simpleMessage("ایجاد شده در :"),
@@ -45,6 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تسک با موفقیت حذف شد"),
         "discard": MessageLookupByLibrary.simpleMessage("بیخیال"),
         "done": MessageLookupByLibrary.simpleMessage("انجام شد"),
+        "editNote":
+            MessageLookupByLibrary.simpleMessage("یادداشت رو هم ویرایش کن!"),
         "editNoteSnackBar": MessageLookupByLibrary.simpleMessage(
             "یادداشت با موفقیت ویرایش شد..."),
         "editTask": MessageLookupByLibrary.simpleMessage("ویرایش برنامه"),

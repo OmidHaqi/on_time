@@ -510,10 +510,10 @@ class S {
     );
   }
 
-  /// `1.0.0`
+  /// `0.0.1+1`
   String get appVersion {
     return Intl.message(
-      '1.0.0',
+      '0.0.1+1',
       name: 'appVersion',
       desc: '',
       args: [],
@@ -525,6 +525,26 @@ class S {
     return Intl.message(
       'Made with ☕ by WE',
       name: 'author',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add the task note to notes!`
+  String get addToNote {
+    return Intl.message(
+      'Add the task note to notes!',
+      name: 'addToNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit the note!`
+  String get editNote {
+    return Intl.message(
+      'Edit the note!',
+      name: 'editNote',
       desc: '',
       args: [],
     );

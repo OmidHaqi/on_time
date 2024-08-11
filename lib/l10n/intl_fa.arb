@@ -46,7 +46,9 @@
     "taskCardTime":"ساعت:",
     "taskCardPlace":"مکان:",
     "taskCardNote":"یادداشت:",
-    "appVersion":"1.0.0",
-    "author":"ساخته شده با ☕ توسط ما"
+    "appVersion":"0.0.1+1",
+    "author":"ساخته شده با ☕ توسط ما",
+    "addToNote":"یادداشت تسک رو به یادداشت ها اضافه کن!",
+    "editNote":"یادداشت رو هم ویرایش کن!"
     
 }
