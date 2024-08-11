@@ -23,7 +23,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       isCompleted: fields[3] as bool,
       dateTime: fields[4] as DateTime,
       color: fields[5] as TaskColor,
-      place: fields[6] as String,
+      addToNote: fields[6] as bool,
     );
   }
 
@@ -44,7 +44,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(5)
       ..write(obj.color)
       ..writeByte(6)
-      ..write(obj.place);
+      ..write(obj.addToNote);
   }
 
   @override

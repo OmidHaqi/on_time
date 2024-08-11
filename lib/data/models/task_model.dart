@@ -23,7 +23,7 @@ class TaskModel extends HiveObject {
   final TaskColor color;
 
   @HiveField(6)
-  final String place;
+  final bool addToNote;
 
   TaskModel(
       {required this.id,
@@ -32,7 +32,7 @@ class TaskModel extends HiveObject {
       required this.isCompleted,
       required this.dateTime,
       required this.color,
-      required this.place});
+      required this.addToNote});
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
@@ -42,7 +42,7 @@ class TaskModel extends HiveObject {
         isCompleted: json['isCompleted'],
         dateTime: json['date'],
         color: json['color'],
-        place: json['place']);
+        addToNote: json['place']);
   }
 
   Map<String, dynamic> toJson() {
@@ -53,7 +53,7 @@ class TaskModel extends HiveObject {
     data['note'] = note;
     data['isCompleted'] = isCompleted;
     data['color'] = color;
-    data['place'] = place;
+    data['place'] = addToNote;
     return data;
   }
 }
