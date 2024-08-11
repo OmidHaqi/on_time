@@ -3,7 +3,7 @@ description: "A planner and note application"
 
 publish_to: 'none'
 
-version: 0.0.1
+version: 0.0.1+1
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
@@ -36,7 +36,6 @@ dependencies:
   flutter_local_notifications: ^17.2.1+2
   device_preview: ^1.2.0
   timezone: ^0.9.4
-  flutter_datetime_picker_plus: ^2.2.0
 
 dev_dependencies:
   flutter_test:
