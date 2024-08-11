@@ -37,7 +37,7 @@ class NoteLocalRepo implements INoteRepo {
   Future<List<NoteModel>> deleteAllNotes() => _iNoteDataSrc.deleteAllNotes();
 
   @override
-  Future<List<NoteModel>> deleteNote(String id) => _iNoteDataSrc.deleteNote(id);
+  Future<List<NoteModel>> deleteNote(int id) => _iNoteDataSrc.deleteNote(id);
 
   @override
   Future<List<NoteModel>> getAllNotes() => _iNoteDataSrc.getAllNotes();
@@ -47,6 +47,6 @@ class NoteLocalRepo implements INoteRepo {
       _iNoteDataSrc.saveNote(note);
 
   @override
-  Future<List<NoteModel>> updateNote(String id, NoteModel note) =>
+  Future<List<NoteModel>> updateNote(int id, NoteModel note) =>
       _iNoteDataSrc.updateNote(id, note);
 }

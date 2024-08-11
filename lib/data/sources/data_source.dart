@@ -12,7 +12,7 @@ abstract class ITaskDataSrc {
 abstract class INoteDataSrc {
   Future<List<NoteModel>> getAllNotes();
   Future<List<NoteModel>> saveNote(NoteModel note);
-  Future<List<NoteModel>> updateNote(String id, NoteModel note);
-  Future<List<NoteModel>> deleteNote(String id);
+  Future<List<NoteModel>> updateNote(int id, NoteModel note);
+  Future<List<NoteModel>> deleteNote(int id);
   Future<List<NoteModel>> deleteAllNotes();
 }

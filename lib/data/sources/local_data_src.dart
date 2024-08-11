@@ -35,13 +35,7 @@ class TaskLocalDataSrc implements ITaskDataSrc {
 
   @override
   Future<List<TaskModel>> saveTask(TaskModel task) async {
-    var uuid = const Uuid();
-    String uuidString = uuid.v4();
-    List<int> bytes = utf8.encode(uuidString);
-    int taskId = bytes.fold(0, (previousValue, element) {
-      return previousValue + element;
-    });
-    task.id = taskId;
+
     final box = await Hive.openBox<TaskModel>(taskBoxName);
     NotificationHelper.scheduleNotification(
       task.id,
@@ -106,7 +100,7 @@ class NoteLocalDataSrc implements INoteDataSrc {
   }
 
   @override
-  Future<List<NoteModel>> deleteNote(String id) async {
+  Future<List<NoteModel>> deleteNote(int id) async {
     final box = await Hive.openBox<NoteModel>(noteBoxName);
     box.delete(id);
     return noteMapToList(box).toList();
@@ -122,14 +116,13 @@ class NoteLocalDataSrc implements INoteDataSrc {
   @override
   Future<List<NoteModel>> saveNote(NoteModel note) async {
     final box = await Hive.openBox<NoteModel>(noteBoxName);
-    var uuid = const Uuid();
-    note.id = uuid.v4();
+
     box.put(note.id, note);
     return noteMapToList(box).toList();
   }
 
   @override
-  Future<List<NoteModel>> updateNote(String id, NoteModel note) async {
+  Future<List<NoteModel>> updateNote(int id, NoteModel note) async {
     final box = await Hive.openBox<NoteModel>(noteBoxName);
     box.put(id, note);
     return noteMapToList(box).toList();
