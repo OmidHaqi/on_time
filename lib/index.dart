@@ -28,7 +28,6 @@ import 'package:persian_horizontal_date_picker/persian_horizontal_date_picker.da
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'as picker;
 
 part 'screens/my_app.dart';
 part 'screens/settings/settings_page.dart';

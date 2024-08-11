@@ -9,13 +9,13 @@ class EditTaskScreen extends StatefulWidget {
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
-  
   late DateTime _selectedDate;
   late DateTime _persianSelectedDate;
   late TaskColor _taskSelectedColor;
   late TextEditingController _titleController;
   late TextEditingController _noteController;
-  late TextEditingController _placeController;
+  late bool addToNote;
+  bool editNote = false;
 
   @override
   void initState() {
@@ -25,14 +25,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     _persianSelectedDate = widget.taskModel.dateTime;
     _titleController = TextEditingController(text: widget.taskModel.title);
     _noteController = TextEditingController(text: widget.taskModel.note);
-    _placeController = TextEditingController(text: widget.taskModel.place);
+    addToNote = widget.taskModel.addToNote;
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _noteController.dispose();
-    _placeController.dispose();
     super.dispose();
   }
 
@@ -54,37 +53,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     String gregorianDay = _selectedDate.day.toString();
     String gregorianMonth = _selectedDate.month.toGregorianMonth();
     String gregorianYear = _selectedDate.year.toString();
-
-    var datePickerThemeEn = picker.DatePickerTheme(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        itemStyle: TextStyle(
-            fontFamily: 'Ubuntu',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
-            fontSize: 18),
-        cancelStyle: TextStyle(
-            fontFamily: 'Ubuntu',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16),
-        doneStyle: TextStyle(
-            fontFamily: 'Ubuntu',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16));
-    var datePickerThemeFa = picker.DatePickerTheme(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        itemStyle: TextStyle(
-            fontFamily: 'YekanBakhNumFa',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
-            fontSize: 18),
-        cancelStyle: TextStyle(
-            fontFamily: 'YekanBakhNumFa',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16),
-        doneStyle: TextStyle(
-            fontFamily: 'YekanBakhNumFa',
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16));
 
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
     return SafeArea(
@@ -117,24 +85,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         color: AppColors.appPrimaryDark,
                       ),
                     ),
-                    InputField(
-                      title: S.current.taskNoteTitle,
-                      hint: S.current.taskNoteHint,
-                      controller: _noteController,
-                      suffixIcon: const Icon(
-                        Icons.note,
-                        color: AppColors.appPrimaryDark,
-                      ),
-                    ),
-                    InputField(
-                      title: S.current.taskPlaceTitle,
-                      hint: S.current.taskPlaceHint,
-                      controller: _placeController,
-                      suffixIcon: const Icon(
-                        Icons.pin_drop_rounded,
-                        color: AppColors.appPrimaryDark,
-                      ),
-                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -143,32 +93,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                             hint: lang == 'fa'
                                 ? '$persianMinute : $persianHour  | $persianDay, $perianMonth , $persianYear'
                                 : '$gregorianHour : $gregorianMinute |  $gregorianDay, $gregorianMonth , $gregorianYear',
-                            onTap: () {
+                            onTap: () async {
                               if (lang == 'fa') {
-                                picker.DatePicker.showDateTimePicker(
-                                  context,
-                                  showTitleActions: true,
-                                  theme: datePickerThemeFa,
-                                  onConfirm: (date) {
-                                    setState(() {
-                                      _persianSelectedDate = date;
-                                    });
-                                  },
-                                  currentTime: DateTime.now(),
-                                  locale: picker.LocaleType.fa,
-                                );
+                                await persianDateTimePicker(context);
                               } else {
-                                picker.DatePicker.showDateTimePicker(
-                                  context,
-                                  showTitleActions: true,
-                                  theme: datePickerThemeEn,
-                                  onConfirm: (date) {
-                                    setState(() {
-                                      _selectedDate = date;
-                                    });
-                                  },
-                                  currentTime: DateTime.now(),
-                                );
+                                await gregorianDateTimePicker(context);
                               }
                             },
                             readOnly: true,
@@ -196,6 +125,72 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         )
                       ],
                     ),
+                    InputField(
+                      title: S.current.taskNoteTitle,
+                      hint: S.current.taskNoteHint,
+                      controller: _noteController,
+                      maxLines: 40,
+                      minLines: 3,
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          widthFactor: 1.0,
+                          heightFactor: 10.0,
+                          child: Icon(
+                            Icons.note,
+                            color: AppColors.appPrimaryDark,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(S.current.addToNote,
+                              style: const TextStyle(
+                                  color: AppColors.appPrimaryDark)),
+                          Theme(
+                            data: AppTheme.lightTheme(context),
+                            child: Checkbox(
+                              value: addToNote,
+                              onChanged: (val) {
+                                setState(() {
+                                  addToNote = val!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            S.current.editNote,
+                            style: const TextStyle(
+                              color: AppColors.appPrimaryDark,
+                            ),
+                          ),
+                          Theme(
+                            data:AppTheme.lightTheme(context),
+                            child: Checkbox(
+                              value: editNote,
+                              onChanged: (val) {
+                                setState(() {
+                                  editNote = val!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -262,13 +257,37 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                       );
                                     } else {
                                       if (lang == 'fa') {
+                                        if (editNote) {
+                                          String dateTime =
+                                              '${DateTime.now().hour.toPersianNumberInt()}:${DateTime.now().minute.toPersianNumberInt()} / ${Jalali.now().day.toPersianNumberInt()} - ${Jalali.now().month.toPesianMonth()} ';
+                                          BlocProvider.of<NoteBloc>(context)
+                                              .add(UpdateNoteEvent(
+                                                  NoteModel(
+                                                    id: taskList.id,
+                                                    title:
+                                                        _titleController.text,
+                                                    description:
+                                                        _noteController.text,
+                                                    color: _noteSelectedColor,
+                                                    dateTime: dateTime,
+                                                  ),
+                                                  taskList.id));
+                                        }
+                                        if (addToNote == false) {
+                                          BlocProvider.of<NoteBloc>(context)
+                                              .add(
+                                            DeleteNoteEvent(
+                                              taskList.id,
+                                            ),
+                                          );
+                                        }
                                         BlocProvider.of<TaskBloc>(context).add(
                                           UpdateTaskEvent(
                                             TaskModel(
                                               id: taskList.id,
                                               title: _titleController.text,
                                               note: _noteController.text,
-                                              place: _placeController.text,
+                                              addToNote: addToNote,
                                               isCompleted: false,
                                               dateTime: _persianSelectedDate,
                                               color: _taskSelectedColor,
@@ -277,13 +296,37 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                           ),
                                         );
                                       } else {
+                                        if (editNote) {
+                                          String gDateTime =
+                                              '${DateTime.now().hour}:${DateTime.now().minute} / ${DateTime.now().day} - ${DateTime.now().month.toGregorianMonth()} ';
+                                          BlocProvider.of<NoteBloc>(context)
+                                              .add(UpdateNoteEvent(
+                                                  NoteModel(
+                                                    id: taskList.id,
+                                                    title:
+                                                        _titleController.text,
+                                                    description:
+                                                        _noteController.text,
+                                                    color: _noteSelectedColor,
+                                                    dateTime: gDateTime,
+                                                  ),
+                                                  taskList.id));
+                                        }
+                                        if (addToNote == false) {
+                                          BlocProvider.of<NoteBloc>(context)
+                                              .add(
+                                            DeleteNoteEvent(
+                                              taskList.id,
+                                            ),
+                                          );
+                                        }
                                         BlocProvider.of<TaskBloc>(context).add(
                                           UpdateTaskEvent(
                                             TaskModel(
                                               id: taskList.id,
                                               title: _titleController.text,
                                               note: _noteController.text,
-                                              place: _placeController.text,
+                                              addToNote: addToNote,
                                               isCompleted: false,
                                               dateTime: _selectedDate,
                                               color: _taskSelectedColor,
@@ -338,6 +381,127 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> persianDateTimePicker(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: 250,
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      'لغو',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'تایید',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoTheme(
+                  data: CupertinoThemeData(
+                    textTheme: CupertinoTextThemeData(
+                      dateTimePickerTextStyle: TextStyle(
+                          fontFamily: 'YekanBakhNumFa',
+                          fontSize: 18.0,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface // تنظیم اندازه‌ی فونت در اینجا
+                          ),
+                    ),
+                  ),
+                  child: PCupertinoDatePicker(
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    initialDateTime: widget.taskModel.dateTime.toJalali(),
+                    use24hFormat: true,
+                    mode: PCupertinoDatePickerMode.dateAndTime,
+                    onDateTimeChanged: (dateTime) {
+                      setState(() {
+                        _persianSelectedDate = dateTime.toDateTime();
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> gregorianDateTimePicker(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      'Dissmis',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'Done',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoTheme(
+                  data: CupertinoThemeData(
+                    textTheme: CupertinoTextThemeData(
+                      dateTimePickerTextStyle: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontSize: 18.0,
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                  child: CupertinoDatePicker(
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    initialDateTime: widget.taskModel.dateTime,
+                    use24hFormat: true,
+                    mode: CupertinoDatePickerMode.dateAndTime,
+                    onDateTimeChanged: (dateTime) {
+                      setState(() {
+                        _selectedDate = dateTime;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

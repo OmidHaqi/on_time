@@ -97,7 +97,6 @@ class _TasksState extends State<Tasks> {
                   Padding(
                     padding: const EdgeInsets.only(top: AppDimens.medium),
                     child: PersianHorizontalDatePicker(
-
                       selectedDayTextStyle: AppTextStyles.selectedTextStyle
                           .apply(color: Theme.of(context).colorScheme.surface),
                       selectedMonthTextStyle: AppTextStyles.selectedTextStyle
@@ -113,7 +112,7 @@ class _TasksState extends State<Tasks> {
                       initialSelectedDate: DateTime.now(),
                       datePickerHeight: 90,
                       startDate: DateTime(2024, 6, 6),
-                      endDate: DateTime(2050,6,6),
+                      endDate: DateTime(2050, 6, 6),
                       backgroundColor: Colors.transparent,
                       textColor: Theme.of(context).colorScheme.onSurface,
                       selectedTextColor: Theme.of(context).colorScheme.surface,
@@ -122,8 +121,6 @@ class _TasksState extends State<Tasks> {
                       onDateSelected: (date) {
                         setState(() {
                           _selectedDate = date!;
-
-
                         });
                       },
                     ),
@@ -177,6 +174,7 @@ class _TasksState extends State<Tasks> {
               },
               builder: (context, state) {
                 if (state is TaskLoadedState) {
+                 
                   return TaskList(
                     selectedDate: _selectedDate,
                   );
@@ -207,4 +205,5 @@ class _TasksState extends State<Tasks> {
       },
     );
   }
+
 }

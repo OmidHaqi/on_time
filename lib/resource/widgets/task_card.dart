@@ -57,7 +57,7 @@ class _TaskCardState extends State<TaskCard> {
                             top: AppDimens.small,
                             bottom:
                                 widget.taskList.dateTime.toString().isEmpty &&
-                                        widget.taskList.place.isEmpty &&
+                                        
                                         widget.taskList.note.isEmpty
                                     ? AppDimens.small
                                     : 0,
@@ -70,7 +70,7 @@ class _TaskCardState extends State<TaskCard> {
                                   horizontal: widget.taskList.dateTime
                                               .toString()
                                               .isEmpty &&
-                                          widget.taskList.place.isEmpty &&
+                                         
                                           widget.taskList.note.isEmpty
                                       ? AppDimens.large
                                       : AppDimens.small,
@@ -121,7 +121,7 @@ class _TaskCardState extends State<TaskCard> {
                                     if (widget.taskList.dateTime
                                             .toString()
                                             .isEmpty &&
-                                        widget.taskList.place.isEmpty &&
+                                        
                                         widget.taskList.note.isEmpty)
                                       Checkbox(
                                           value:widget.value,
@@ -133,7 +133,7 @@ class _TaskCardState extends State<TaskCard> {
                           ),
                         ),
                         if (widget.taskList.dateTime.toString().isNotEmpty ||
-                            widget.taskList.place.isNotEmpty ||
+                            
                             widget.taskList.note.isNotEmpty)
                           Column(
                             children: [
@@ -203,53 +203,7 @@ class _TaskCardState extends State<TaskCard> {
                                               ],
                                             ),
                                           ),
-                                          if (widget.taskList.place.isNotEmpty)
-                                            RichText(
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        S.current.taskCardPlace,
-                                                    style: AppTextStyles
-                                                        .taskInfoTitleTextStyle
-                                                        .apply(
-                                                      fontFamily: lang == 'fa'
-                                                          ? 'YekanBakhNumFa'
-                                                          : 'Ubuntu',
-                                                      color: AppColors
-                                                          .appPrimaryDark,
-                                                      decoration: widget
-                                                              .taskList
-                                                              .isCompleted
-                                                          ? TextDecoration
-                                                              .lineThrough
-                                                          : TextDecoration.none,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text:
-                                                        ' ${widget.taskList.place} ',
-                                                    style: AppTextStyles
-                                                        .taskInfoTextStyle
-                                                        .apply(
-                                                      fontFamily: lang == 'fa'
-                                                          ? 'YekanBakhNumFa'
-                                                          : 'Ubuntu',
-                                                      color: AppColors
-                                                          .appPrimaryDark,
-                                                      decoration: widget
-                                                              .taskList
-                                                              .isCompleted
-                                                          ? TextDecoration
-                                                              .lineThrough
-                                                          : TextDecoration.none,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                          
                                           if (widget.taskList.note.isNotEmpty)
                                             RichText(
                                               maxLines: 2,

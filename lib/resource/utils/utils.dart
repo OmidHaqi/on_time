@@ -9,7 +9,7 @@ Iterable<TaskModel> taskMapTOlist(Box<TaskModel> box) {
       isCompleted: t.isCompleted,
       dateTime: t.dateTime,
       color: t.color,
-      place: t.place,
+      addToNote: t.addToNote
     ),
   );
 }

@@ -10,6 +10,8 @@ class InputField extends StatelessWidget {
 
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final int? maxLines;
+  final int? minLines;
 
   const InputField({
     super.key,
@@ -20,7 +22,7 @@ class InputField extends StatelessWidget {
     this.onTap,
     this.readOnly = false,
     this.prefixIcon,
-    this.suffixIcon,
+    this.suffixIcon, this.maxLines, this.minLines,
   });
 
   @override
@@ -28,8 +30,12 @@ class InputField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
       child: TextFormField(
+         textAlignVertical: TextAlignVertical.top,
+        maxLines: maxLines,
+        minLines: minLines,
         style: const TextStyle(color: AppColors.appPrimaryDark),
         autofocus: false,
+        
         onTap: onTap,
         readOnly: readOnly,
         controller: controller,
@@ -44,6 +50,8 @@ class InputField extends StatelessWidget {
             hintStyle: const TextStyle(color: AppColors.appPrimaryDark),
             labelStyle: const TextStyle(color: AppColors.appPrimaryDark),
             labelText: title,
+            alignLabelWithHint: true,
+            
             hintText: hint,
             border: const OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.appPrimaryDark)),

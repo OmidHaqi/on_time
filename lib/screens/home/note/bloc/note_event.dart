@@ -17,7 +17,7 @@ class NoteLoadedEvent extends NoteEvent {
 }
 
 class DeleteNoteEvent extends NoteEvent {
-  final String id;
+  final int id;
   const DeleteNoteEvent(this.id);
 
   @override
@@ -33,7 +33,7 @@ class SaveNoteEvent extends NoteEvent {
 }
 
 class UpdateNoteEvent extends NoteEvent {
-  final String id;
+  final int id;
   final NoteModel updateNote;
 
   const UpdateNoteEvent(this.updateNote, this.id);

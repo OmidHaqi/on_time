@@ -17,6 +17,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     var lang = BlocProvider.of<SettingsBloc>(context).state.locale.languageCode;
+        var uuid = const Uuid();
+    String uuidString = uuid.v4();
+    List<int> bytes = utf8.encode(uuidString);
+    int noteId = bytes.fold(0, (previousValue, element) {
+      return previousValue + element;
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(_noteSelectedColor.code),
@@ -121,7 +127,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                                       BlocProvider.of<NoteBloc>(context).add(
                                         SaveNoteEvent(
                                           NoteModel(
-                                              id: '',
+                                              id: noteId,
                                               title: _titleController.text,
                                               description:
                                                   _descriptionController.text,
@@ -136,7 +142,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                                       BlocProvider.of<NoteBloc>(context).add(
                                         SaveNoteEvent(
                                           NoteModel(
-                                              id: '',
+                                              id: noteId,
                                               title: _titleController.text,
                                               description:
                                                   _descriptionController.text,

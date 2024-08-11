@@ -47,6 +47,7 @@ class TaskList extends StatelessWidget {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => EditTaskScreen(
+                              
                               taskModel: TaskModel(
                                 id: taskList.id,
                                 title: taskList.title,
@@ -54,7 +55,7 @@ class TaskList extends StatelessWidget {
                                 isCompleted: taskList.isCompleted,
                                 dateTime: taskList.dateTime,
                                 color: taskList.color,
-                                place: taskList.place,
+                                addToNote: taskList.addToNote,
                               ),
                             ),
                           ),
@@ -87,7 +88,7 @@ class TaskList extends StatelessWidget {
                             isCompleted: val!,
                             dateTime: taskList.dateTime,
                             color: taskList.color,
-                            place: taskList.place,
+                            addToNote: taskList.addToNote,
                           ),
                           taskList.id,
                           val,
