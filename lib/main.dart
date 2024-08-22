@@ -59,7 +59,7 @@ main() async {
         BlocProvider(create: (_) => HomeBloc())
       ],
       child: DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: kReleaseMode,
         availableLocales: const [
           Locale('fa_IR'),
           Locale('en_US'),

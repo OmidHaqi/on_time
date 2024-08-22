@@ -54,7 +54,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<Locale> _getLocale() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String languageCode = prefs.getString('language') ?? 'fa';
+    String languageCode = prefs.getString('language') ?? 'en';
     return Locale(languageCode);
   }
 }
