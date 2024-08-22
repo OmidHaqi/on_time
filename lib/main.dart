@@ -1,6 +1,6 @@
-import 'dart:io';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_time/data/models/note_model.dart';
@@ -11,15 +11,13 @@ import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/home/note/bloc/note_bloc.dart';
 import 'package:on_time/screens/home/task/bloc/task_bloc.dart';
 import 'package:on_time/screens/settings/bloc/settings_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationHelper.initialize();
-  Directory directory = await getApplicationDocumentsDirectory();
+
   Hive
-    ..init(directory.path)
+    ..initFlutter()
     ..registerAdapter(TaskModelAdapter())
     ..registerAdapter(TaskColorAdapter())
     ..registerAdapter(NoteModelAdapter())
@@ -27,14 +25,15 @@ main() async {
   await Hive.openBox<TaskModel>(taskBoxName);
   await Hive.openBox<NoteModel>(noteBoxName);
 
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Color(0xff161928),
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xff161928),
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   const SystemUiOverlayStyle(
+  //     statusBarColor: Color(0xff161928),
+  //     statusBarIconBrightness: Brightness.light,
+  //     systemNavigationBarColor: Color(0xff161928),
+  //     systemNavigationBarIconBrightness: Brightness.light,
+  //   ),
+  // );
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -59,7 +58,20 @@ main() async {
         ),
         BlocProvider(create: (_) => HomeBloc())
       ],
-      child: const RestartWidget(child: MyApp()),
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        availableLocales: const [
+          Locale('fa_IR'),
+          Locale('en_US'),
+        ],
+        data: DevicePreviewData(
+          deviceIdentifier: Devices.ios.iPhone12ProMax.toString(),
+          locale: 'fa_IR',
+        ),
+        builder: (context) {
+          return const MyApp();
+        },
+      ),
     ),
   );
 }
