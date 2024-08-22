@@ -64,13 +64,14 @@ main() async {
           Locale('fa_IR'),
           Locale('en_US'),
         ],
-        data: DevicePreviewData(
-          deviceIdentifier: Devices.ios.iPhone12ProMax.toString(),
-          locale: 'fa_IR',
-        ),
         builder: (context) {
           return const MyApp();
         },
+        data: DevicePreviewData(
+          locale: 'fa_IR',
+          isEnabled: kReleaseMode,
+          deviceIdentifier: Devices.android.samsungGalaxyS20.toString(),
+        ),
       ),
     ),
   );
