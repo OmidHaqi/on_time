@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,7 @@ import 'package:on_time/data/models/task_model.dart';
 import 'package:on_time/gen/assets.gen.dart';
 import 'package:on_time/generated/l10n.dart';
 import 'package:on_time/resource/utils/notification_helper.dart';
+import 'package:on_time/resource/widgets/mobile_wrapper_in_desktop.dart';
 import 'package:on_time/screens/home/bloc/home_bloc.dart';
 import 'package:on_time/screens/home/bloc/home_event.dart';
 import 'package:on_time/screens/home/bloc/home_state.dart';

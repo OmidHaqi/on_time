@@ -40,10 +40,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     var taskList = widget.taskModel;
 
     String persianDay =
-        _persianSelectedDate.toJalali().day.toPersianNumberInt();
-    String perianMonth = _persianSelectedDate.toJalali().month.toPesianMonth();
+        DateTimeExtensions(_persianSelectedDate).toJalali().day.toPersianNumberInt();
+    String perianMonth = DateTimeExtensions(_persianSelectedDate).toJalali().month.toPesianMonth();
     String persianYear =
-        _persianSelectedDate.toJalali().year.toPersianNumberInt();
+        DateTimeExtensions(_persianSelectedDate).toJalali().year.toPersianNumberInt();
     String persianMinute = _persianSelectedDate.minute.toString();
     String persianHour = _persianSelectedDate.hour.toString();
 
@@ -426,11 +426,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           ),
                     ),
                   ),
-                  child: PCupertinoDatePicker(
+                  child: PersianCupertinoDatePicker(
                     backgroundColor: Theme.of(context).colorScheme.surface,
-                    initialDateTime: widget.taskModel.dateTime.toJalali(),
+                    initialDateTime: DateTimeExtensions(widget.taskModel.dateTime).toJalali(),
                     use24hFormat: true,
-                    mode: PCupertinoDatePickerMode.dateAndTime,
+                    mode: PersianCupertinoDatePickerMode.dateAndTime,
                     onDateTimeChanged: (dateTime) {
                       setState(() {
                         _persianSelectedDate = dateTime.toDateTime();

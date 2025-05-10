@@ -23,9 +23,9 @@ class _TasksState extends State<Tasks> {
         .toSet()
         .toList();
 
-    String day = _selectedDate.toJalali().day.toPersianNumberInt();
-    String month = _selectedDate.toJalali().month.toPesianMonth();
-    String year = _selectedDate.toJalali().year.toPersianNumberInt();
+    String day = DateTimeExtensions(_selectedDate).toJalali().day.toPersianNumberInt();
+    String month = DateTimeExtensions(_selectedDate).toJalali().month.toPesianMonth();
+    String year = DateTimeExtensions(_selectedDate).toJalali().year.toPersianNumberInt();
 
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
@@ -47,30 +47,24 @@ class _TasksState extends State<Tasks> {
                   Padding(
                     padding: const EdgeInsets.only(top: AppDimens.medium),
                     child: PersianHorizontalDatePicker(
-                      selectedDayTextStyle:
-                          AppTextStyles.selectedTextStyle.apply(
-                        color: Theme.of(context).colorScheme.surface,
+                      weekDayTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
-                      selectedMonthTextStyle:
-                          AppTextStyles.selectedTextStyle.apply(
-                        color: Theme.of(context).colorScheme.surface,
+                      dayTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
-                      selectedWeekDayTextStyle:
-                          AppTextStyles.selectedTextStyle.apply(
-                        color: Theme.of(context).colorScheme.surface,
+                      monthTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
-                      selectedMarkedDotColor:
-                          Theme.of(context).colorScheme.surface,
-                      markedDotColor: Theme.of(context).colorScheme.onSurface,
                       markedDates: taskDates,
-                      hasSelectedItemShadow: false,
+                      hasShadow: false,
                       initialSelectedDate: DateTime.now(),
                       datePickerHeight: 90,
-                      startDate: DateTime(2024, 6, 31),
+                      startDate: DateTime.now().subtract(const Duration(days: 30)),
                       endDate: DateTime.now().add(const Duration(days: 30)),
                       backgroundColor: Colors.transparent,
-                      textColor: Theme.of(context).colorScheme.onSurface,
-                      selectedTextColor: Theme.of(context).colorScheme.surface,
+                      onBackgroundColor: Theme.of(context).colorScheme.onSurface,
+                      selectedOnBackgroundColor: Theme.of(context).colorScheme.surface,
                       selectedBackgroundColor:
                           Theme.of(context).colorScheme.onSurface,
                       onDateSelected: (date) {
@@ -97,25 +91,25 @@ class _TasksState extends State<Tasks> {
                   Padding(
                     padding: const EdgeInsets.only(top: AppDimens.medium),
                     child: PersianHorizontalDatePicker(
-                      selectedDayTextStyle: AppTextStyles.selectedTextStyle
-                          .apply(color: Theme.of(context).colorScheme.surface),
-                      selectedMonthTextStyle: AppTextStyles.selectedTextStyle
-                          .apply(color: Theme.of(context).colorScheme.surface),
-                      selectedWeekDayTextStyle: AppTextStyles.selectedTextStyle
-                          .apply(color: Theme.of(context).colorScheme.surface),
-                      selectedMarkedDotColor:
-                          Theme.of(context).colorScheme.surface,
-                      markedDotColor: Theme.of(context).colorScheme.onSurface,
+                      weekDayTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      dayTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      monthTextStyle: AppTextStyles.selectedTextStyle.apply(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                       markedDates: taskDates,
                       isPersianDate: false,
-                      hasSelectedItemShadow: false,
+                      hasShadow: false,
                       initialSelectedDate: DateTime.now(),
                       datePickerHeight: 90,
                       startDate: DateTime(2024, 6, 6),
                       endDate: DateTime(2050, 6, 6),
                       backgroundColor: Colors.transparent,
-                      textColor: Theme.of(context).colorScheme.onSurface,
-                      selectedTextColor: Theme.of(context).colorScheme.surface,
+                      onBackgroundColor: Theme.of(context).colorScheme.onSurface,
+                      selectedOnBackgroundColor: Theme.of(context).colorScheme.surface,
                       selectedBackgroundColor:
                           Theme.of(context).colorScheme.onSurface,
                       onDateSelected: (date) {

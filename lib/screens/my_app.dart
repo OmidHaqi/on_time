@@ -1,5 +1,6 @@
 part of '../index.dart';
 
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
@@ -15,14 +16,34 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme(context),
           darkTheme: AppTheme.darkTheme(context),
-          builder: (_, child) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: MediaQuery.of(context)
-                  .textScaler
-                  .clamp(minScaleFactor: 0.8, maxScaleFactor: 0.8),
-            ),
-            child: child!,
-          ),
+          builder: (_, child) {
+            if (kIsWeb) {
+              final mediaQuery = MediaQuery.of(context);
+              final isDesktop = mediaQuery.size.width > 768;
+              if (isDesktop) {
+                const double mobileWidth = 480.0;
+                return MobileWrapperInDesktop(
+                  mobileWidth: mobileWidth,
+                  child: MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaler: MediaQuery.of(context)
+                          .textScaler
+                          .clamp(minScaleFactor: 0.8, maxScaleFactor: 0.8),
+                    ),
+                    child: child!,
+                  ),
+                );
+              }
+            }
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: MediaQuery.of(context)
+                    .textScaler
+                    .clamp(minScaleFactor: 0.8, maxScaleFactor: 0.8),
+              ),
+              child: child!,
+            );
+          },
           themeMode: state.themeMode,
           localizationsDelegates: const [
             S.delegate,

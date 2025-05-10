@@ -25,13 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
       (_) {
         Future.delayed(
           const Duration(seconds: 2),
-          () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) =>
-                  _isFirstRun ? const IntroScreen() : const HomePage(),
-            ),
-          ),
+          () {
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      _isFirstRun ? const IntroScreen() : const HomePage(),
+                ),
+              );
+            }
+          },
         );
       },
     );

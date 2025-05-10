@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_time/data/models/note_model.dart';
@@ -17,13 +18,22 @@ import 'package:path_provider/path_provider.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationHelper.initialize();
-  Directory directory = await getApplicationDocumentsDirectory();
-  Hive
-    ..init(directory.path)
-    ..registerAdapter(TaskModelAdapter())
-    ..registerAdapter(TaskColorAdapter())
-    ..registerAdapter(NoteModelAdapter())
-    ..registerAdapter(NoteColorAdapter());
+  
+
+  if (kIsWeb) {
+
+    await Hive.initFlutter();
+  } else {
+
+    Directory directory = await getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+  }
+  
+  Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(TaskColorAdapter());
+  Hive.registerAdapter(NoteModelAdapter());
+  Hive.registerAdapter(NoteColorAdapter());
+  
   await Hive.openBox<TaskModel>(taskBoxName);
   await Hive.openBox<NoteModel>(noteBoxName);
 

@@ -32,7 +32,7 @@ class EmptyVC extends StatelessWidget {
                       ..color = Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withOpacity(0.1)
+                          .withValues(alpha:  0.1)
                       ..strokeWidth = 25),
               )
             ],

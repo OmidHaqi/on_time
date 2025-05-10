@@ -27,10 +27,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     String persianDay =
-        _persianSelectedDate.toJalali().day.toPersianNumberInt();
-    String perianMonth = _persianSelectedDate.toJalali().month.toPesianMonth();
+        DateTimeExtensions(_persianSelectedDate).toJalali().day.toPersianNumberInt();
+    String perianMonth = DateTimeExtensions(_persianSelectedDate).toJalali().month.toPesianMonth();
     String persianYear =
-        _persianSelectedDate.toJalali().year.toPersianNumberInt();
+        DateTimeExtensions(_persianSelectedDate).toJalali().year.toPersianNumberInt();
     String persianMinute = _persianSelectedDate.minute.toString();
     String persianHour = _persianSelectedDate.hour.toString();
 
@@ -353,11 +353,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ),
-                  child: PCupertinoDatePicker(
+                  child: PersianCupertinoDatePicker(
                     backgroundColor: Theme.of(context).colorScheme.surface,
                     initialDateTime: Jalali.now(),
                     use24hFormat: true,
-                    mode: PCupertinoDatePickerMode.dateAndTime,
+                    mode: PersianCupertinoDatePickerMode.dateAndTime,
                     onDateTimeChanged: (dateTime) {
                       setState(() {
                         _persianSelectedDate = dateTime.toDateTime();
